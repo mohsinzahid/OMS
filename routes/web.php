@@ -495,7 +495,7 @@ Route::get('/customer/saleprice/ajaxupdate','CustomerController@show');
 
     Route::get('/sales/reports/customerLedgerReport',function ()
     {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2  || Auth::user()->type_id ===  3)
             return app()->call('App\Http\Controllers\SalesReportsController@CustomerLedgerReport');
         else
             return view('admin.master');
@@ -506,7 +506,7 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
     Route::get('/reports/customerLedgerDetail/ajaxupdate', 'SalesReportsController@CustomerLedgerDetailAjaxUpdate');
 
     Route::get('/reports/customerLedgerDetail', function () {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2  || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\SalesReportsController@statement');
         else
             return view('admin.master');
@@ -746,14 +746,14 @@ Route::get('/sale/ajaxreceipt', 'SaleinventoryController@getreceipt');
 
 //General Ledger Start
     Route::get('/petty-cash/add', function () {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return view("general ledger.forms.petty cash payment.add",['msg' => '']);
         else
             return view('admin.master');
     });
 
     Route::post('/petty-cash/post-payment', function (Request $request) {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2  || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\PettyCashController@store',[$request]);
         else
             return view('admin.master');
