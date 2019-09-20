@@ -637,7 +637,7 @@ Route::get('/sale/ajaxreceipt', 'SaleinventoryController@getreceipt');
 //Purchase Payment Start
 
     Route::get('/sales/forms/cash-collection', function () {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\CashCollectionController@create');
         else
             return view('admin.master');
@@ -646,7 +646,7 @@ Route::get('/sale/ajaxreceipt', 'SaleinventoryController@getreceipt');
 //Route::post('/salepayment/postpayment','SalepaymentController@store');
 
     Route::post('/cash-collection/postpayment', function (Request $request) {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\CashCollectionController@store',[$request]);
         else
             return view('admin.master');
