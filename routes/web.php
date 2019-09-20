@@ -580,7 +580,7 @@ Route::get('/sale/ajaxreceipt', 'SaleinventoryController@getreceipt');
     });
 
     Route::get('/jobs-list/ajax-get-submitted-jobs', function () {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 4)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\JobslistController@submittedjobs');
         else
             return view('admin.master');
@@ -596,7 +596,7 @@ Route::get('/sale/ajaxreceipt', 'SaleinventoryController@getreceipt');
     Route::get('/job-order/ajaxsearch', 'JobOrderController@AjaxSearch');
 
     Route::get('/jobs-list/pending-jobs', function () {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 4)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return view('jobs list.pending jobs');
         else
             return view('admin.master');
@@ -614,7 +614,7 @@ Route::get('/sale/ajaxreceipt', 'SaleinventoryController@getreceipt');
 
 
     Route::get('/jobs-list/printed-jobs', function () {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 4)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return view('jobs list.printed jobs');
         else
             return view('admin.master');

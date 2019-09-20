@@ -111,7 +111,7 @@
 
                 success: function (response) {
                     console.log(response);
-                 /*   $('#tableExample4').DataTable().clear().draw();
+                    $('#tableExample4').DataTable().clear().draw();
 
                     var previd = -1;
                     var editIcon;
@@ -143,7 +143,7 @@
                                 '','','','', '', '', response[key]["size"], response[key]["description"], response[key]["set"],
                                 response[key]["color"], '','', '']).draw();
                         }
-                    }*/
+                    }
 
 
                     $("#tableExample4").DataTable().page('last').draw('page');
