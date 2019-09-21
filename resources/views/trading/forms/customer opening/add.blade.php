@@ -58,12 +58,14 @@
 
                                     <div class="form-group col-sm-6">
                                         <label>NTN No</label>
-                                        <input type="text" class="form-control" placeholder="NTN Number" name="ntnno" required>
+                                        <input type="text" class="form-control" placeholder="NTN Number" name="ntnno">
                                     </div>
 
                                     <div class="form-group col-sm-6">
                                         <label>Credit limit</label>
-                                        <input type="text" class="form-control" pattern="[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)" placeholder="Uper Credit limit" name="creditlimit">
+                                        <input type="text" class="form-control"
+                                               pattern="[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)" placeholder="Uper Credit limit"
+                                               name="creditlimit" required>
                                     </div>
 
 
@@ -79,7 +81,7 @@
 
                                     <div class="form-group col-sm-6">
                                         <label> Contact Name</label>
-                                        <input type="text" class="form-control" placeholder="Person Name" name="contactname" required>
+                                        <input type="text" class="form-control" placeholder="Person Name" name="contactname">
                                     </div>
 
                                     <div class="form-group col-sm-6">
@@ -89,12 +91,12 @@
 
                                     <div class="form-group col-sm-6">
                                         <label>City</label>
-                                        <input type="text" class="form-control" placeholder="City" name="city">
+                                        <input type="text" class="form-control" placeholder="City" name="city" required>
                                     </div>
 
                                     <div class="form-group col-sm-6">
                                         <label>Country</label>
-                                        <input type="text" class="form-control" placeholder="Country" name="country">
+                                        <input type="text" class="form-control" placeholder="Country" name="country" required>
                                     </div>
 
                                     <div class="form-group col-sm-6">
