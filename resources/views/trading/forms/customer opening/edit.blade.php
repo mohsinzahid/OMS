@@ -8,7 +8,7 @@
             <div class="col-lg-12">
                 <div class="view-header">
                     <div class="pull-right text-right" style="line-height: 14px">
-                        <div style="float: right"><a href="/customer/{{$result->id}}/delete"
+                        <div style="float: right"><a href="/customer/{{$customer->id}}/delete"
                                                      class="btn btn-w-md btn-danger">Delete</a>
                         </div>
                     </div>
