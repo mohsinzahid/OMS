@@ -35,68 +35,81 @@
                             <div class="row">
                                 <div class="form-group col-sm-6">
                                     <label>Name</label>
-                                    <input type="text" class="form-control" placeholder="Company Name" name="name" value="{{$customer->name}}" required>
+                                    <input type="text" class="form-control" placeholder="Company Name" name="name"
+                                           value="{{$customer->name}}" required>
                                 </div>
 
                                 <div class="form-group col-sm-6">
                                     <label>Short Name</label>
-                                    <input type="text" class="form-control" placeholder="Short Name" name="shortname" value="{{$customer->short_name}}"required>
+                                    <input type="text" class="form-control" placeholder="Short Name" name="shortname"
+                                           value="{{$customer->short_name}}"required>
                                 </div>
 
                                 <div class="form-group col-sm-6">
                                     <label>Contact Address</label>
-                                    <input type="text" class="form-control" placeholder="Address" name="address" value="{{$customer->address}}">
+                                    <input type="text" class="form-control" placeholder="Address" name="address"
+                                           value="{{$customer->address}}">
                                 </div>
 
                                 <div class="form-group col-sm-6">
                                     <label>Sales Tax No</label>
-                                    <input type="text" class="form-control" placeholder="Sales Tax no" name="salestaxno" value="{{$customer->sales_tax_no}}">
+                                    <input type="text" class="form-control" placeholder="Sales Tax no" name="salestaxno"
+                                           value="{{$customer->sales_tax_no}}">
                                 </div>
 
                                 <div class="form-group col-sm-6">
                                     <label>NTN No</label>
-                                    <input type="text" class="form-control" placeholder="NTN Number" name="ntnno" value="{{$customer->ntn_no}}" required>
+                                    <input type="text" class="form-control" placeholder="NTN Number" name="ntnno"
+                                           value="{{$customer->ntn_no}}">
                                 </div>
 
                                 <div class="form-group col-sm-6">
                                     <label>Credit limit</label>
-                                    <input type="text" class="form-control" pattern="[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)" placeholder="Uper Credit limit" name="creditlimit" value="{{$customer->credit_limit}}" required>
+                                    <input type="text" class="form-control" pattern="[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)"
+                                           placeholder="Uper Credit limit" name="creditlimit"
+                                           value="{{$customer->credit_limit}}" required>
                                 </div>
 
 
                                 <div class="form-group col-sm-6">
                                     <label >Mobile Number </label>
-                                    <input type="text" class="form-control" placeholder="eg:03221234567" name="mobile" value="{{$customer->mobile}}">
+                                    <input type="text" class="form-control" placeholder="eg:03221234567" name="mobile"
+                                           value="{{$customer->mobile}}">
                                 </div>
 
                                 <div class="form-group col-sm-6">
                                     <label >Phone Number </label>
-                                    <input type="text" class="form-control" placeholder="eg:04237234569" name="phone" value="{{$customer->phone}}">
+                                    <input type="text" class="form-control" placeholder="eg:04237234569" name="phone"
+                                           value="{{$customer->phone}}">
                                 </div>
 
                                 <div class="form-group col-sm-6">
                                     <label> Contact Name</label>
-                                    <input type="text" class="form-control" placeholder="Person Name" name="contactname" value="{{$customer->contact_name}}" required>
+                                    <input type="text" class="form-control" placeholder="Person Name" name="contactname"
+                                           value="{{$customer->contact_name}}">
                                 </div>
 
                                 <div class="form-group col-sm-6">
                                     <label>Email </label>
-                                    <input type="email" class="form-control" placeholder="abc@abc.com" name="email" value="{{$customer->email}}">
+                                    <input type="email" class="form-control" placeholder="abc@abc.com" name="email"
+                                           value="{{$customer->email}}">
                                 </div>
 
                                 <div class="form-group col-sm-6">
                                     <label>City</label>
-                                    <input type="text" class="form-control" placeholder="City" name="city" value="{{$customer->city}}">
+                                    <input type="text" class="form-control" placeholder="City" name="city"
+                                           value="{{$customer->city}}" required>
                                 </div>
 
                                 <div class="form-group col-sm-6">
                                     <label>Country</label>
-                                    <input type="text" class="form-control" placeholder="Country" name="country" value="{{$customer->country}}">
+                                    <input type="text" class="form-control" placeholder="Country" name="country"
+                                           value="{{$customer->country}}" required>
                                 </div>
 
                                 <div class="form-group col-sm-6">
                                     <label>Previous Balance</label>
-                                    <input type="text" class="form-control" value="{{$customer->prevbalance}}" name="prevbalance" required>
+                                    <input type="text" class="form-control" value="{{$customer->prevbalance}}" name="prevbalance">
                                 </div>
 
                             </div>
