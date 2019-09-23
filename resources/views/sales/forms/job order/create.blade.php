@@ -43,7 +43,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Customer</label>
-                                        <select class="form-control" name="customer_id" id="callfunc" required>
+                                        <select class="form-control" name="customer_id" id="callfunc" autofocus required>
                                             <option value="" selected disabled hidden>Choose here</option>
                                             @if(count($customer)>0)
                                                 @foreach($customer as $customers)
@@ -315,6 +315,17 @@
                 }
             });
         });
+
+        $(function () {
+            $('[autofocus]').focus()
+        });
+
+        $(document).on('keydown',function (e) {
+            if(e.keyCode == 113) {
+                addRow();
+            }
+        });
+
 
     </script>
 @endsection
