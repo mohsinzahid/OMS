@@ -32,9 +32,9 @@
             <div class="col-sm-3"></div>
             <div class="col-sm-6">
                 <div class="header-title">
-                                        @if($msg)
-                                            <h3>Payment Added Successfully.</h3>
-                                        @endif
+                    @if($msg)
+                        <h3>Payment Added Successfully.</h3>
+                    @endif
                 </div>
                 <div class="panel panel-filled">
                     <div class="panel-body">
@@ -50,8 +50,8 @@
                                     <option value="" selected disabled hidden>Choose here</option>
                                     @if(count($customer)>0)
                                         @foreach($customer as $customers)
-                                            <option value="{{$customers->id}}">{{$customers->id}} &emsp;
-                                                {{$customers->name}}</option>
+                                            <option value="{{$customers->id}}">{{$customers->name}} &emsp; {{$customers->id}}
+                                                </option>
                                         @endforeach
                                     @else
                                         <option>No customer exist</option>

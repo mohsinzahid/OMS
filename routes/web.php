@@ -528,7 +528,7 @@ Route::get('/sale/ajaxreceipt', 'SaleinventoryController@getreceipt');
 //Route::get('/customer/sale/{id}/edit', 'SaleinventoryController@edit');
 
     Route::get('/job-order/{id}/edit', function ($id) {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\JobOrderController@edit',[$id]);
         else
             return view('admin.master');
