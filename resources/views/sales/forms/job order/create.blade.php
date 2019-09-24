@@ -69,7 +69,9 @@
                                 </div>
                                 <div class="col-sm-4"></div>
                                 <div class="col-sm-4">
-                                    <div class="form-group"><label >Date</label> <input type="date" class="form-control" pattern="^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$"  name="dateofsale" required></div>
+                                    <div class="form-group"><label >Date</label> <input type="date" class="form-control"
+                                        pattern="^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$"  name="dateofsale"
+                                        value="<?php echo date('Y-m-j'); ?>"required></div>
                                     <div class="form-group"><label >Invoice No</label> <input type="text" class="form-control" pattern="\d*"  name="invoiceno" required></div>
                                 </div>
                             </div>
@@ -319,6 +321,8 @@
         $(function () {
             $('[autofocus]').focus()
         });
+
+        //press F2 to add new row in  job order using shorcut key
 
         $(document).on('keydown',function (e) {
             if(e.keyCode == 113) {

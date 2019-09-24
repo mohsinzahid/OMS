@@ -61,7 +61,8 @@
 
                             <div class="form-group">
                                 <label>Date</label>
-                                <input type="date" class="form-control" name="paiddate" required>
+                                <input type="date" class="form-control" name="paiddate" value="<?php echo date('Y-m-j'); ?>"
+                                       required>
                             </div>
                             <div id="jor">
                                 <div class="form-group" id="jod">
