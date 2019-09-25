@@ -56,23 +56,30 @@
                                     </div>
                                     <div class="hidden" id="walkinfo1">
                                         <label>Customer Name</label>
-                                        <input type="text" class="form-control" name="walkname" id="custname" pattern="[A-Za-z ]{1,32}" disabled required>
+                                        <input type="text" class="form-control" name="walkname" id="custname"
+                                               pattern="[A-Za-z ]{1,32}" disabled required>
                                     </div>
                                     <div class="hidden" id="walkinfo2">
                                         <label>Mobile No</label>
-                                        <input type="text" class="form-control" name="walkmobile" id="custmob" pattern="\d*" disabled>
+                                        <input type="text" class="form-control" name="walkmobile" id="custmob"
+                                               pattern="\d*" disabled>
                                     </div>
                                     <div class="hidden" id="walkinfo3">
                                         <label>Email</label>
-                                        <input type="email" class="form-control" placeholder="abc@abc.com" id="custemail" name="walkemail" disabled="disabled">
+                                        <input type="email" class="form-control" placeholder="abc@abc.com" id="custemail"
+                                               name="walkemail" disabled="disabled">
                                     </div>
                                 </div>
                                 <div class="col-sm-4"></div>
                                 <div class="col-sm-4">
-                                    <div class="form-group"><label >Date</label> <input type="date" class="form-control"
-                                        pattern="^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$"  name="dateofsale"
-                                        value="<?php echo date('Y-m-j'); ?>"required></div>
-                                    <div class="form-group"><label >Invoice No</label> <input type="text" class="form-control" pattern="\d*"  name="invoiceno" required></div>
+                                    <div class="form-group"><label >Date</label>
+                                        <input type="date" class="form-control" name="dateofsale"
+                                               value="<?php echo date('Y-m-j'); ?>" min="2019-01-01" max="2019-12-31"
+                                               required></div>
+                                    <div class="form-group">
+                                        <label >Invoice No</label>
+                                        <input type="text" class="form-control" pattern="\d*"  name="invoiceno"
+                                               required></div>
                                 </div>
                             </div>
 

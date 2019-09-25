@@ -92,8 +92,11 @@
                                 </div>
                                 <div class="col-sm-4"></div>
                                 <div class="col-sm-4">
-                                    <div class="form-group"><label >Date</label> <input type="date" class="form-control" value="{{$inventory->dateofsale}}"  name="dateofsale" required></div>
-                                    <div class="form-group"><label >Invoice No</label> <input type="text" class="form-control" pattern="\d*"  value="{{$inventory->invoiceno}}" name="invoiceno" required></div>
+                                    <div class="form-group"><label >Date</label> <input type="date" class="form-control"
+                                        value="{{$inventory->dateofsale}}"  name="dateofsale" required></div>
+                                    <div class="form-group"><label >Invoice No</label> <input type="text"
+                                          class="form-control" pattern="\d*"  value="{{$inventory->invoiceno}}"
+                                            name="invoiceno" required></div>
                                 </div>
                             </div>
                             <hr>
