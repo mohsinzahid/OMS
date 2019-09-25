@@ -106,7 +106,7 @@
                                                     <label>Size</label>
                                                 @endif
                                                 <select class="form-control" name="data[size][{{$i}}]" id="sizes{{$i}}"
-                                                        style="width: 100%" onchange='Calculate("0");tot()' required>
+                                                        style="width: 100%" onchange='Calculate("{{$i}}");tot()' required>
                                                     <option value="" selected disabled hidden>Choose here</option>
                                                     @if(count($size)>0)
                                                         @foreach($size as $sizes)
