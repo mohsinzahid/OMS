@@ -69,7 +69,10 @@ class CashCollectionController extends Controller
 
         $customers = DB::table('customers')->select('name', 'id')->where('status',1)->get();
 
-        return view('sales.forms.cash collection.add',['customer' => $customers],['msg'=>'Payment added Successfully']);
+        return redirect('/sales/forms/cash-collection')->with('msg', 'Payment added Successfully');
+
+
+//        return view('sales.forms.cash collection.add',['customer' => $customers],['msg'=>'Payment added Successfully']);
     }
 
     /**
@@ -168,5 +171,26 @@ class CashCollectionController extends Controller
     {
         DB::table('salepayment')->where('id', $id)->delete();
         return redirect('/form/edit');
+    }
+
+    public function getinvoice(Request $request)
+    {
+//        $saleid = DB::table('saleinventory')
+//            ->join('salepayment', 'salepayment.job_order_no', '=' , 'saleinventory.id')
+//            ->select(DB::raw('group_concat(saleinventory.id) as jobid'))
+//            ->where('saleinventory.customer_id',$request['id'])
+//            ->where('saleinventory.id', '!=' , 'salepayment.job_order_no')
+//            ->get();
+
+        $saleid = DB::table('saleinventory')->select(DB::raw('group_concat(id) as jobid'))
+            ->where('customer_id',$request['id'])->get();
+
+        $cashjobid = DB::table('salepayment')->select(DB::raw('group_concat(job_order_no) as cashjobid'))
+            ->where('customer_id',$request['id'])->get();
+
+        $result['jobid'] =','. $saleid[0]->jobid . ',';
+        $result['cashjobid'] = ',' . $cashjobid[0]->cashjobid . ',';
+
+        return response()->json($result, 200);
     }
 }

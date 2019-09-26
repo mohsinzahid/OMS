@@ -84,15 +84,17 @@ function getjobids () {
             }
         },
         type: 'GET',
-        url: '/customer-adjustment/ajax/get-invoice',
+        url: '/cash-collection/ajax/get-invoice',
         data: {id: id},
 
         success: function (response) {
 
-            console.log(response);
-            jobids = ','+response[0]['jobid']+',';
-            console.log(jobids);
-            confirmid()
+            joborderids = response;
+            console.log(joborderids);
+            var value = $('input:radio[name=vor]:checked').val();
+            if(value === 'r') {
+                confirmid()
+            }
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(JSON.stringify(jqXHR));
@@ -102,7 +104,7 @@ function getjobids () {
 }
  function confirmid () {
     var id =','+$("#confirmjobid").val()+',';
-    if( jobids.search(id) !== -1) {
+     if ((joborderids['jobid'].search(id) !== -1 ) && (joborderids['cashjobid'].search(id) === -1)) {
         $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
         $(".pe-7s-check").css({ 'color': 'lightgreen' });
         // $(".submitbtn").removeClass("btn-default");

@@ -680,6 +680,9 @@ Route::get('/sale/ajaxreceipt', 'SaleinventoryController@getreceipt');
             return view('admin.master');
     });
 
+
+    Route::get('/cash-collection/ajax/get-invoice','CashCollectionController@getinvoice');
+
 //Customer adjustment start
 
     Route::get('/sales/forms/customer-adjustment', function () {

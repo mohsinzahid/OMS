@@ -121,5 +121,53 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="{{asset('js/localfunctions.js') }}"></script>
+{{--    <script type="text/javascript" src="{{asset('js/localfunctions.js') }}"></script>--}}
+
+    <script>
+        function getjobids () {
+            var id = $("#callfunc").val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                statusCode: {
+                    500: function () {
+                        alert("Script exhausted");
+                    }
+                },
+                type: 'GET',
+                url: '/customer-adjustment/ajax/get-invoice',
+                data: {id: id},
+
+                success: function (response) {
+
+                    console.log(response);
+                    jobids = ','+response[0]['jobid']+',';
+                    console.log(jobids);
+                    confirmid()
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+            });
+        }
+        function confirmid () {
+            var id = ',' + $("#confirmjobid").val() + ',';
+            if (jobids.search(id) !== -1) {
+                $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
+                $(".pe-7s-check").css({'color': 'lightgreen'});
+                // $(".submitbtn").removeClass("btn-default");
+                // $(".submitbtn").addClass("btn-success");
+
+            } else {
+                $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
+                $(".pe-7s-check").css({'color': ''});
+                // $(".submitbtn").removeClass("btn-success");
+                // $(".submitbtn").addClass("btn-default");
+            }
+        }
+    </script>
 @endsection

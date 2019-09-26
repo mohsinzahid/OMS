@@ -145,4 +145,54 @@
         </div>
     </div>
     <script type="text/javascript" src="{{asset('js/localfunctions.js') }}"></script>
+
+    <script>
+        /*var joborderids;
+        function getunpaidjobids () {
+            var id = $("#callfunc").val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                statusCode: {
+                    500: function () {
+                        alert("Script exhausted");
+                    }
+                },
+                type: 'GET',
+                url: '/cash-collection/ajax/get-invoice',
+                data: {id: id},
+
+                success: function (response) {
+
+                    // console.log(response);
+                    joborderids = response;
+                    console.log(joborderids);
+                    confirmjoborderno()
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+            });
+        }
+
+        function confirmjoborderno () {
+            var id = ',' + $("#confirmjobid").val() + ',';
+            if ((joborderids['jobid'].search(id) !== -1 ) && (joborderids['cashjobid'].search(id) === -1)) {
+                $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
+                $(".pe-7s-check").css({'color': 'lightgreen'});
+                // $(".submitbtn").removeClass("btn-default");
+                // $(".submitbtn").addClass("btn-success");
+
+            } else {
+                $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
+                $(".pe-7s-check").css({'color': ''});
+                // $(".submitbtn").removeClass("btn-success");
+                // $(".submitbtn").addClass("btn-default");
+            }
+        }*/
+    </script>
 @endsection
