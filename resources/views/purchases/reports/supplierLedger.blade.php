@@ -159,10 +159,15 @@
                             "","Opening Balance", "", "", "", "", "", "", openingbalance,"", "", ""]).draw();
 
                         var balance = openingbalance;
+                        var totaldebit = 0;
+                        var totalcredit = 0;
 
                         for(key in response)
                         {
                             balance = (balance + response[key]["debit_amount"]) - response[key]["credit_amount"];
+                            totaldebit = totaldebit + response[key]["debit_amount"];
+                            totalcredit = totalcredit + response[key]["credit_amount"];
+
                             $("#tableExample4").DataTable().row.add([
                                 response[key]['id'],response[key]["date"],response[key]["formtype"], response[key]["invoice_no"],
                                 response[key]['cheque_no'],response[key]['cheque_date'],response[key]['debit_amount'],
@@ -170,6 +175,8 @@
                                 response[key]["received_by"]
                             ]).draw();
                         }
+                        $("#tableExample4").DataTable().row.add([
+                            "","Net Total", "", "", "", "", totaldebit, totalcredit, balance,"", "", ""]).draw();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(JSON.stringify(jqXHR));
