@@ -153,9 +153,13 @@
                         $("#tableExample4").DataTable().row.add([
                             "","Opening Balance", "", "", "", "", "", "", openingbalance,"", "", ""]).draw();
 
+                        var totaldebit = 0;
+                        var totalcredit = 0;
                         var balance = openingbalance;
                         for (key in response) {
                             balance = (balance + response[key]["debit_amount"]) - response[key]["credit_amount"];
+                            totaldebit = totaldebit + response[key]["debit_amount"];
+                            totalcredit = totalcredit + response[key]["credit_amount"];
 
                             $("#tableExample4").DataTable().row.add([
                                 response[key]["id"],response[key]["date"], response[key]["formtype"], response[key]["invoice_no"],
@@ -164,6 +168,9 @@
                                 response[key]["added_at"]
                             ]).draw();
                         }
+
+                        $("#tableExample4").DataTable().row.add([
+                            "","Net Total", "", "", "", "", totaldebit, totalcredit, balance,"", "", ""]).draw();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(JSON.stringify(jqXHR));
