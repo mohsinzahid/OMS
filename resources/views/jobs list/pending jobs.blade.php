@@ -189,11 +189,11 @@
                 data: {id: idvalue},
 
                 success: function (response) {
-                    $("#modalin").empty();
+               /*     $("#modalin").empty();
                     var html  ='<p><strong>'+idvalue+'</strong></p>';
                     $("#modalin").append(html);
 
-                    $("#myModal2").modal('show');
+                    $("#myModal2").modal('show');*/
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(JSON.stringify(jqXHR));
