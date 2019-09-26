@@ -122,10 +122,14 @@
                             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                             "lengthMenu": [ [25, 50, -1], [25, 50, "All"] ],
                             buttons: [
-                                {extend: 'copy',className: 'btn-sm',  exportOptions: {columns: [ 0, 1, 2, 3, 4 ]}},
-                                {extend: 'csv',title: "Zahid Scan", className: 'btn-sm',  exportOptions: {columns: [ 0, 1, 2, 3, 4]}},
-                                {extend: 'pdf', title: "Zahid Scan", className: 'btn-sm',  exportOptions: {columns: [ 0, 1, 2, 3, 4]}},
-                                {extend: 'print',title: "Zahid Scan" , className: 'btn-sm',exportOptions: {columns: [ 0, 1, 2, 3, 4]}}
+                                {extend: 'copy',className: 'btn-sm',
+                                    exportOptions: {columns: [ 0, 1, 2, 3, 4 ]}},
+                                {extend: 'csv',title: "Zahid Scan", className: 'btn-sm',
+                                    exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ]}},
+                                {extend: 'pdf', title: "Zahid Scan", className: 'btn-sm',
+                                    exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ]}},
+                                {extend: 'print',title: "Zahid Scan" , className: 'btn-sm',
+                                    exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ]}}
                             ],
                             "ordering": false,
                             "bDestroy": true

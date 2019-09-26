@@ -1,5 +1,8 @@
 @extends('admin.master')
 
+<link rel="stylesheet" href="{{url('vendor/datatables/datatables.min.css')}}"/>
+
+
 @section('content')
     <div class="container-fluid">
 
@@ -33,7 +36,7 @@
                         </p>--}}
                         <div class="table-responsive">
 
-                            <table id="tableExample3" class="table table-striped table-hover table-bordered table-condensed">
+                            <table id="tableExample4" class="table table-striped table-hover table-bordered table-condensed">
                                 <thead>
                                 <tr>
                                     <th>Customer ID</th>
@@ -94,5 +97,36 @@
 
         </div>
     </div>
+
+    <script src="{{url('vendor/datatables/datatables.min.js')}}"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#tableExample4').DataTable({
+                dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                "lengthMenu": [[25, 50, -1], [25, 50, "All"]],
+                buttons: [
+                    {
+                        extend: 'copy', className: 'btn-sm',
+                        exportOptions: {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ,13]}
+                    },
+                    {
+                        extend: 'csv', title: "Zahid Scan", className: 'btn-sm',
+                        exportOptions: {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ,13]}
+                    },
+                    {
+                        extend: 'pdf', title: "Zahid Scan", className: 'btn-sm',
+                        exportOptions: {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,13]}
+                    },
+                    {
+                        extend: 'print', title: "Zahid Scan", className: 'btn-sm',
+                        exportOptions: {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,13]}
+                    }
+                ],
+                "ordering": false
+            });
+        })
+    </script>
 
 @endsection
