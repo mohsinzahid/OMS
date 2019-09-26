@@ -147,8 +147,8 @@
                         for(key in response['original'])
                         {
                             balance = (balance + response['original'][key]["debit_amount"]) - response['original'][key]["credit_amount"];
-                            totaldebit = totaldebit + response[key]["debit_amount"];
-                            totalcredit = totalcredit + response[key]["credit_amount"];
+                            totaldebit = totaldebit + response['original'][key]["debit_amount"];
+                            totalcredit = totalcredit + response['original'][key]["credit_amount"];
                             $("#tableExample4").DataTable().row.add([
                                 response['original'][key]['id'],response['original'][key]["date"],
                                 response['original'][key]["formtype"], response['original'][key]["invoice_no"],
