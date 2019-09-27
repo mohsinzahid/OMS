@@ -157,7 +157,7 @@
 
                 success: function (response) {
                     jobids = ','+response[0]['jobid']+',';
-                    // console.log(jobids);
+                    console.log(jobids);
                     confirmid();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {

@@ -175,7 +175,7 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="{{asset('js/localfunctions.js') }}"></script>
+{{--    <script type="text/javascript" src="{{asset('js/localfunctions.js') }}"></script>--}}
 
 
     <script>
@@ -190,8 +190,32 @@
                 $("#amount").addClass( "col-sm-4" );
                 $("#amountdiv").addClass( "row" );
             }
+        });
 
+        function Calculate()
+        {
+            var chequeamount = document.getElementById('chequeamount').value;
+            var taxamount = document.getElementById('taxamount').value;
+            var amount = parseFloat(chequeamount) + parseFloat(taxamount);
+            document.getElementById('totalamount').value=parseFloat(amount);
+        }
 
+        $('input:radio[name=type]').change(function () {
+            var value = $(this).val();
+            if(value == 0)
+            {
+                $("#chequeinfo1,#chequeinfo2,#chequeinfo3,#chequename").removeClass("hidden");
+                $("#chequeno,#chequedate,#taxamount").removeAttr("disabled");
+                $("#amount").addClass( "col-sm-4" );
+                $("#amountdiv").addClass( "row" );
+            }
+            else
+            {
+                $("#chequeinfo1,#chequeinfo2,#chequeinfo3,#chequename").addClass( "hidden" );
+                $("#chequeno,#chequedate,#taxamount").attr("disabled", true);
+                $("#amount").removeClass( "col-sm-4" );
+                $("#amountdiv").removeClass( "row" );
+            }
         });
     </script>
 @endsection

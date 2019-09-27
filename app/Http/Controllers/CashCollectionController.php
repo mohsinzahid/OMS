@@ -25,8 +25,10 @@ class CashCollectionController extends Controller
     public function create()
     {
         $customers = DB::table('customers')->where('status',1)->orderBy('name', 'asc')->get();
+        $walk = DB::table('customers')->where('type',0)->first();
 
-        return view('sales.forms.cash collection.add',['customer' => $customers],['msg'=>'']);
+
+        return view('sales.forms.cash collection.add',['customer' => $customers,'walk' => $walk],['msg'=>'']);
     }
 
     /**
