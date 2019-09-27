@@ -64,7 +64,7 @@
 
                             <div class="form-group">
                                 <label>Customer</label>
-                                <select class="select2_demo_1 form-control" name="customerid"
+                                <select class="select2_demo_1 form-control" name="customerid" autofocus
                                         id="callfunc" onchange="getjobids()" style="width: 100%" required>
                                     <option value="" selected disabled hidden>Choose here</option>
                                     @if(count($customer)>0)
@@ -221,7 +221,7 @@
             <div class="col-sm-3"></div>
         </div>
     </div>
-    <script type="text/javascript" src="{{asset('js/localfunctions.js') }}"></script>
+{{--    <script type="text/javascript" src="{{asset('js/localfunctions.js') }}"></script>--}}
 
     <script>
 
@@ -237,6 +237,157 @@
                 }
             getjobids();
             setTimeout(vor,1000);
+        });
+
+        var joborderids;
+
+        $("#callfunc").on('change', function () {
+            var id = $(this).val();
+            walkid = $("#walk").val();
+            var optionvalue = $('input:radio[name=vor]:checked').val();
+            if ((id === walkid) && (optionvalue !== 'r')) {
+                $("#inlineRadio1").removeAttr("checked");
+                $("#inlineRadio2").prop("checked", true);
+                getjobids();
+                vor();
+            }
+
+            if(optionvalue === 'r')
+            {
+                getjobids();
+            }
+        });
+
+        function getjobids () {
+            var id = $("#callfunc").val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                statusCode: {
+                    500: function () {
+                        alert("Script exhausted");
+                    }
+                },
+                type: 'GET',
+                url: '/cash-collection/ajax/get-invoice',
+                data: {id: id},
+
+                success: function (response) {
+
+                    joborderids = response;
+                    // console.log(joborderids);
+                    var value = $('input:radio[name=vor]:checked').val();
+                    if(value === 'r') {
+                        confirmid()
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+            });
+        }
+        function confirmid () {
+            var id =','+$("#confirmjobid").val()+',';
+            // console.log(joborderids);
+            if ((joborderids['jobid'].search(id) !== -1 ) && (joborderids['cashjobid'].search(id) === -1)) {
+                $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
+                $(".pe-7s-check").css({ 'color': 'lightgreen' });
+                // $(".submitbtn").removeClass("btn-default");
+                // $(".submitbtn").addClass("btn-success");
+
+            }
+            else {
+                $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
+                $(".pe-7s-check").css({ 'color': '' });
+                // $(".submitbtn").removeClass("btn-success");
+                // $(".submitbtn").addClass("btn-default");
+            }
+
+        }
+
+        function Calculate()
+        {
+            var chequeamount = document.getElementById('chequeamount').value;
+            var taxamount = document.getElementById('taxamount').value;
+            var amount = parseFloat(chequeamount) + parseFloat(taxamount);
+            document.getElementById('totalamount').value=parseFloat(amount);
+        }
+
+        $('input:radio[name=type]').change(function () {
+            var value = $(this).val();
+            // console.log(value);
+            if(value == 0)
+            {
+                $("#amount").addClass( "col-sm-4" );
+                $("#amountdiv").addClass( "row" );
+                $("#chequeinfo1,#chequeinfo2,#chequeinfo3,#chequename").removeClass("hidden");
+                $("#chequeno,#chequedate,#taxamount").removeAttr("disabled");
+
+            }
+            else
+            {
+                $("#chequeinfo1,#chequeinfo2,#chequeinfo3,#chequename").addClass( "hidden" );
+                $("#chequeno,#chequedate,#taxamount").attr("disabled", true);
+                $("#amount").removeClass( "col-sm-4" );
+                $("#amountdiv").removeClass( "row" );
+            }
+        });
+
+        function vor () {
+            var value = $('input:radio[name=vor]:checked').val();
+            if(value === 'r')
+            {
+
+                $("#jon,#check").removeClass("hidden");
+                $("#inlineRadio3").prop("checked", true);
+                $("#confirmjobid").attr("onkeyup","confirmid()");
+                $("#cvn,#coc").addClass( "hidden" );
+                $("#jod").addClass( "col-sm-11" );
+                $("#jor").addClass( "row" );
+
+                // console.log($('input:radio[name=type]').val());
+                if( $('input:radio[name=type]:checked').val() == 0)
+                {
+                    $("#chequeinfo1,#chequeinfo2,#chequeinfo3,#chequename").addClass( "hidden" );
+                    $("#chequeno,#chequedate,#taxamount").attr("disabled", true);
+                    $("#amount").removeClass( "col-sm-4" );
+                    $("#amountdiv").removeClass( "row" );
+                }
+                $("#formtype").val("r");
+
+                if(joborderids)
+                {
+                    confirmid();
+                }
+
+            }
+            else
+            {
+                $("#jon,#check").addClass( "hidden" );
+                $("#cvn,#coc").removeClass( "hidden" );
+                $("#jod").removeClass( "col-sm-11" );
+                $("#jor").removeClass( "row" );
+                $("#submit").removeAttr("disabled");
+                $("#confirmjobid").removeAttr("onkeyup");
+
+
+                if( $('input:radio[name=type]:checked').val() == 0)
+                {
+                    $("#chequeinfo1,#chequeinfo2,#chequeinfo3,#chequename").removeClass("hidden");
+                    $("#chequeno,#chequedate,#taxamount").removeAttr("disabled");
+                    $("#amount").addClass( "col-sm-4" );
+                    $("#amountdiv").addClass( "row" );
+                }
+                $("#formtype").val("v");
+            }
+        }
+
+        $(function () {
+            $('[autofocus]').focus()
         });
     </script>
 @endsection

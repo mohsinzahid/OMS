@@ -46,7 +46,7 @@
 
                             <div class="form-group">
                                 <label for="InputQuantity">Customer</label>
-                                <select class="select2_demo_1 form-control" name="customerid" id="callfunc"
+                                <select class="select2_demo_1 form-control" name="customerid" id="callfunc" autofocus
                                         {{--onchange="getjobids()"--}} style="width: 100%" required>
                                     <option value="" selected disabled hidden>Choose here</option>
                                     @if(count($customer)>0)
@@ -293,6 +293,10 @@
                 $("#formtype").val("v");
             }
         }
+
+        $(function () {
+            $('[autofocus]').focus()
+        });
     </script>
 
 {{--    <script type="text/javascript" src="{{asset('js/localfunctions.js') }}"></script>--}}

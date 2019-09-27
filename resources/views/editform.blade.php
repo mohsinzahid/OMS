@@ -33,7 +33,7 @@
                             <div class="form-group">
                                 <label for="formtype">Forms type</label>
                                 <select class="select2_demo_1 form-control" name="formid" id="callfunc" style="width: 100%"
-                                        onchange="getjobids()" required>
+                                        {{--onchange="getjobids()"--}} required>
                                     <option value="" selected disabled hidden>Choose here</option>
                                     <option value="jo"> JO &emsp; Job Order(CTP)</option>
                                     <option value="cc"> CC &emsp; Cash Collection</option>
@@ -55,7 +55,7 @@
                                         CGN <small>(System Generated Unique ID)</small>
                                     </label>
                                     <input type="text" class="form-control" id="confirmjobid" pattern="\d*"
-                                           placeholder="0" name="cgn" onkeyup="confirmid()" required>
+                                           placeholder="0" name="cgn" onkeyup="confirmjobids()" required>
                                 </div>
                                 <div class=" col-sm-1" id="check">
                                     <label></label>
@@ -77,7 +77,9 @@
         var jobids;
         var table;
 
-        function getjobids () {
+        function confirmjobids () {
+            var jobid =$("#confirmjobid").val();
+
 
             var id = $("#callfunc").val();
             if(id === 'jo')
@@ -153,12 +155,21 @@
                 },
                 type: 'GET',
                 url: '/edit-form/ajax/get-id',
-                data: {table: table},
+                data: {table: table, jobid: jobid},
 
                 success: function (response) {
-                    jobids = ','+response[0]['jobid']+',';
+                    /*jobids = ','+response[0]['jobid']+',';
                     console.log(jobids);
-                    confirmid();
+                    confirmid();*/
+                    console.log(response);
+                    if(response) {
+                        $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
+                        $(".pe-7s-check").css({ 'color': 'lightgreen' });
+                    }
+                    else {
+                        $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
+                        $(".pe-7s-check").css({ 'color': '' });
+                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(JSON.stringify(jqXHR));
@@ -166,7 +177,7 @@
                 }
             });
         }
-        function confirmid () {
+        /*function confirmid () {
             var id =','+$("#confirmjobid").val()+',';
             if( jobids.search(id) !== -1) {
                 $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
@@ -176,7 +187,7 @@
                 $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
                 $(".pe-7s-check").css({ 'color': '' });
             }
-        }
+        }*/
     </script>
 
 @endsection

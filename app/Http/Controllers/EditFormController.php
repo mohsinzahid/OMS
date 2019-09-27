@@ -45,9 +45,18 @@ class EditFormController extends Controller
 
     public function ajaxgetids(Request $request)
     {
-        $saleid = DB::table($request['table'])
+       /* $saleid = DB::table($request['table'])
             ->select(DB::raw('group_concat(id) as jobid'))
-           ->get();
+            ->get();*/
+
+        if( DB::table($request['table'])->where('id',$request['jobid'])->first())
+        {
+            $salerecord = 1;
+        }
+        else
+        {
+            $salerecord = 0;
+        }
 
 //        $saleid = DB::select(DB::raw("SELECT group_concat(id) as jobid from ".$request['table']));
 
@@ -55,7 +64,7 @@ class EditFormController extends Controller
 
 //        echo ($request['table']);
 
-        return response()->json($saleid, 200);
+        return response()->json($salerecord, 200);
 
     }
 
