@@ -43,14 +43,14 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Customer</label>
-                                        <input class="form-control" list="customers" name="customer_id" id="callfunc"
+                                       {{-- <input class="form-control" list="customers" name="customer_id" id="callfunc"
                                                autofocus required>
                                         <datalist id="customers">
                                             @foreach($customer as $customers)
                                                 <option value="{{$customers->id}}">{{$customers->name}}</option>
                                             @endforeach
-                                        </datalist>
-                                        {{--<select class="form-control" name="customer_id" id="callfunc" autofocus required>
+                                        </datalist>--}}
+                                        <select class="form-control" name="customer_id" id="callfunc" autofocus required>
                                             <option value="" selected disabled hidden>Choose here</option>
                                             @if(count($customer)>0)
                                                 @foreach($customer as $customers)
@@ -59,7 +59,7 @@
                                             @else
                                                 <option>No Customer exist</option>
                                             @endif
-                                        </select>--}}
+                                        </select>
                                     </div>
                                     <div class="hidden" id="walkinfo1">
                                         <label>Customer Name</label>
