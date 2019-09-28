@@ -184,15 +184,30 @@ class CashCollectionController extends Controller
 //            ->where('saleinventory.id', '!=' , 'salepayment.job_order_no')
 //            ->get();
 
-        $saleid = DB::table('saleinventory')->select(DB::raw('group_concat(id) as jobid'))
+        if(( DB::table('saleinventory')->where('customer_id',$request['id'])->where('id',$request['jobid'])->first()))
+        {
+            if( DB::table('salepayment')->where('customer_id',$request['id'])->where('job_order_no',$request['jobid'])->first()) {
+                $salerecord = 0;
+            }
+            else
+            {
+                $salerecord = 1;
+            }
+        }
+        else
+        {
+            $salerecord = 0;
+        }
+
+        /*$saleid = DB::table('saleinventory')->select(DB::raw('group_concat(id) as jobid'))
             ->where('customer_id',$request['id'])->get();
 
         $cashjobid = DB::table('salepayment')->select(DB::raw('group_concat(job_order_no) as cashjobid'))
             ->where('customer_id',$request['id'])->get();
 
         $result['jobid'] =','. $saleid[0]->jobid . ',';
-        $result['cashjobid'] = ',' . $cashjobid[0]->cashjobid . ',';
+        $result['cashjobid'] = ',' . $cashjobid[0]->cashjobid . ',';*/
 
-        return response()->json($result, 200);
+        return response()->json($salerecord, 200);
     }
 }

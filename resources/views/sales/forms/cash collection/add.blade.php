@@ -156,18 +156,23 @@
             if ((id === walkid) && (optionvalue !== 'r')) {
                 $("#inlineRadio1").removeAttr("checked");
                 $("#inlineRadio2").prop("checked", true);
-                getjobids();
+                // getjobids();
+                confirmid();
                 vor();
             }
 
             if(optionvalue === 'r')
             {
-                getjobids();
+                // getjobids();
+                confirmid();
             }
         });
 
-        function getjobids () {
-            var id = $("#callfunc").val();
+        // function getjobids () {
+        function confirmid () {
+            var customer_id = $("#callfunc").val();
+            var jobid =$("#confirmjobid").val();
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -181,7 +186,7 @@
                 },
                 type: 'GET',
                 url: '/cash-collection/ajax/get-invoice',
-                data: {id: id},
+                data: {id: customer_id, jobid: jobid},
 
                 success: function (response) {
 
@@ -189,7 +194,16 @@
                     // console.log(joborderids);
                     var value = $('input:radio[name=vor]:checked').val();
                     if(value === 'r') {
-                        confirmid()
+                        /*confirmid()*/
+                        console.log(response);
+                        if(response) {
+                            $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
+                            $(".pe-7s-check").css({ 'color': 'lightgreen' });
+                        }
+                        else {
+                            $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
+                            $(".pe-7s-check").css({ 'color': '' });
+                        }
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -198,7 +212,7 @@
                 }
             });
         }
-        function confirmid () {
+        /*function confirmid () {
             var id =','+$("#confirmjobid").val()+',';
             // console.log(joborderids);
             if ((joborderids['jobid'].search(id) !== -1 ) && (joborderids['cashjobid'].search(id) === -1)) {
@@ -215,7 +229,7 @@
                 // $(".submitbtn").addClass("btn-default");
             }
 
-        }
+        }*/
 
         function Calculate()
         {
@@ -252,12 +266,11 @@
 
                 $("#jon,#check").removeClass("hidden");
                 $("#inlineRadio3").prop("checked", true);
-                $("#confirmjobid").attr("onkeyup","confirmid()");
+                $("#confirmjobid").attr("onchange","confirmid()");
                 $("#cvn,#coc").addClass( "hidden" );
                 $("#jod").addClass( "col-sm-11" );
                 $("#jor").addClass( "row" );
 
-                // console.log($('input:radio[name=type]').val());
                 if( $('input:radio[name=type]:checked').val() == 0)
                 {
                     $("#chequeinfo1,#chequeinfo2,#chequeinfo3,#chequename").addClass( "hidden" );
