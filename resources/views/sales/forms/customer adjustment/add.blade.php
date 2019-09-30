@@ -159,7 +159,10 @@
                         $(".pe-7s-check").css({ 'color': '' });
                     }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function (XMLHttpRequest, textStatus, errorThrown) { if (XMLHttpRequest.readyState == 0) {
+                    // Network error (i.e. connection refused, access denied due to CORS, etc.)
+                    alert('net error');
+                }
                     console.log(JSON.stringify(jqXHR));
                     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                 }

@@ -49,8 +49,9 @@ class CustomerAdjustmentController extends Controller
         $customers = DB::table('customers')->where('status',1)->orderBy('name', 'asc')->get();
         $gl = DB::table('glaccounts')->orderBy('name', 'asc')->get();
 
+        return redirect('/sales/forms/customer-adjustment')->with('msg', 'Adjustment added Successfully');
 
-        return view('sales.forms.customer adjustment.add',['customer' => $customers, 'gl' => $gl],['msg'=>'done']);
+//        return view('sales.forms.customer adjustment.add',['customer' => $customers, 'gl' => $gl],['msg'=>'done']);
     }
 
     /**
