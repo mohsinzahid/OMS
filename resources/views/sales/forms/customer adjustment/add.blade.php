@@ -34,7 +34,7 @@
                             <div class="row">
                                 <div class="form-group col-sm-5">
                                     <label for="callfunc">Customer</label>
-                                    <select class="select2_demo_1 form-control" name="customerid" onchange="getjobids()"
+                                    <select class="select2_demo_1 form-control" name="customerid" {{--onchange="getjobids()"--}}
                                             id="callfunc" style="width: 100%" required>
                                         <option value="" selected disabled hidden>Choose here</option>
                                         @if(count($customer)>0)
@@ -161,10 +161,10 @@
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) { if (XMLHttpRequest.readyState == 0) {
                     // Network error (i.e. connection refused, access denied due to CORS, etc.)
-                    alert('net error');
+                    toastr.error('Network Connection lost');
                 }
-                    console.log(JSON.stringify(jqXHR));
-                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                    /*console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);*/
                 }
             });
         }

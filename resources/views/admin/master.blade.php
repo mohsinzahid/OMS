@@ -16,7 +16,7 @@
     {{--<link rel="stylesheet" href="{{url('vendor/fontawesome/css/font-awesome.css')}}"/>--}}
 {{--    <link rel="stylesheet" href="{{url('vendor/animate.css/animate.css')}}"/>--}}
     <link rel="stylesheet" href="{{url('vendor/bootstrap/css/bootstrap.css')}}"/>
-{{--    <link rel="stylesheet" href="{{url('vendor/toastr/toastr.min.css')}}"/>--}}
+    <link rel="stylesheet" href="{{url('vendor/toastr/toastr.min.css')}}"/>
     {{--<link rel="stylesheet" href="{{url('vendor/datatables/datatables.min.css')}}"/>--}}
     <link rel="stylesheet" href="{{url('vendor/switchery/switchery.min.css')}}"/>
 
@@ -269,7 +269,7 @@
 
 <!-- Vendor scripts -->
 <script src="{{url('vendor/pacejs/pace.min.js')}}"></script>
-{{--<script src="{{url('vendor/toastr/toastr.min.js')}}"></script>--}}
+<script src="{{url('vendor/toastr/toastr.min.js')}}"></script>
 {{--<script src="{{url('vendor/sparkline/index.js')}}"></script>--}}
 {{--<script src="{{url('vendor/flot/jquery.flot.min.js')}}"></script>--}}
 {{--<script src="{{url('vendor/flot/jquery.flot.resize.min.js')}}"></script>--}}

@@ -206,9 +206,10 @@
                         }
                     }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log(JSON.stringify(jqXHR));
-                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                error: function (XMLHttpRequest, textStatus, errorThrown) { if (XMLHttpRequest.readyState == 0) {
+                    // Network error (i.e. connection refused, access denied due to CORS, etc.)
+                    toastr.error('Network Connection Refused');
+                     }
                 }
             });
         }
