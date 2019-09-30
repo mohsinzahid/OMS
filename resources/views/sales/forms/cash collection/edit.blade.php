@@ -70,9 +70,9 @@
                                     @if(count($customer)>0)
                                         @foreach($customer as $customers)
                                             @if($customers->id === $payment->customer_id)
-                                                <option selected value="{{$customers->id}}">{{$customers->name}}</option>
+                                                <option selected value="{{$customers->id}}">{{$customers->id}} &emsp; {{$customers->name}}</option>
                                             @else
-                                                <option value="{{$customers->id}}">{{$customers->name}}</option>
+                                                <option value="{{$customers->id}}">{{$customers->id}} &emsp; {{$customers->name}}</option>
                                             @endif
                                         @endforeach
                                     @else

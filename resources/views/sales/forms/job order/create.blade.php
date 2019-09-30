@@ -48,7 +48,8 @@
                                             <option value="" selected disabled hidden>Choose here</option>
                                             @if(count($customer)>0)
                                                 @foreach($customer as $customers)
-                                                    <option value="{{$customers->id}}">{{$customers->name}} &emsp; {{$customers->id}} </option>
+                                                    <option value="{{$customers->id}}">{{$customers->id}} &emsp;
+                                                        {{$customers->name}} </option>
                                                 @endforeach
                                             @else
                                                 <option>No Customer exist</option>
