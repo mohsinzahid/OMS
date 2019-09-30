@@ -72,7 +72,7 @@
                                 <div class="form-group col-sm-6">
                                     <label for="JobOrderno">Job Card ID (System generated)</label>
                                     <input type="text" class="form-control" id="confirmjobid" placeholder="0"
-                                           name="joborderno" onkeyup="confirmid()" required>
+                                           name="joborderno" onchange="confirmid()" required>
                                 </div>
                                 <div class="form-group col-sm-1">
                                     <label></label>
@@ -124,8 +124,10 @@
 {{--    <script type="text/javascript" src="{{asset('js/localfunctions.js') }}"></script>--}}
 
     <script>
-        function getjobids () {
-            var id = $("#callfunc").val();
+        function confirmid () {
+            var custid = $("#callfunc").val();
+            var jobid =$("#confirmjobid").val();
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -139,14 +141,23 @@
                 },
                 type: 'GET',
                 url: '/customer-adjustment/ajax/get-invoice',
-                data: {id: id},
+                data: {custid: custid, jobid: jobid},
 
                 success: function (response) {
 
-                    console.log(response);
+                    /*console.log(response);
                     jobids = ','+response[0]['jobid']+',';
                     console.log(jobids);
-                    confirmid()
+                    confirmid()*/
+                    console.log(response);
+                    if(response) {
+                        $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
+                        $(".pe-7s-check").css({ 'color': 'lightgreen' });
+                    }
+                    else {
+                        $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
+                        $(".pe-7s-check").css({ 'color': '' });
+                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(JSON.stringify(jqXHR));
@@ -154,7 +165,7 @@
                 }
             });
         }
-        function confirmid () {
+        /*function confirmid () {
             var id = ',' + $("#confirmjobid").val() + ',';
             if (jobids.search(id) !== -1) {
                 $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
@@ -168,6 +179,6 @@
                 // $(".submitbtn").removeClass("btn-success");
                 // $(".submitbtn").addClass("btn-default");
             }
-        }
+        }*/
     </script>
 @endsection

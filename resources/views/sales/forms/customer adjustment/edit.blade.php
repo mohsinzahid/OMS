@@ -38,7 +38,7 @@
                                 <div class="form-group col-sm-5">
                                     <label>Customer</label>
                                     <select class="select2_demo_1 form-control" name="customerid"
-                                            id="callfunc" onchange="getjobids()" style="width: 100%" required>
+                                            id="callfunc" {{--onchange="getjobids()"--}} style="width: 100%" required>
                                         <option value="" selected disabled hidden>Choose here</option>
                                         @if(count($customer)>0)
                                             @foreach($customer as $customers)
@@ -85,7 +85,7 @@
                                 <div class="form-group col-sm-6">
                                     <label for="JobOrderno">Job Card ID (System generated)</label>
                                     <input type="text" class="form-control" id="confirmjobid" placeholder="0"
-                                           name="joborderno" onkeyup="confirmid()" value="{{$adj->invoice_no}}" required>
+                                           name="joborderno" onchange="confirmid()" value="{{$adj->invoice_no}}" required>
                                 </div>
                                 <div class="form-group col-sm-1">
                                     <label></label>
@@ -150,14 +150,20 @@
     </div>
 
     <script>
+/*
         var jobids;
+*/
         $(document).ready(function () {
+/*
             getjobids();
+*/
             setTimeout(confirmid,700);
         });
 
-        function getjobids () {
-            var id = $("#callfunc").val();
+        function confirmid () {
+            var custid = $("#callfunc").val();
+            var jobid =$("#confirmjobid").val();
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -171,14 +177,23 @@
                 },
                 type: 'GET',
                 url: '/customer-adjustment/ajax/get-invoice',
-                data: {id: id},
+                data: {custid: custid, jobid: jobid},
 
                 success: function (response) {
 
-                    console.log(response);
+                    /*console.log(response);
                     jobids = ','+response[0]['jobid']+',';
                     console.log(jobids);
-                    confirmid()
+                    confirmid()*/
+                    console.log(response);
+                    if(response) {
+                        $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
+                        $(".pe-7s-check").css({ 'color': 'lightgreen' });
+                    }
+                    else {
+                        $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
+                        $(".pe-7s-check").css({ 'color': '' });
+                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(JSON.stringify(jqXHR));
@@ -186,7 +201,7 @@
                 }
             });
         }
-        function confirmid () {
+        /*function confirmid () {
             var id = ',' + $("#confirmjobid").val() + ',';
             if (jobids.search(id) !== -1) {
                 $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
@@ -200,7 +215,7 @@
                 // $(".submitbtn").removeClass("btn-success");
                 // $(".submitbtn").addClass("btn-default");
             }
-        }
+        }*/
     </script>
 
 

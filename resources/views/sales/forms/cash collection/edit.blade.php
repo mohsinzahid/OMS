@@ -65,7 +65,7 @@
                             <div class="form-group">
                                 <label>Customer</label>
                                 <select class="select2_demo_1 form-control" name="customerid" autofocus
-                                        id="callfunc" onchange="getjobids()" style="width: 100%" required>
+                                        id="callfunc" {{--onchange="getjobids()"--}} style="width: 100%" required>
                                     <option value="" selected disabled hidden>Choose here</option>
                                     @if(count($customer)>0)
                                         @foreach($customer as $customers)

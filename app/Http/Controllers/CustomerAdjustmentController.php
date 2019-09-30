@@ -112,14 +112,16 @@ class CustomerAdjustmentController extends Controller
 
     public function getinvoice(Request $request)
     {
-//        $saleid = DB::table('saleinventory')->select('id')->where('customer_id',$request['id'])->get();
-        $saleid = DB::table('saleinventory')->select(DB::raw('group_concat(id) as jobid'))
-                                            ->where('customer_id',$request['id'])->get();
-//        echo $saleid;
-//        foreach($saleid->id as $ids){
-//            $arr=explode($ids," ");
-//        }
-//        echo $arr;
-        return response()->json($saleid, 200);
+        /*$saleid = DB::table('saleinventory')->select(DB::raw('group_concat(id) as jobid'))
+                                            ->where('customer_id',$request['id'])->get();*/
+        if(( DB::table('saleinventory')->where('customer_id',$request['custid'])->where('id',$request['jobid'])->first()))
+        {
+            $result = 1;
+        }
+        else
+        {
+            $result = 0;
+        }
+        return response()->json($result, 200);
     }
 }

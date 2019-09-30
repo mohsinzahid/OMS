@@ -177,13 +177,6 @@ class CashCollectionController extends Controller
 
     public function getinvoice(Request $request)
     {
-//        $saleid = DB::table('saleinventory')
-//            ->join('salepayment', 'salepayment.job_order_no', '=' , 'saleinventory.id')
-//            ->select(DB::raw('group_concat(saleinventory.id) as jobid'))
-//            ->where('saleinventory.customer_id',$request['id'])
-//            ->where('saleinventory.id', '!=' , 'salepayment.job_order_no')
-//            ->get();
-
         if(( DB::table('saleinventory')->where('customer_id',$request['id'])->where('id',$request['jobid'])->first()))
         {
             if( DB::table('salepayment')->where('customer_id',$request['id'])->where('job_order_no',$request['jobid'])->first()) {
