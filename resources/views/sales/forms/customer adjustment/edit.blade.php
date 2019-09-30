@@ -150,13 +150,12 @@
     </div>
 
     <script>
-/*
-        var jobids;
-*/
+
         $(document).ready(function () {
-/*
-            getjobids();
-*/
+            $(".select2_demo_2").select2({
+                placeholder: "Select a customer",
+                allowClear: true
+            });
             setTimeout(confirmid,700);
         });
 

@@ -64,8 +64,8 @@
 
                             <div class="form-group">
                                 <label>Customer</label>
-                                <select class="select2_demo_1 form-control" name="customerid" autofocus
-                                        id="callfunc" {{--onchange="getjobids()"--}} style="width: 100%" required>
+                                <select class="select2_demo_2 form-control" name="customerid" autofocus
+                                        id="callfunc" style="width: 100%" required>
                                     <option value="" selected disabled hidden>Choose here</option>
                                     @if(count($customer)>0)
                                         @foreach($customer as $customers)
@@ -108,7 +108,8 @@
 
                             <div class="form-group">
                                 <label for="payeename"> Payer Name </label>
-                                <input type="text" class="form-control" placeholder="name" value="{{$payment->payee_name}}" name="payeename" required>
+                                <input type="text" class="form-control" placeholder="name" value="{{$payment->payee_name}}"
+                                       name="payeename" required>
                             </div>
 
                             @if($chequeinfo)
@@ -142,8 +143,8 @@
                                 <div class="form-group" id="amount">
                                     <label> <span class="hidden" id="chequename"> Cheque </span> Amount </label>
                                     <input type="text" class="form-control" pattern="[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)"
-                                           id="chequeamount"  placeholder="0.00" value="{{$payment->amount}}" name="amount" onchange="Calculate()"
-                                           required>
+                                           id="chequeamount"  placeholder="0.00" value="{{$payment->amount}}" name="amount"
+                                           onchange="Calculate()" required>
                                 </div>
                                 @if($chequeinfo)
                                     <div class="form-group col-sm-4" id="chequeinfo3">
@@ -221,10 +222,7 @@
             <div class="col-sm-3"></div>
         </div>
     </div>
-{{--    <script type="text/javascript" src="{{asset('js/localfunctions.js') }}"></script>--}}
-
     <script>
-
 
         $(document).ready(function () {
                 Calculate();
@@ -235,11 +233,13 @@
                     $("#amountdiv").addClass( "row" );
                     $("#chequename").removeClass("hidden");
                 }
-            getjobids();
             setTimeout(vor,1000);
-        });
 
-        var joborderids;
+            $(".select2_demo_2").select2({
+                placeholder: "Select a customer",
+                allowClear: true
+            });
+        });
 
         $("#callfunc").on('change', function () {
             var id = $(this).val();
@@ -248,18 +248,19 @@
             if ((id === walkid) && (optionvalue !== 'r')) {
                 $("#inlineRadio1").removeAttr("checked");
                 $("#inlineRadio2").prop("checked", true);
-                getjobids();
                 vor();
             }
 
             if(optionvalue === 'r')
             {
-                getjobids();
+                confirmid();
             }
         });
 
-        function getjobids () {
-            var id = $("#callfunc").val();
+        function confirmid () {
+            var customer_id = $("#callfunc").val();
+            var jobid =$("#confirmjobid").val();
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -273,40 +274,28 @@
                 },
                 type: 'GET',
                 url: '/cash-collection/ajax/get-invoice',
-                data: {id: id},
+                data: {id: customer_id, jobid: jobid},
 
                 success: function (response) {
 
-                    joborderids = response;
-                    // console.log(joborderids);
                     var value = $('input:radio[name=vor]:checked').val();
                     if(value === 'r') {
-                        confirmid()
+                        if(response) {
+                            $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
+                            $(".pe-7s-check").css({ 'color': 'lightgreen' });
+                        }
+                        else {
+                            $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
+                            $(".pe-7s-check").css({ 'color': '' });
+                        }
                     }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log(JSON.stringify(jqXHR));
-                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                error: function (XMLHttpRequest, textStatus, errorThrown) { if (XMLHttpRequest.readyState == 0) {
+                    // Network error (i.e. connection refused, access denied due to CORS, etc.)
+                    toastr.error('Network Connection Refused');
+                }
                 }
             });
-        }
-        function confirmid () {
-            var id =','+$("#confirmjobid").val()+',';
-            // console.log(joborderids);
-            if ((joborderids['jobid'].search(id) !== -1 ) && (joborderids['cashjobid'].search(id) === -1)) {
-                $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
-                $(".pe-7s-check").css({ 'color': 'lightgreen' });
-                // $(".submitbtn").removeClass("btn-default");
-                // $(".submitbtn").addClass("btn-success");
-
-            }
-            else {
-                $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
-                $(".pe-7s-check").css({ 'color': '' });
-                // $(".submitbtn").removeClass("btn-success");
-                // $(".submitbtn").addClass("btn-default");
-            }
-
         }
 
         function Calculate()
@@ -319,7 +308,6 @@
 
         $('input:radio[name=type]').change(function () {
             var value = $(this).val();
-            // console.log(value);
             if(value == 0)
             {
                 $("#amount").addClass( "col-sm-4" );
@@ -349,7 +337,6 @@
                 $("#jod").addClass( "col-sm-11" );
                 $("#jor").addClass( "row" );
 
-                // console.log($('input:radio[name=type]').val());
                 if( $('input:radio[name=type]:checked').val() == 0)
                 {
                     $("#chequeinfo1,#chequeinfo2,#chequeinfo3,#chequename").addClass( "hidden" );
@@ -359,10 +346,7 @@
                 }
                 $("#formtype").val("r");
 
-                if(joborderids)
-                {
-                    confirmid();
-                }
+                confirmid();
 
             }
             else

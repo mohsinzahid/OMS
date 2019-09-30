@@ -46,8 +46,8 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Customer</label>
-                                        <select class="form-control" name="customer_id" id="callfunc" onchange='getrates();'
-                                                required>
+                                        <select class="select2_demo_2 form-control" name="customer_id" id="callfunc"
+                                                onchange='getrates();' required>
                                             <option value="" selected disabled hidden>Choose here</option>
                                             @if(count($customer)>0)
                                                 @foreach($customer as $customers)
@@ -65,28 +65,34 @@
                                     @if($inventory->customer_id === $walk->id)
                                         <div id="walkinfo1">
                                             <label>Customer Name</label>
-                                            <input type="text" class="form-control" name="walkname" id="custname" pattern="[A-Za-z ]{1,32}" value="{{$walkincustomer->name}}" required>
+                                            <input type="text" class="form-control" name="walkname" id="custname"
+                                                   pattern="[A-Za-z ]{1,32}" value="{{$walkincustomer->name}}" required>
                                         </div>
                                         <div id="walkinfo2">
                                             <label>Mobile No</label>
-                                            <input type="text" class="form-control" name="walkmobile" id="custmob" pattern="\d*" value="{{$walkincustomer->mobile}}">
+                                            <input type="text" class="form-control" name="walkmobile" id="custmob"
+                                                   pattern="\d*" value="{{$walkincustomer->mobile}}">
                                         </div>
                                         <div id="walkinfo3">
                                             <label>Email</label>
-                                            <input type="email" class="form-control" placeholder="abc@abc.com" id="custemail" name="walkemail" value="{{$walkincustomer->email}}">
+                                            <input type="email" class="form-control" placeholder="abc@abc.com"
+                                                   id="custemail" name="walkemail" value="{{$walkincustomer->email}}">
                                         </div>
                                     @else
                                         <div class="hidden" id="walkinfo1">
                                             <label>Customer Name</label>
-                                            <input type="text" class="form-control" name="walkname" id="custname" pattern="[A-Za-z ]{1,32}" disabled required>
+                                            <input type="text" class="form-control" name="walkname" id="custname"
+                                                   pattern="[A-Za-z ]{1,32}" disabled required>
                                         </div>
                                         <div class="hidden" id="walkinfo2">
                                             <label>Mobile No</label>
-                                            <input type="text" class="form-control" name="walkmobile" id="custmob" pattern="\d*" disabled>
+                                            <input type="text" class="form-control" name="walkmobile" id="custmob"
+                                                   pattern="\d*" disabled>
                                         </div>
                                         <div class="hidden" id="walkinfo3">
                                             <label>Email</label>
-                                            <input type="email" class="form-control" placeholder="abc@abc.com" id="custemail" name="walkemail" disabled="disabled">
+                                            <input type="email" class="form-control" placeholder="abc@abc.com"
+                                                   id="custemail" name="walkemail" disabled="disabled">
                                         </div>
                                     @endif
                                 </div>
@@ -229,11 +235,11 @@
         $(document).ready(function () {
             // var Count = $('#counter').val();
             walkid =$("#walk").val();
+            $(".select2_demo_2").select2({
+                placeholder: "Select a customer",
+                allowClear: true
+            });
             getrates();
-   /*         for (var i = 0; i < Count; i++) {
-                Calculate(i);
-            }
-            tot();*/
 
         });
 

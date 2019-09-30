@@ -14,7 +14,7 @@
 
     <!-- Vendor styles -->
     {{--<link rel="stylesheet" href="{{url('vendor/fontawesome/css/font-awesome.css')}}"/>--}}
-{{--    <link rel="stylesheet" href="{{url('vendor/animate.css/animate.css')}}"/>--}}
+    <link rel="stylesheet" href="{{url('vendor/animate.css/animate.css')}}"/>
     <link rel="stylesheet" href="{{url('vendor/bootstrap/css/bootstrap.css')}}"/>
     <link rel="stylesheet" href="{{url('vendor/toastr/toastr.min.css')}}"/>
     {{--<link rel="stylesheet" href="{{url('vendor/datatables/datatables.min.css')}}"/>--}}
@@ -23,10 +23,13 @@
 
     <!-- App styles -->
     <link rel="stylesheet" href="{{url('styles/pe-icons/pe-icon-7-stroke.css')}}"/>
-{{--    <link rel="stylesheet" href="{{url('styles/pe-icons/helper.css')}}"/>--}}
+    <link rel="stylesheet" href="{{url('styles/pe-icons/helper.css')}}"/>
     <link rel="stylesheet" href="{{url('styles/stroke-icons/style.css')}}"/>
     <link rel="stylesheet" href="{{url('styles/style.css')}}">
+    <link rel="stylesheet" href="{{url('vendor/select2/dist/css/select2.min.css')}}"/>
+
     <script src="{{url('vendor/jquery/dist/jquery.min.js')}}"></script>
+
 
 </head>
 <body>
@@ -276,6 +279,7 @@
 {{--<script src="{{url('vendor/flot/jquery.flot.spline.js')}}"></script>--}}
 <script src="{{url('vendor/bootstrap/js/bootstrap.min.js')}}"></script>
 <script src="{{url('vendor/bootstrap3-typeahead/bootstrap3-typeahead.min.js')}}"></script>
+<script src="{{url('vendor/select2/dist/js/select2.js')}}"></script>
 
 
 

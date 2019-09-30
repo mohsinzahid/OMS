@@ -45,13 +45,13 @@
                             <input type="hidden" name="walkid" value="{{$walk->id}}" id="walk">
 
                             <div class="form-group">
-                                <label for="InputQuantity">Customer</label>
-                                <select class="select2_demo_1 form-control" name="customerid" id="callfunc" autofocus
-                                        {{--onchange="getjobids()"--}} style="width: 100%" required>
+                                <label >Customer</label>
+                                <select class="select2_demo_2 form-control" name="customerid" id="callfunc" autofocus
+                                        style="width: 100%" required>
                                     <option value="" selected disabled hidden>Choose here</option>
                                     @if(count($customer)>0)
                                         @foreach($customer as $customers)
-                                            <option value="{{$customers->id}}">{{$customers->name}} &emsp; {{$customers->id}}
+                                            <option value="{{$customers->id}}">  {{$customers->id}} &emsp; {{$customers->name}}
                                                 </option>
                                         @endforeach
                                     @else
@@ -136,18 +136,21 @@
                                     </div>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
-
             </div>
             <div class="col-sm-3"></div>
         </div>
     </div>
 
     <script>
-        var joborderids;
+        $(document).ready(function () {
+            $(".select2_demo_2").select2({
+                placeholder: "Select a customer",
+                allowClear: true
+            });
+        });
 
         $("#callfunc").on('change', function () {
             var id = $(this).val();
@@ -156,19 +159,14 @@
             if ((id === walkid) && (optionvalue !== 'r')) {
                 $("#inlineRadio1").removeAttr("checked");
                 $("#inlineRadio2").prop("checked", true);
-                // getjobids();
-                confirmid();
                 vor();
             }
 
             if(optionvalue === 'r')
             {
-                // getjobids();
                 confirmid();
             }
         });
-
-        // function getjobids () {
         function confirmid () {
             var customer_id = $("#callfunc").val();
             var jobid =$("#confirmjobid").val();
@@ -190,12 +188,8 @@
 
                 success: function (response) {
 
-                    joborderids = response;
-                    // console.log(joborderids);
                     var value = $('input:radio[name=vor]:checked').val();
                     if(value === 'r') {
-                        /*confirmid()*/
-                        console.log(response);
                         if(response) {
                             $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
                             $(".pe-7s-check").css({ 'color': 'lightgreen' });
@@ -213,24 +207,6 @@
                 }
             });
         }
-        /*function confirmid () {
-            var id =','+$("#confirmjobid").val()+',';
-            // console.log(joborderids);
-            if ((joborderids['jobid'].search(id) !== -1 ) && (joborderids['cashjobid'].search(id) === -1)) {
-                $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
-                $(".pe-7s-check").css({ 'color': 'lightgreen' });
-                // $(".submitbtn").removeClass("btn-default");
-                // $(".submitbtn").addClass("btn-success");
-
-            }
-            else {
-                $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
-                $(".pe-7s-check").css({ 'color': '' });
-                // $(".submitbtn").removeClass("btn-success");
-                // $(".submitbtn").addClass("btn-default");
-            }
-
-        }*/
 
         function Calculate()
         {
@@ -242,7 +218,6 @@
 
         $('input:radio[name=type]').change(function () {
             var value = $(this).val();
-            // console.log(value);
             if(value == 0)
             {
                 $("#amount").addClass( "col-sm-4" );
@@ -281,11 +256,7 @@
                 }
                 $("#formtype").val("r");
 
-                if(joborderids)
-                {
-                    confirmid();
-                }
-
+                confirmid();
             }
             else
             {
@@ -312,7 +283,5 @@
             $('[autofocus]').focus()
         });
     </script>
-
-{{--    <script type="text/javascript" src="{{asset('js/localfunctions.js') }}"></script>--}}
 
 @endsection

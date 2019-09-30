@@ -43,14 +43,8 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Customer</label>
-                                       {{-- <input class="form-control" list="customers" name="customer_id" id="callfunc"
-                                               autofocus required>
-                                        <datalist id="customers">
-                                            @foreach($customer as $customers)
-                                                <option value="{{$customers->id}}">{{$customers->name}}</option>
-                                            @endforeach
-                                        </datalist>--}}
-                                        <select class="form-control" name="customer_id" id="callfunc" autofocus required>
+                                        <select class="select2_demo_2 form-control"  name="customer_id" id="callfunc"
+                                                 autofocus required>
                                             <option value="" selected disabled hidden>Choose here</option>
                                             @if(count($customer)>0)
                                                 @foreach($customer as $customers)
@@ -198,6 +192,10 @@
         var walkid;
         $(document).ready(function () {
              walkid =$("#walk").val();
+            $(".select2_demo_2").select2({
+                placeholder: "Select a customer",
+                allowClear: true
+            });
         });
 
         function addRow(){

@@ -34,8 +34,8 @@
                             <div class="row">
                                 <div class="form-group col-sm-5">
                                     <label for="callfunc">Customer</label>
-                                    <select class="select2_demo_1 form-control" name="customerid" {{--onchange="getjobids()"--}}
-                                            id="callfunc" style="width: 100%" required>
+                                    <select class="select2_demo_2 form-control" name="customerid" id="callfunc"
+                                            style="width: 100%" required>
                                         <option value="" selected disabled hidden>Choose here</option>
                                         @if(count($customer)>0)
                                             @foreach($customer as $customers)
@@ -124,6 +124,12 @@
 {{--    <script type="text/javascript" src="{{asset('js/localfunctions.js') }}"></script>--}}
 
     <script>
+        $(document).ready(function () {
+            $(".select2_demo_2").select2({
+                placeholder: "Select a customer",
+                allowClear: true
+            });
+        });
         function confirmid () {
             var custid = $("#callfunc").val();
             var jobid =$("#confirmjobid").val();
