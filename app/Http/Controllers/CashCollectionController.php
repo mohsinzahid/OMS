@@ -203,4 +203,18 @@ class CashCollectionController extends Controller
 
         return response()->json($salerecord, 200);
     }
+
+    public function receipts(Request $request)
+    {
+        DB::table('salepayment')->insert(
+            ['customer_id' => $request['customerid'], 'date' => $request['date'],
+                'job_order_no' => $request['job_order_no'] , 'added_at' => now() , 'amount' => $request['amount'],
+                'type' => "cash"]);
+
+//        return redirect('/sale/receipt');
+        $result = 1;
+
+        return response()->json($result, 200);
+
+    }
 }

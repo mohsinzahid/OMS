@@ -133,16 +133,22 @@
 
                     $('#tableExample4').DataTable().clear().draw();
 
-                    for (key in response) {
-                        date = '<input type="date" class="form-control"\n' + 'value="'+response[key]["date"]+'"  name="date" required>';
-                        paidamount = '<input type="text" class="form-control" placeholder="0.00" name="paidamount">';
+                    unique_id = 1;
 
-                        button = '<button type="button" style="color: #ffc771" class="btn btn-warning btn-sm" id="submit">' +
-                            'Collect</button>';
-                        customer_id = '<input value="'+response[key]["customer_id"]+'" class="hidden" required>';
+                    for (key in response) {
+                        job_id ='<div id="jobid'+unique_id+'">'+response[key]["id"]+'</div>';
+                        date = '<input type="date" class="form-control"\n' + 'value="'+response[key]["date"]+'"  ' +
+                            'name="date" id="date'+unique_id+'" required>';
+                        paidamount = '<input type="text" class="form-control" placeholder="0.00" id="paidamount'+unique_id+'" ' +
+                            'name="paidamount">';
+
+                        button = '<button type="button" style="color: #ffc771" class="btn btn-warning btn-sm" ' +
+                            'onclick="collect('+unique_id+')">Collect</button>';
+                        customer_id = '<input value="'+response[key]["customer_id"]+'" id="cust_id'+unique_id+'"' +
+                            ' class="hidden" required>';
 
                         $("#tableExample4").DataTable().row.add([
-                            response[key]["id"],response[key]["type"],response[key]["name"], date,
+                           job_id ,response[key]["type"],response[key]["name"], date,
                             response[key]["invoice_no"], response[key]["debit_amount"],paidamount, response[key]["created_by"],
                             response[key]["added_at"], button, customer_id
                         ]).draw();
@@ -157,6 +163,52 @@
         $(function () {
             $('[autofocus]').focus()
         });
+
+        function collect(id) {
+            $(".btn").attr("disabled", true);
+            var customer_id = $("#cust_id"+id).val();
+            var jobid =$("#jobid"+id).text();
+            var paidamount =$("#paidamount"+id).val();
+            var date =$("#date"+id).val();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                statusCode: {
+                    500: function () {
+                        alert("Script exhausted");
+                    }
+                },
+                type: 'POST',
+                url: '/job-order/ajaxcollect',
+                data: {customerid: customer_id, date: date, job_order_no: jobid, amount: paidamount},
+
+                success: function (response) {
+                    console.log(response);
+                    if (response === 1)
+                    {
+                        toastr.success('Receipt Collected successfully');
+                    }
+                    else
+                    {
+                        toastr.error('error');
+                    }
+                },
+                error: function (XMLHttpRequest,jqXHR, textStatus, errorThrown) {
+                    if (XMLHttpRequest.readyState == 0) {
+                        // Network error (i.e. connection refused, access denied due to CORS, etc.)
+                        toastr.error('Network Connection Refused');
+                    }
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+            });
+
+            console.log('customer_id = '+customer_id+', job id = '+jobid+', paid amount = '+paidamount+', date = '+date);
+        }
 
     </script>
 

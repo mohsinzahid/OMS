@@ -633,7 +633,7 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
 //salelist end
 
 
-//Purchase Payment Start
+//Sale Payment Start
 
     Route::get('/sales/forms/cash-collection', function () {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
@@ -680,6 +680,9 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
 
 
     Route::get('/cash-collection/ajax/get-invoice','CashCollectionController@getinvoice');
+
+    Route::post('/job-order/ajaxcollect', 'CashCollectionController@receipts');
+
 
 //Customer adjustment start
 

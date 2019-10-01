@@ -287,6 +287,18 @@
 <!-- App scripts -->
 <script src="{{url('scripts/luna.js')}}"></script>
 
+<script>
+    $(document).ready(function () {
+        toastr.options = {
+            "debug": false,
+            "newestOnTop": false,
+            "positionClass": "toast-bottom-right",
+            "closeButton": true,
+            "progressBar": true
+        };
+    });
+</script>
+
 {{--<script src="{{url('vendor/datatables/datatables.min.js')}}"></script>--}}
 </body>
 </html>
