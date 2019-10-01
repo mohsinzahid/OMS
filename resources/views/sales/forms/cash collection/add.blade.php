@@ -62,7 +62,7 @@
 
                             <div class="form-group">
                                 <label>Date</label>
-                                <input type="date" class="form-control" name="paiddate" value="<?php echo date('Y-m-j'); ?>"
+                                <input type="date" class="form-control" name="paiddate" value="<?php echo date('Y-m-d'); ?>"
                                        id="focus1" required>
                             </div>
                             <div id="jor">
