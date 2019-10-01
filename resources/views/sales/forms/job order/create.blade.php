@@ -77,7 +77,7 @@
                                     <div class="form-group"><label >Date</label>
                                         <input type="date" class="form-control" name="dateofsale"
                                                value="<?php echo date('Y-m-j'); ?>" min="2019-01-01" max="2019-12-31"
-                                               required></div>
+                                               id="focus2" required></div>
                                     <div class="form-group">
                                         <label >Invoice No</label>
                                         <input type="text" class="form-control" pattern="\d*"  name="invoiceno"
@@ -193,10 +193,11 @@
         var walkid;
         $(document).ready(function () {
              walkid =$("#walk").val();
-            $(".select2_demo_2").select2({
+            /*$(".select2_demo_2").select2({
                 placeholder: "Select a customer",
                 allowClear: true
-            });
+            });*/
+            $(".select2_demo_2").select2();
         });
 
         function addRow(){
@@ -289,6 +290,7 @@
             {
                 $("#walkinfo1,#walkinfo2,#walkinfo3").removeClass("hidden");
                 $("#custname,#custmob,#custemail").removeAttr("disabled");
+
             }
             else
             {
@@ -322,6 +324,14 @@
                         Calculate(i);
                     }
                     tot();
+                    if(value === walkid) {
+
+                        $("#custname").focus()
+                    }
+                    else
+                    {
+                        $("#focus2").focus()
+                    }
 
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
