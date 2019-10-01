@@ -115,7 +115,8 @@
                             <li><a href="{{url('/sales/forms/job-order')}}">Job Order (CTP)</a></li>
                             <li><a href="{{url('/sales/forms/cash-collection')}}">Cash Collection</a></li>
                             <li><a href="{{url('/sales/forms/customer-adjustment')}}">Customer Adjustment Form</a></li>
-                            <li><a href="{{url('/job-order/search')}}">Search Job Order</a></li>                            {{--                            <li><a href="{{url('/sale/receipt')}}">Receipts</a></li>--}}
+                            <li><a href="{{url('/job-order/search')}}">Search Job Order</a></li>
+                            <li><a href="{{url('/sale/receipt')}}">Receipts Collection</a></li>
                         </ul>
                     </li>
 

@@ -1,304 +1,163 @@
 @extends('admin.master')
 
+<link rel="stylesheet" href="{{url('vendor/fontawesome/css/font-awesome.css')}}"/>
+<link rel="stylesheet" href="{{url('vendor/datatables/datatables.min.css')}}"/>
+
 @section('content')
+
     <div class="container-fluid">
+
 
         <div class="row">
             <div class="col-lg-12">
                 <div class="view-header">
-                    {{--                    <div class="pull-right text-right" style="line-height: 14px">
-                                            <small>Table design<br>General<br> <span class="c-white">DataTables</span></small>
-                                        </div>--}}
+                    <div class="pull-right text-right" style="line-height: 14px">
+                    </div>
                     <div class="header-icon">
-                        <i class="pe page-header-icon pe-7s-albums"></i>
+                        <i class="pe page-header-icon pe-7s-pen"></i>
                     </div>
                     <div class="header-title">
-                        <h3>Receipts</h3>
+                        <h3>Search Job Order</h3>
                     </div>
                 </div>
                 <hr>
             </div>
         </div>
-        <div class="row"  id="adddate">
-            <div class="col-sm-3">
-                <input type="hidden" name="walkid" value="{{$walk->id}}" id="walk">
-
-                <label>Customer</label>
-                {{--<div class="col-sm-11">--}}
-                <select class="form-control" name="customer_id"  id="callfunc" style="width: 100% !important;" required>
-                    <option value="" selected disabled hidden>Choose here</option>
-                    @if(count($customer)>0)
-                        @foreach($customer as $customers)
-                            <option value="{{$customers->id}}" >{{$customers->name}}</option>
-                        @endforeach
-                    @else
-                        <option>No Customer exist</option>
-                    @endif
-                </select>
-                {{--</div>--}}
-                {{--<div class="col-sm-1"><i class="fa fa-check-circle-o" style="font-size: 25px !important;"></i></div>--}}
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="header-title">
+                </div>
+                <div class="panel panel-filled">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="formtype">Forms type</label>
+                            <select class="form-control"style="width: 100%" required>
+                                <option value="jo" selected> JO &emsp; Job Order(CTP)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="Inputinvoiceno">
+                                Invoice No
+                            </label>
+                            <input type="text" class="form-control" id="invoiceno" pattern="\d*"
+                                   placeholder="0" autofocus required>
+                        </div>
+                        <button class="btn btn-primary" id="search" >Search</button>
+                    </div>
+                </div>
 
             </div>
-
-            <div class="col-sm-4"></div>
-            <div class="form-group col-sm-2" id="hiddenfrom" style="border-left: 1px solid darkslategrey;">
-                <label >From</label>
-                <input type="date" class="form-control"  id="start" required>
-            </div>
-            <div class="form-group col-sm-2 " id="hiddento">
-                <label>To</label>
-                <input type="date" class="form-control"  id="end" required>
-            </div>
-            <div class="col-sm-1 hidden" id="calldate">
-                <button class="btn btn-default"  style="margin-top: 25px">
-                    <i class="fa fa-check-circle-o" style="font-size: 16px !important;"></i>
-                </button>
-            </div>
-
+            <div class="col-sm-3"></div>
         </div>
-        <hr>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-filled">
                     <div class="panel-heading">
-                        Invoices
+                        Sales
                     </div>
-                    {{--<forms method="post" action="{{url('/sale/changeAmount')}}">--}}
-                        <div class="panel-body">
-                            <div class="table-responsive">
+                    <div class="panel-body">
+                        <div class="table-responsive">
 
-                                    {{ csrf_field() }}
-                                    <table id="tableExample2" class="table table-hover table-bordered table-condensed">
-                                        <thead>
-                                        <tr>
-                                            <th>CGN</th>
-                                            <th>Name</th>
-                                            <th>Date</th>
-                                            <th>Invoice No</th>
-                                            <th>Amount Due</th>
-                                            <th>Amount Paid</th>
-                                            <th style="text-align: center"><span class="pe-7s-tools" style="color: #ffc771 ; font-size:20px !important; "></span></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="back">
-                                        </tbody>
-                                    </table>
-                                    <br>
-                                    <input type="submit" class="btn btn-default hidden" style="color: #f6a821; float: right;" id="savebtn" value="Save">
-                            </div>
+                            <table id="tableExample4" class="table table-striped table-hover table-bordered table-condensed">
+                                <thead>
+                                <tr>
+                                    <th style="color: #ffc771">CGN</th>
+                                    <th style="color: #ffc771">Type</th>
+                                    <th style="color: #ffc771">Name</th>
+                                    <th style="color: #ffc771">Date</th>
+                                    <th style="color: #ffc771">Invoice No</th>
+                                    <th style="color: #ffc771">Debit Amount</th>
+                                    <th style="color: #ffc771">Paid Amount</th>
+                                    <th style="color: #ffc771">Created By</th>
+                                    <th style="color: #ffc771">Entry date</th>
+                                    <th style="color: #ffc771" class="pe-7s-config"></th>
+                                    <th style="color: #ffc771" class="hidden"></th>
+                                </tr>
+                                </thead>
+                                <tbody id="back">
+                                </tbody>
+                            </table>
                         </div>
-                    {{--</forms>--}}
+
+                    </div>
                 </div>
             </div>
+
         </div>
+
     </div>
+
+    <script src="{{url('vendor/datatables/datatables.min.js')}}"></script>
     <script>
-        $(document).ready(function () {
-            var name = '';
-            var id;
-            var arr=[];
-            var arrlength;
-            var checked_records = {};
 
-            $( "#calldate" ).click(function(){
-                arr=[];
-                id = $("#callfunc option:selected").val();
-                name = $("#callfunc option:selected").text();
-                var start = $('#start').val();
-                var end = $('#end').val();
+        $( "#search" ).click(function(){
+            var id = $('#invoiceno').val();
 
-                // $("#calldate,#hiddenfrom,#hiddento").removeClass("hidden");
-                // $("#end").attr("disabled", true);
-                // $("#calldate").addClass( "hidden" );
-
-                var walkid =$("#walk").val();
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                statusCode: {
+                    500: function () {
+                        alert("Script exhausted");
                     }
-                });
-                $.ajax({
-                    statusCode: {
-                        500: function () {
-                            alert("Script exhausted");
-                        }
-                    },
-                    type: 'GET',
-                    url: '/sale/ajaxreceipt',
-                    data: {id: id, walkid : walkid,start: start, end: end},
+                },
+                type: 'GET',
+                url: '/job-order/ajaxsearch',
+                data: {id: id},
 
-                    success: function (response) {
+                success: function (response) {
+                    console.log(response);
 
-                        console.log(response);
+                    $('#tableExample4').DataTable({
+                        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                        "lengthMenu": [ [25, 50, -1], [25, 50, "All"] ],
+                        buttons: [
+                            {extend: 'copy' ,title: name,className: 'btn-sm',  exportOptions: {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]}},
+                            {extend: 'csv',title: name, message:'This Customer Ledger is printed under the authority of administration',
+                                className: 'btn-sm',  exportOptions: {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]}},
+                            {extend: 'pdf', title: name, message:'This Customer Ledger is printed under the authority of administration',
+                                className: 'btn-sm',  exportOptions: {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]}},
+                            {extend: 'print',title: name, className: 'btn-sm', message:'This Customer Ledger is printed under the authority of administration',
+                                exportOptions: {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]}}
+                        ],
+                        "ordering": false,
+                        "bDestroy": true
+                    });
+                    // console.log(response);
 
-                        /*var payment = response['payment'];
 
-                        delete response['payment'];*/
+                    $('#tableExample4').DataTable().clear().draw();
 
-                        var count = 0;
+                    for (key in response) {
+                        date = '<input type="date" class="form-control"\n' + 'value="'+response[key]["date"]+'"  name="date" required>';
+                        paidamount = '<input type="text" class="form-control" placeholder="0.00" name="paidamount">';
 
-                        for (key in response)
-                            count = count + 1;
+                        button = '<button type="button" style="color: #ffc771" class="btn btn-warning btn-sm" id="submit">' +
+                            'Collect</button>';
+                        customer_id = '<input value="'+response[key]["customer_id"]+'" class="hidden" required>';
 
-                        for (var z = 0; z < count; z++) {
-                            arr[z] ={"id": response[z]['id'] ,
-                                "customer_id": response[z]['customer_id'],
-                                "date": response[z]['dateofsale'],
-                                "name": response[z]['name'],
-                                "invoice_no": response[z]['invoiceno'],
-                                "debit": response[z]['total_amount']
-                                };
-                        }
-
-                        arrlength=count;
-
-                        arr.sort(function(a, b){
-                            var dateA=new Date(a.date), dateB=new Date(b.date);
-                            return dateA-dateB //sort by date ascending
-                        });
-
-                        $('#tableExample2').DataTable().clear().draw();
-
-                        for (var i = 0; i < count; i++)
-                        {
-                            // var inputfield ='<input name="amount['+i+']" type="text" class="forms-control" id="Inputamount'+arr[i]["id"]+'" pattern="[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)"  placeholder="0.00" name="paidamount" min="0" max="'+arr[i]["debit"]+'">';
-                            var inputfield ='<input name="amount['+arr[i]["id"]+']" type="text" class="forms-control" id="Inputamount'+arr[i]["id"]+'" pattern="[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)"  placeholder="0.00" name="paidamount" min="0" max="'+arr[i]["debit"]+'">';
-                            var editIcon = '<div class="checkbox checkbox-warning">\n' +
-                                '                                    <input name="id['+i+']" value="'+arr[i]["id"]+'" id="checkbox5" type="checkbox" class="styled tosend" >\n' +
-                                '                                    <label for="checkbox5">\n' +
-                                '                                    </label>\n' +
-                                '                                </div>';
-
-                            var debit = '<div id="debit'+arr[i]["id"]+'">'+arr[i]["debit"]+'</div>';
-
-                            $("#tableExample2").DataTable().row.add([
-                                arr[i]["id"],arr[i]["name"], arr[i]["date"], arr[i]["invoice_no"], debit,inputfield,editIcon
-                            ]).draw();
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(JSON.stringify(jqXHR));
-                        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                        $("#tableExample4").DataTable().row.add([
+                            response[key]["id"],response[key]["type"],response[key]["name"], date,
+                            response[key]["invoice_no"], response[key]["debit_amount"],paidamount, response[key]["created_by"],
+                            response[key]["added_at"], button, customer_id
+                        ]).draw();
                     }
-                });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
             });
-
-            // $( "#calldate" ).click(function()
-            // {
-            //
-            //     var start = $('#start').val();
-            //     var end = $('#end').val();
-            //
-            //     var filter=[];
-            //
-            //     var len=0;
-            //
-            //     for (var z = 0; z < arrlength; z++) {
-            //         if(arr[z]['date'] >= start)
-            //         {
-            //             if(arr[z]['date'] <= end)
-            //             {
-            //                 filter[len]=arr[z];
-            //                 len++;
-            //             }
-            //         }
-            //     }
-            //
-            //     $('#tableExample2').DataTable().clear().draw();
-            //
-            //     for (var i = 0; i < len; i++)
-            //     {
-            //         var inputfield ='<input name="amount['+i+']" type="text" class="forms-control" id="Inputamount'+filter[i]["id"]+'" pattern="[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)"  placeholder="0.00" name="paidamount" max="'+filter[i]["debit"]+'">';
-            //         var editIcon = '<div class="checkbox checkbox-warning">\n' +
-            //             '                                    <input name="id['+i+']" value="'+filter[i]["id"]+'" id="checkbox5" type="checkbox" class="styled" >\n' +
-            //             '                                    <label for="checkbox5">\n' +
-            //             '                                    </label>\n' +
-            //             '                                </div>';
-            //
-            //         var debit = '<div id="debit'+filter[i]["id"]+'">'+filter[i]["debit"]+'</div>';
-            //
-            //         $("#tableExample2").DataTable().row.add([
-            //             filter[i]["id"] ,filter[i]["name"],filter[i]["date"], filter[i]["invoice_no"], debit, inputfield, editIcon
-            //         ]).draw();
-            //     }
-            // });
-
-            $("#hiddenfrom").on('change', function () {
-
-                $("#end").removeAttr("disabled");
-                /*}
-                else
-                {
-                    $("#walkinfo1,#walkinfo2,#walkinfo3").addClass( "hidden" );
-                    $("#custname,#custmob,#custemail").attr("disabled", true);
-                }*/
-            });
-
-            $("#hiddento").on('change', function ()
-            {
-                $("#calldate").removeClass("hidden");
-
-            });
-
-            $('#tableExample2').on('click', '#checkbox5', function()
-            {
-                $("#savebtn").removeClass("hidden");
-
-            });
-            //
-            // $('#back').children('tr').click(function(event)
-            // {
-            //     if (event.target.type !== 'checkbox') {
-            //         $(':checkbox', this).trigger('click');
-            //     }
-            // });
-
-            $('#tableExample2').on('click', '#checkbox5', function()
-            {
-                var checkid = $(this).val();
-                var debit = $("#debit"+checkid).html();
-                $("#Inputamount"+checkid).val(debit);
-            });
-
-            function get_records() {
-                $('input.tosend:checkbox:checked').each(function () {
-                    var checkid = $(this).val();
-                    var update_amount = $("#Inputamount"+checkid).val();
-                    checked_records[checkid] = update_amount;
-                });
-            }
-            $( "#savebtn" ).click(function(){
-
-                get_records();
-                console.log(checked_records);
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    statusCode: {
-                        500: function () {
-                            alert("Script exhausted");
-                        }
-                    },
-                    type: 'POST',
-                    url: '/sale/changeAmount',
-                    data: {amount: checked_records},
-
-                    success: function (response) {
-                        window.location.href = '/sale/receipt'
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(JSON.stringify(jqXHR));
-                        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-                    }
-                });
-            });
-
-
         });
+        $(function () {
+            $('[autofocus]').focus()
+        });
+
     </script>
+
 @endsection

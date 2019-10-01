@@ -204,7 +204,8 @@ class JobOrderController extends Controller
             ->select("sin.id as id", "sin.dateofsale as date", "sin.invoiceno as invoice_no",
                 "sin.total_amount as debit_amount", "sin.added_at as added_at","e.name as created_by",
                 DB::raw("'' as remarks"), DB::raw("CASE WHEN c.type = 0 THEN w.name ELSE c.name END as name"),
-                DB::raw("CASE WHEN c.type = 0 THEN 'Walk In Customer' ELSE 'Credit customer' END as type"))
+                DB::raw("CASE WHEN c.type = 0 THEN 'Walk In Customer' ELSE 'Credit customer' END as type"),
+                "sin.customer_id as customer_id")
             ->where('sin.invoiceno', $request['id'])
             ->get();
 

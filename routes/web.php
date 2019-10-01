@@ -517,13 +517,11 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
 
     Route::get('/sale/receipt',function ()
     {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
-            return app()->call('App\Http\Controllers\SalesFormsController@receipt');
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
+            return view('sales.forms.receipt');
         else
             return view('admin.master');
     });
-
-Route::get('/sale/ajaxreceipt', 'SaleinventoryController@getreceipt');
 
 //Route::get('/customer/sale/{id}/edit', 'SaleinventoryController@edit');
 
@@ -588,7 +586,7 @@ Route::get('/sale/ajaxreceipt', 'SaleinventoryController@getreceipt');
 
     Route::get('/job-order/search', function () {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
-            return view('jobs list.search');
+            return view('sales.forms.search');
         else
             return view('admin.master');
     });
