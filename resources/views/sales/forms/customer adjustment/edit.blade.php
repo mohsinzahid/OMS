@@ -66,7 +66,7 @@
                                                         {{$gls->id}} &emsp;{{$gls->name}}
                                                     </option>
                                                 @else
-                                                    <option value="{{$gls->id}}" selected>
+                                                    <option value="{{$gls->id}}">
                                                         {{$gls->id}} &emsp;{{$gls->name}}
                                                     </option>
                                                 @endif
