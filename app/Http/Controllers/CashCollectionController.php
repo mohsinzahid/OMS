@@ -210,9 +210,27 @@ class CashCollectionController extends Controller
             ['customer_id' => $request['customerid'], 'date' => $request['date'],
                 'job_order_no' => $request['job_order_no'] , 'added_at' => now() , 'amount' => $request['amount'],
                 'type' => "cash"]);
+        $result = 0;
+        if($request['discount'] > 0)
+        {
+            DB::table('customeradjustment')->insert(
+                ['customer_id' => $request['customerid'],'invoice_no' => $request['job_order_no'],
+                    'date' => $request['date'], 'amount' => $request['discount'], 'added_at' => now(),
+                    'type' => "credit", 'general_ledger_id' => "8", 'remarks' => 'Discount adjustment added from Receipts']);
+            $result = 1;
+        }
+        else if($request['discount'] < 0)
+        {
+            DB::table('customeradjustment')->insert(
+                ['customer_id' => $request['customerid'],'invoice_no' => $request['job_order_no'],
+                    'date' => $request['date'], 'amount' => ($request['discount'] * -1), 'added_at' => now(),
+                    'type' => 'debit', 'general_ledger_id' => 1, 'remarks' => 'Discount adjustment added from Receipts']);
+            $result = 1;
+        }
+
 
 //        return redirect('/sale/receipt');
-        $result = 1;
+
 
         return response()->json($result, 200);
 

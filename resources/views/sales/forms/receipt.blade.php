@@ -70,8 +70,10 @@
                                     <th style="color: #ffc771">Invoice No</th>
                                     <th style="color: #ffc771">Debit Amount</th>
                                     <th style="color: #ffc771">Paid Amount</th>
+                                    <th style="color: #ffc771">Discount</th>
                                     <th style="color: #ffc771">Created By</th>
                                     <th style="color: #ffc771">Entry date</th>
+                                    <th style="color: #ffc771">Status</th>
                                     <th style="color: #ffc771" class="pe-7s-config"></th>
                                     <th style="color: #ffc771" class="hidden"></th>
                                 </tr>
@@ -136,21 +138,34 @@
                     unique_id = 1;
 
                     for (key in response) {
+
                         job_id ='<div id="jobid'+unique_id+'">'+response[key]["id"]+'</div>';
                         date = '<input type="date" class="form-control"\n' + 'value="'+response[key]["date"]+'"  ' +
                             'name="date" id="date'+unique_id+'" required>';
+                        debitamount = '<input value="'+response[key]["debit_amount"]+'" type="text" class="form-control"' +
+                            ' id="debitamount'+unique_id+'" disabled>';
                         paidamount = '<input type="text" class="form-control" placeholder="0.00" id="paidamount'+unique_id+'" ' +
-                            'name="paidamount">';
+                            'name="paidamount" onkeyup=calculateDiscount('+unique_id+')>';
+                        if (response[key]["status"] === 'paid')
+                        {
+                            button = '<button type="button" style="color: #ffc771" class="btn btn-warning btn-sm" ' +
+                                'onclick="collect('+unique_id+')" id="submit'+unique_id+'" disabled>Collect</button>';
+                        }
+                        else{
+                            button = '<button type="button" style="color: #ffc771" class="btn btn-warning btn-sm" ' +
+                                'onclick="collect('+unique_id+')" id="submit'+unique_id+'">Collect</button>';
+                        }
 
-                        button = '<button type="button" style="color: #ffc771" class="btn btn-warning btn-sm" ' +
-                            'onclick="collect('+unique_id+')">Collect</button>';
                         customer_id = '<input value="'+response[key]["customer_id"]+'" id="cust_id'+unique_id+'"' +
                             ' class="hidden" required>';
 
+                        discount = '<input value="" type="text" class="form-control" id="discount'+unique_id+'" disabled' +
+                            ' required>';
+
                         $("#tableExample4").DataTable().row.add([
                            job_id ,response[key]["type"],response[key]["name"], date,
-                            response[key]["invoice_no"], response[key]["debit_amount"],paidamount, response[key]["created_by"],
-                            response[key]["added_at"], button, customer_id
+                            response[key]["invoice_no"],debitamount ,paidamount,discount, response[key]["created_by"],
+                            response[key]["added_at"],response[key]["status"], button, customer_id
                         ]).draw();
                     }
                 },
@@ -165,49 +180,60 @@
         });
 
         function collect(id) {
-            $(".btn").attr("disabled", true);
-            var customer_id = $("#cust_id"+id).val();
-            var jobid =$("#jobid"+id).text();
             var paidamount =$("#paidamount"+id).val();
-            var date =$("#date"+id).val();
+            if(paidamount) {
+                $("#submit"+id).attr("disabled", true);
+                var customer_id = $("#cust_id" + id).val();
+                var jobid = $("#jobid" + id).text();
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                statusCode: {
-                    500: function () {
-                        alert("Script exhausted");
-                    }
-                },
-                type: 'POST',
-                url: '/job-order/ajaxcollect',
-                data: {customerid: customer_id, date: date, job_order_no: jobid, amount: paidamount},
+                var date = $("#date" + id).val();
+                var discount = $("#discount"+ id).val();
+                console.log(discount);
 
-                success: function (response) {
-                    console.log(response);
-                    if (response === 1)
-                    {
-                        toastr.success('Receipt Collected successfully');
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
-                    else
-                    {
-                        toastr.error('error');
-                    }
-                },
-                error: function (XMLHttpRequest,jqXHR, textStatus, errorThrown) {
-                    if (XMLHttpRequest.readyState == 0) {
-                        // Network error (i.e. connection refused, access denied due to CORS, etc.)
-                        toastr.error('Network Connection Refused');
-                    }
-                    console.log(JSON.stringify(jqXHR));
-                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-                }
-            });
+                });
+                $.ajax({
+                    statusCode: {
+                        500: function () {
+                            alert("Script exhausted");
+                        }
+                    },
+                    type: 'POST',
+                    url: '/job-order/ajaxcollect',
+                    data: {customerid: customer_id, date: date, job_order_no: jobid, amount: paidamount, discount:discount},
 
-            console.log('customer_id = '+customer_id+', job id = '+jobid+', paid amount = '+paidamount+', date = '+date);
+                    success: function (response) {
+                        console.log(response);
+                        if (response === 1) {
+                            toastr.success('Receipt Collected successfully');
+                        }
+                    },
+                    error: function (XMLHttpRequest, jqXHR, textStatus, errorThrown) {
+                        if (XMLHttpRequest.readyState == 0) {
+                            // Network error (i.e. connection refused, access denied due to CORS, etc.)
+                            toastr.error('Network Connection Refused');
+                            $("#submit"+id).removeAttr("disabled");
+                        }
+                        console.log(JSON.stringify(jqXHR));
+                        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                    }
+                });
+
+                console.log('customer_id = ' + customer_id + ', job id = ' + jobid + ', paid amount = ' + paidamount + ', date = ' + date);
+            }
+            else{
+                toastr.warning('Please Enter Paid Amount');
+            }
+        }
+
+        function calculateDiscount(id)
+        {
+            var debitamount = $('#debitamount'+id).val();
+            var paidamount = $('#paidamount'+id).val();
+            $('#discount'+id).val(debitamount - paidamount);
         }
 
     </script>
