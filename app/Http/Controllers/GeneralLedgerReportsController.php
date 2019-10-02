@@ -331,7 +331,7 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'GLAF' as formtype"),"glaf.added_at as added_at", DB::raw("'' as cheque_no"),
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
-            ->where('glaf.date', '<=', $request['end'])
+            ->andwhere('glaf.date', '<=', $request['end'])
             ->where('glaf.debit_gl', $request['id'])
             ->orwhere('glaf.credit_gl', $request['id']);
 
