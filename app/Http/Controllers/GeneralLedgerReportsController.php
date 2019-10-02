@@ -114,9 +114,9 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'GLAF' as formtype"),"glaf.added_at as added_at", DB::raw("'' as cheque_no"),
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
+            ->where('glaf.date', '<=', $request['end'])
             ->where('glaf.debit_gl', $request['id'])
-            ->orwhere('glaf.credit_gl', $request['id'])
-            ->where('glaf.date', '<=', $request['end']);
+            ->orwhere('glaf.credit_gl', $request['id']);
 
         $result = DB::table('customeradjustment as caf')
             ->leftJoin('saleinventory as sin', 'sin.id', '=', 'caf.invoice_no')
@@ -424,9 +424,9 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'GLAF' as formtype"),"glaf.added_at as added_at", DB::raw("'' as cheque_no"),
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
+            ->where('glaf.date', '<=', $request['end'])
             ->where('glaf.debit_gl', $request['id'])
             ->orwhere('glaf.credit_gl', $request['id'])
-            ->where('glaf.date', '<=', $request['end'])
             ->union($first)
             ->union($second)
             ->ORDERBY('date')
@@ -506,9 +506,9 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'GLAF' as formtype"),"glaf.added_at as added_at", DB::raw("'' as cheque_no"),
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
+            ->where('glaf.date', '<=', $request['end'])
             ->where('glaf.debit_gl', $request['id'])
             ->orwhere('glaf.credit_gl', $request['id'])
-            ->where('glaf.date', '<=', $request['end'])
             ->union($first)
             ->union($second)
             ->ORDERBY('date')
@@ -553,9 +553,9 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'GLAF' as formtype"),"glaf.added_at as added_at", DB::raw("'' as cheque_no"),
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
+            ->where('glaf.date', '<=', $request['end'])
             ->where('glaf.debit_gl', $request['id'])
             ->orwhere('glaf.credit_gl', $request['id'])
-            ->where('glaf.date', '<=', $request['end'])
             ->union($first)
             ->ORDERBY('date')
             ->get();
@@ -586,9 +586,9 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'GLAF' as formtype"),"glaf.added_at as added_at", DB::raw("'' as cheque_no"),
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
+            ->where('glaf.date', '<=', $request['end'])
             ->where('glaf.debit_gl', $request['id'])
             ->orwhere('glaf.credit_gl', $request['id'])
-            ->where('glaf.date', '<=', $request['end'])
             ->ORDERBY('date')
             ->get();
 
@@ -653,9 +653,9 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'GLAF' as formtype"),"glaf.added_at as added_at", DB::raw("'' as cheque_no"),
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
+            ->where('glaf.date', '<=', $request['end'])
             ->where('glaf.debit_gl', $request['id'])
             ->orwhere('glaf.credit_gl', $request['id'])
-            ->where('glaf.date', '<=', $request['end'])
             ->union($first)
             ->union($second)
             ->ORDERBY('date')
@@ -745,9 +745,9 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'GLAF' as formtype"),"glaf.added_at as added_at", DB::raw("'' as cheque_no"),
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
+            ->where('glaf.date', '<=', $request['end'])
             ->where('glaf.debit_gl', $request['id'])
-            ->orwhere('glaf.credit_gl', $request['id'])
-            ->where('glaf.date', '<=', $request['end']);
+            ->orwhere('glaf.credit_gl', $request['id']);
 
         $fourth = DB::table('supplieradjustment as saf')
             ->leftJoin('purchaseinventory as pin', 'pin.id', '=', 'saf.purchase_order_no')
@@ -826,9 +826,9 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'GLAF' as formtype"),"glaf.added_at as added_at", DB::raw("'' as cheque_no"),
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
+            ->where('glaf.date', '<=', $request['end'])
             ->where('glaf.debit_gl', $request['id'])
             ->orwhere('glaf.credit_gl', $request['id'])
-            ->where('glaf.date', '<=', $request['end'])
             ->union($first)
             ->ORDERBY('date')
             ->get();
