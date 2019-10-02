@@ -113,8 +113,6 @@
                 data: {id: id},
 
                 success: function (response) {
-                    console.log(response);
-
                     $('#tableExample4').DataTable({
                         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                         "lengthMenu": [ [25, 50, -1], [25, 50, "All"] ],
@@ -221,8 +219,6 @@
                         console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                     }
                 });
-
-                console.log('customer_id = ' + customer_id + ', job id = ' + jobid + ', paid amount = ' + paidamount + ', date = ' + date);
             }
             else{
                 toastr.warning('Please Enter Paid Amount');
