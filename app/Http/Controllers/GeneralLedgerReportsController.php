@@ -284,7 +284,7 @@ class GeneralLedgerReportsController extends Controller
 
     public function bank(Request $request)
     {
-        $prevdebitsalepayment =  DB::table('salepayment as sp')
+       /* $prevdebitsalepayment =  DB::table('salepayment as sp')
             ->leftJoin('chequeinfo as ci', 'sp.id', '=', 'ci.sale_payment_id')
             ->where('date', '<', $request['start'])
             ->where('type', 'cheque')
@@ -331,7 +331,9 @@ class GeneralLedgerReportsController extends Controller
             ->sum('supplieradjustment.amount');
 
         $openingbalance = ($prevdebitsalepayment + $prevdebitgl +$prevdebitcadj +$prevdebitsadj)-
-            ($prevcreditpurchasepayment + $prevcreditgl +$prevcreditcadj +$prevcreditsadj);
+            ($prevcreditpurchasepayment + $prevcreditgl +$prevcreditcadj +$prevcreditsadj);*/
+
+        $openingbalance = 0;
 
         $first = DB::table('salepayment as sp')
             ->leftJoin('chequeinfo as ci', 'sp.id', '=', 'ci.sale_payment_id')
@@ -378,7 +380,7 @@ class GeneralLedgerReportsController extends Controller
             ->where('glaf.date', '<=', $request['end'])
             ->where('glaf.debit_gl', $request['id'])
             ->orwhere('glaf.credit_gl', $request['id']);*/
-        /*$fourth = DB::table('customeradjustment as caf')
+        $fourth = DB::table('customeradjustment as caf')
             ->leftJoin('saleinventory as sin', 'sin.id', '=', 'caf.invoice_no')
             ->leftJoin('customers as c', 'sin.customer_id', '=', 'c.id')
             ->leftJoin('walkincustomer as w', 'sin.id', '=', 'w.saleinventory_id')
@@ -391,7 +393,7 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("CASE WHEN c.type = 0 THEN 'Walk In Customer' ELSE 'Credit customer' END as customer_type"))
             ->where('caf.date', '>=', $request['start'])
             ->where('caf.date', '<=', $request['end'])
-            ->where('caf.general_ledger_id',$request['id']);*/
+            ->where('caf.general_ledger_id',$request['id']);
 
         $result = DB::table('supplieradjustment as saf')
             ->leftJoin('purchaseinventory as pin', 'pin.id', '=', 'saf.purchase_order_no')
@@ -407,7 +409,7 @@ class GeneralLedgerReportsController extends Controller
             ->union($first)
             ->union($second)
             ->union($third)
-//            ->union($fourth)
+            ->union($fourth)
             ->ORDERBY('date')
             ->get();
 
