@@ -156,9 +156,13 @@
                     console.log(jobids);
                     confirmid()*/
                     console.log(response);
-                    if(response) {
+                    if((response === 1) || ((response === 2))) {
                         $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
                         $(".pe-7s-check").css({ 'color': 'lightgreen' });
+                        if(response === 2)
+                        {
+                            toastr.warning('Cash Collection Already submitted against this job id');
+                        }
                     }
                     else {
                         $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");

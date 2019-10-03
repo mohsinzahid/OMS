@@ -180,7 +180,7 @@ class CashCollectionController extends Controller
         if(( DB::table('saleinventory')->where('customer_id',$request['id'])->where('id',$request['jobid'])->first()))
         {
             if( DB::table('salepayment')->where('customer_id',$request['id'])->where('job_order_no',$request['jobid'])->first()) {
-                $salerecord = 0;
+                $salerecord = 2;
             }
             else
             {
