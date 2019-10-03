@@ -210,8 +210,8 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("0 as credit_amount"), DB::raw("'CC' as formtype"),"sp.added_at as added_at", "ci.cheque_no as cheque_no",
                 "ci.cheque_date as cheque_date",DB::raw("'' as created_by"),DB::raw("'' as remarks"),
                 DB::raw("CASE WHEN sp.invoiceno iS NULL AND c.type = 0 THEN w.name WHEN sp.invoiceno iS NULL AND c.type != 0 THEN c.name ELSE '' END as customer_name"),
-                /*DB::raw("CASE WHEN sp.invoiceno iS NULL THEN CASE WHEN c.type = 0 THEN 'Walk In Customer' ELSE
-                    'Credit customer' END ELSE '' as customer_type")*/ DB::raw("'' as customer_type"))
+                DB::raw("CASE WHEN sp.invoiceno iS NULL AND c.type = 0 THEN 'Walk In Customer' WHEN sp.invoiceno iS NULL AND c.type != 0 THEN
+                    'Credit customer' ELSE '' END as customer_type"))
             ->where('sp.date', '>=', $request['start'])
             ->where('sp.date', '<=', $request['end']);
 
