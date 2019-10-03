@@ -140,7 +140,7 @@
                         delete response['original']['openingbalance'];
                         $('#tableExample4').DataTable().clear().draw();
                         $("#tableExample4").DataTable().row.add([
-                            "","Opening Balance", "", "", "", "", "", "", openingbalance,"", "", ""]).draw();
+                            "","Opening Balance", "", "", "", "","","", "", "", openingbalance,"", "", ""]).draw();
 
                         var balance = openingbalance;
                         var totaldebit = 0;
@@ -162,7 +162,7 @@
                             ]).draw();
                         }
                         $("#tableExample4").DataTable().row.add([
-                            "","Net Total", "", "", "", "", totaldebit, totalcredit, balance,"", "", ""]).draw();
+                            "","Net Total", "", "", "","","", "", totaldebit, totalcredit, balance,"", "", ""]).draw();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(JSON.stringify(jqXHR));
