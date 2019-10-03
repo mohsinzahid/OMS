@@ -115,8 +115,12 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
             ->where('glaf.date', '<=', $request['end'])
-            ->where('glaf.debit_gl', $request['id'])
-            ->orwhere('glaf.credit_gl', $request['id']);
+            ->where(function($result) use ($request) {
+                    $result->where('glaf.debit_gl', $request['id'])
+                        ->orwhere('glaf.credit_gl', $request['id']);
+            });
+//            ->where('glaf.debit_gl', $request['id'])
+//            ->orwhere('glaf.credit_gl', $request['id']);
 
         $result = DB::table('customeradjustment as caf')
             ->leftJoin('saleinventory as sin', 'sin.id', '=', 'caf.invoice_no')
