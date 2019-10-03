@@ -99,10 +99,13 @@ class GeneralLedgerReportsController extends Controller
 
         $first = DB::table('saleinventory as sin')
             ->leftJoin('employees as e', 'sin.employee_id', '=', 'e.id')
+            ->leftJoin('customers as c', 'sin.customer_id', '=', 'c.id')
+            ->leftJoin('walkincustomer as w', 'sin.id', '=', 'w.saleinventory_id')
             ->select("sin.id as id", "sin.dateofsale as date", "sin.invoiceno as invoice_no",
                 DB::raw("0 as debit_amount"),"sin.total_amount as credit_amount",DB::raw("'JO' as formtype"),
                 "sin.added_at as added_at",DB::raw("'' as cheque_no"),DB::raw("'' as cheque_date"),"e.name as created_by",
-                DB::raw("'' as remarks"))
+                DB::raw("'' as remarks"),DB::raw("CASE WHEN c.type = 0 THEN w.name ELSE c.name END as customer_name"),
+                DB::raw("CASE WHEN c.type = 0 THEN 'Walk In Customer' ELSE 'Credit customer' END as customer_type"))
             ->where('sin.status', 1)
             ->where('sin.dateofsale', '>=', $request['start'])
             ->where('sin.dateofsale', '<=', $request['end']);
@@ -112,7 +115,8 @@ class GeneralLedgerReportsController extends Controller
                 (DB::raw("CASE WHEN glaf.debit_gl = ".$request['id']." THEN glaf.amount ELSE 0 END as debit_amount")),
                 (DB::raw("CASE WHEN glaf.credit_gl = ".$request['id']." THEN glaf.amount ELSE 0 END as credit_amount")),
                 DB::raw("'GLAF' as formtype"),"glaf.added_at as added_at", DB::raw("'' as cheque_no"),
-                DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
+                DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks",
+                DB::raw("'' as customer_name"), DB::raw("'' as customer_type"))
             ->where('glaf.date', '>=', $request['start'])
             ->where('glaf.date', '<=', $request['end'])
             ->where(function($result) use ($request) {
@@ -124,11 +128,15 @@ class GeneralLedgerReportsController extends Controller
 
         $result = DB::table('customeradjustment as caf')
             ->leftJoin('saleinventory as sin', 'sin.id', '=', 'caf.invoice_no')
+            ->leftJoin('customers as c', 'caf.customer_id', '=', 'c.id')
+            ->leftJoin('walkincustomer as w', 'sin.id', '=', 'w.saleinventory_id')
             ->select("caf.id as id", "caf.date as date", "sin.invoiceno as invoice_no",
                 (DB::raw("CASE WHEN caf.type = 'credit' THEN caf.amount ELSE 0 END as debit_amount")),
                 (DB::raw("CASE WHEN caf.type = 'debit' THEN caf.amount ELSE 0 END as credit_amount")),
                 DB::raw("'CAF' as formtype"),"caf.added_at as added_at", DB::raw("'' as cheque_no"),
-                DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "caf.remarks as remarks")
+                DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "caf.remarks as remarks",
+                DB::raw("CASE WHEN c.type = 0 THEN w.name ELSE c.name END as customer_name"),
+                DB::raw("CASE WHEN c.type = 0 THEN 'Walk In Customer' ELSE 'Credit customer' END as customer_type"))
             ->where('caf.date', '>=', $request['start'])
             ->where('caf.date', '<=', $request['end'])
             ->where('caf.general_ledger_id',$request['id'])
@@ -221,8 +229,14 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
             ->where('glaf.date', '<=', $request['end'])
-            ->where('glaf.debit_gl', $request['id'])
-            ->orwhere('glaf.credit_gl', $request['id']);
+            ->where(function($result) use ($request) {
+                $result->where('glaf.debit_gl', $request['id'])
+                    ->orwhere('glaf.credit_gl', $request['id']);
+            });
+//            ->where('glaf.date', '>=', $request['start'])
+//            ->where('glaf.date', '<=', $request['end'])
+//            ->where('glaf.debit_gl', $request['id'])
+//            ->orwhere('glaf.credit_gl', $request['id']);
 
         $fourth = DB::table('supplieradjustment as saf')
             ->leftJoin('purchaseinventory as pin', 'pin.id', '=', 'saf.purchase_order_no')
@@ -334,10 +348,16 @@ class GeneralLedgerReportsController extends Controller
                 (DB::raw("CASE WHEN glaf.credit_gl = ".$request['id']." THEN glaf.amount ELSE 0 END as credit_amount")),
                 DB::raw("'GLAF' as formtype"),"glaf.added_at as added_at", DB::raw("'' as cheque_no"),
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
-            ->where('glaf.date', '>=', $request['start'])
+                ->where('glaf.date', '>=', $request['start'])
+                ->where('glaf.date', '<=', $request['end'])
+                ->where(function($result) use ($request) {
+                    $result->where('glaf.debit_gl', $request['id'])
+                        ->orwhere('glaf.credit_gl', $request['id']);
+                });
+        /*->where('glaf.date', '>=', $request['start'])
             ->where('glaf.date', '<=', $request['end'])
             ->where('glaf.debit_gl', $request['id'])
-            ->orwhere('glaf.credit_gl', $request['id']);
+            ->orwhere('glaf.credit_gl', $request['id']);*/
 
         $fourth = DB::table('supplieradjustment as saf')
             ->leftJoin('purchaseinventory as pin', 'pin.id', '=', 'saf.purchase_order_no')
@@ -427,10 +447,16 @@ class GeneralLedgerReportsController extends Controller
                 (DB::raw("CASE WHEN glaf.credit_gl = ".$request['id']." THEN glaf.amount ELSE 0 END as credit_amount")),
                 DB::raw("'GLAF' as formtype"),"glaf.added_at as added_at", DB::raw("'' as cheque_no"),
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
-            ->where('glaf.date', '>=', $request['start'])
+            /*->where('glaf.date', '>=', $request['start'])
             ->where('glaf.date', '<=', $request['end'])
             ->where('glaf.debit_gl', $request['id'])
-            ->orwhere('glaf.credit_gl', $request['id'])
+            ->orwhere('glaf.credit_gl', $request['id'])*/
+            ->where('glaf.date', '>=', $request['start'])
+            ->where('glaf.date', '<=', $request['end'])
+            ->where(function($result) use ($request) {
+                $result->where('glaf.debit_gl', $request['id'])
+                    ->orwhere('glaf.credit_gl', $request['id']);
+            })
             ->union($first)
             ->union($second)
             ->ORDERBY('date')
@@ -511,8 +537,14 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
             ->where('glaf.date', '<=', $request['end'])
+            ->where(function($result) use ($request) {
+                $result->where('glaf.debit_gl', $request['id'])
+                    ->orwhere('glaf.credit_gl', $request['id']);
+            })
+            /*->where('glaf.date', '>=', $request['start'])
+            ->where('glaf.date', '<=', $request['end'])
             ->where('glaf.debit_gl', $request['id'])
-            ->orwhere('glaf.credit_gl', $request['id'])
+            ->orwhere('glaf.credit_gl', $request['id'])*/
             ->union($first)
             ->union($second)
             ->ORDERBY('date')
@@ -558,8 +590,10 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
             ->where('glaf.date', '<=', $request['end'])
-            ->where('glaf.debit_gl', $request['id'])
-            ->orwhere('glaf.credit_gl', $request['id'])
+            ->where(function($result) use ($request) {
+                $result->where('glaf.debit_gl', $request['id'])
+                    ->orwhere('glaf.credit_gl', $request['id']);
+            })
             ->union($first)
             ->ORDERBY('date')
             ->get();
@@ -658,8 +692,10 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
             ->where('glaf.date', '<=', $request['end'])
-            ->where('glaf.debit_gl', $request['id'])
-            ->orwhere('glaf.credit_gl', $request['id'])
+            ->where(function($result) use ($request) {
+                $result->where('glaf.debit_gl', $request['id'])
+                    ->orwhere('glaf.credit_gl', $request['id']);
+            })
             ->union($first)
             ->union($second)
             ->ORDERBY('date')
@@ -750,8 +786,10 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
             ->where('glaf.date', '<=', $request['end'])
-            ->where('glaf.debit_gl', $request['id'])
-            ->orwhere('glaf.credit_gl', $request['id']);
+            ->where(function($result) use ($request) {
+                $result->where('glaf.debit_gl', $request['id'])
+                    ->orwhere('glaf.credit_gl', $request['id']);
+            });
 
         $fourth = DB::table('supplieradjustment as saf')
             ->leftJoin('purchaseinventory as pin', 'pin.id', '=', 'saf.purchase_order_no')
@@ -831,8 +869,10 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
             ->where('glaf.date', '>=', $request['start'])
             ->where('glaf.date', '<=', $request['end'])
-            ->where('glaf.debit_gl', $request['id'])
-            ->orwhere('glaf.credit_gl', $request['id'])
+            ->where(function($result) use ($request) {
+                $result->where('glaf.debit_gl', $request['id'])
+                    ->orwhere('glaf.credit_gl', $request['id']);
+            })
             ->union($first)
             ->ORDERBY('date')
             ->get();
