@@ -196,8 +196,12 @@ class GeneralLedgerReportsController extends Controller
             ->where('supplieradjustment.type', 'credit')
             ->sum('supplieradjustment.amount');
 
+        $prevcreditpettycash = DB::table('pettycashpayment')
+            ->where('pettycashpayment.date', '<', $request['start'])
+            ->sum('pettycashpayment.amount');
+
         $openingbalance = ($prevdebitsalepayment + $prevdebitgl +$prevdebitcadj +$prevdebitsadj)-
-                            ($prevcreditpurchasepayment + $prevcreditgl +$prevcreditcadj +$prevcreditsadj);
+                            ($prevcreditpurchasepayment + $prevcreditgl +$prevcreditcadj +$prevcreditsadj + $prevcreditpettycash);
 
         $first = DB::table('salepayment as sp')
             ->leftJoin('chequeinfo as ci', 'sp.id', '=', 'ci.sale_payment_id')
@@ -257,6 +261,15 @@ class GeneralLedgerReportsController extends Controller
             ->where('saf.date', '>=', $request['start'])
             ->where('saf.date', '<=', $request['end']);
 
+        $fifth = DB::table('pettycashpayment as pcp')
+            ->select("pcp.id as id", "pcp.date as date", DB::raw("'' as invoice_no"),
+                (DB::raw("0 as debit_amount")), (DB::raw("pcp.amount as credit_amount")), DB::raw("'PCF' as formtype"),
+                "pcp.added_at as added_at", DB::raw("'' as cheque_no"), DB::raw("'' as cheque_date"),
+                DB::raw("'' as created_by"), "pcp.remarks as remarks", DB::raw("'' as customer_name"),
+                DB::raw("'' as customer_type"))
+            ->where('pcp.date', '>=', $request['start'])
+            ->where('pcp.date', '<=', $request['end']);
+
         $result = DB::table('customeradjustment as caf')
             ->leftJoin('saleinventory as sin', 'sin.id', '=', 'caf.invoice_no')
             ->leftJoin('customers as c', 'caf.customer_id', '=', 'c.id')
@@ -275,6 +288,7 @@ class GeneralLedgerReportsController extends Controller
             ->union($second)
             ->union($third)
             ->union($fourth)
+            ->union($fifth)
             ->ORDERBY('date')
             ->get();
 
@@ -604,7 +618,7 @@ class GeneralLedgerReportsController extends Controller
         $first = DB::table('pettycashpayment as pcp')
             ->select("pcp.id as id", "pcp.date as date", DB::raw("'' as invoice_no"),
                 (DB::raw("pcp.amount as debit_amount")),
-                (DB::raw("0 credit_amount")), DB::raw("'PCF' as formtype"),"pcp.added_at as added_at",
+                (DB::raw("0 as credit_amount")), DB::raw("'PCF' as formtype"),"pcp.added_at as added_at",
                 DB::raw("'' as cheque_no"), DB::raw("'' as cheque_date"),DB::raw("'' as created_by"),
                 "pcp.remarks as remarks", DB::raw("'' as customer_name"), DB::raw("'' as customer_type"))
             ->where('pcp.date', '>=', $request['start'])
