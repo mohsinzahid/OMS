@@ -138,7 +138,7 @@
                     for (key in response) {
 
                         job_id ='<div id="jobid'+unique_id+'">'+response[key]["id"]+'</div>';
-                        date = '<input type="date" class="form-control"\n' + 'value="'+response[key]["date"]+'"  ' +
+                        date = '<input type="date" class="form-control"\n' + 'value=""  ' +
                             'name="date" id="date'+unique_id+'" required>';
                         debitamount = '<input value="'+response[key]["debit_amount"]+'" type="text" class="form-control"' +
                             ' id="debitamount'+unique_id+'" disabled>';
@@ -179,12 +179,11 @@
 
         function collect(id) {
             var paidamount =$("#paidamount"+id).val();
-            if(paidamount) {
+            var date =$("#date"+id).val();
+            if(paidamount && date) {
                 $("#submit"+id).attr("disabled", true);
                 var customer_id = $("#cust_id" + id).val();
                 var jobid = $("#jobid" + id).text();
-
-                var date = $("#date" + id).val();
                 var discount = $("#discount"+ id).val();
                 console.log(discount);
 
