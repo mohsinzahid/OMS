@@ -284,7 +284,7 @@ class GeneralLedgerReportsController extends Controller
 
     public function bank(Request $request)
     {
-       /* $prevdebitsalepayment =  DB::table('salepayment as sp')
+        $prevdebitsalepayment =  DB::table('salepayment as sp')
             ->leftJoin('chequeinfo as ci', 'sp.id', '=', 'ci.sale_payment_id')
             ->where('date', '<', $request['start'])
             ->where('type', 'cheque')
@@ -331,9 +331,7 @@ class GeneralLedgerReportsController extends Controller
             ->sum('supplieradjustment.amount');
 
         $openingbalance = ($prevdebitsalepayment + $prevdebitgl +$prevdebitcadj +$prevdebitsadj)-
-            ($prevcreditpurchasepayment + $prevcreditgl +$prevcreditcadj +$prevcreditsadj);*/
-
-        $openingbalance = 0;
+            ($prevcreditpurchasepayment + $prevcreditgl +$prevcreditcadj +$prevcreditsadj);
 
         $first = DB::table('salepayment as sp')
             ->leftJoin('chequeinfo as ci', 'sp.id', '=', 'ci.sale_payment_id')
@@ -348,7 +346,7 @@ class GeneralLedgerReportsController extends Controller
                     c.type != 0 THEN c.name ELSE '' END as customer_name"),
                 DB::raw("CASE WHEN sp.invoiceno iS NULL AND c.type = 0 THEN 'Walk In Customer' WHEN sp.invoiceno iS NULL
                     AND c.type != 0 THEN 'Credit customer' ELSE '' END as customer_type"))
-            ->where('type', 'cheque')
+            ->where('sp.type', 'cheque')
             ->where('sp.date', '>=', $request['start'])
             ->where('sp.date', '<=', $request['end']);
 
@@ -359,7 +357,7 @@ class GeneralLedgerReportsController extends Controller
                 "pp.added_at as added_at", "ci.cheque_no as cheque_no", "ci.cheque_date as cheque_date",
                 DB::raw("'' as created_by"),DB::raw("'' as remarks"), DB::raw("'' as customer_name"),
                 DB::raw("'' as customer_type"))
-            ->where('type', 'cheque')
+            ->where('pp.type', 'cheque')
             ->where('pp.paiddate', '>=', $request['start'])
             ->where('pp.paiddate', '<=', $request['end']);
 
@@ -808,7 +806,7 @@ class GeneralLedgerReportsController extends Controller
                     c.type != 0 THEN c.name ELSE '' END as customer_name"),
                 DB::raw("CASE WHEN sp.invoiceno iS NULL AND c.type = 0 THEN 'Walk In Customer' WHEN sp.invoiceno iS NULL
                     AND c.type != 0 THEN 'Credit customer' ELSE '' END as customer_type"))
-            ->where('type', 'cheque')
+            ->where('sp.type', 'cheque')
             ->where('sp.date', '>=', $request['start'])
             ->where('sp.date', '<=', $request['end']);
 
@@ -819,7 +817,7 @@ class GeneralLedgerReportsController extends Controller
                 "pp.added_at as added_at", "ci.cheque_no as cheque_no", "ci.cheque_date as cheque_date",
                 DB::raw("'' as created_by"),DB::raw("'' as remarks"), DB::raw("'' as customer_name"),
                 DB::raw("'' as customer_type"))
-            ->where('type', 'cheque')
+            ->where('pp.type', 'cheque')
             ->where('pp.paiddate', '>=', $request['start'])
             ->where('pp.paiddate', '<=', $request['end']);
 

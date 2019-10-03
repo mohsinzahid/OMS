@@ -65,6 +65,8 @@
                                     <th>CGN</th>
                                     <th>Date</th>
                                     <th>Form Type</th>
+                                    <th>Customer Name</th>
+                                    <th>Customer Type</th>
                                     <th>Reference No</th>
                                     <th>Cheque No</th>
                                     <th>Cheque Date</th>
@@ -151,7 +153,8 @@
                             totalcredit = totalcredit + response['original'][key]["credit_amount"];
                             $("#tableExample4").DataTable().row.add([
                                 response['original'][key]['id'],response['original'][key]["date"],
-                                response['original'][key]["formtype"], response['original'][key]["invoice_no"],
+                                response['original'][key]["formtype"],response['original'][key]["customer_name"],
+                                response['original'][key]["customer_type"],response['original'][key]["invoice_no"],
                                 response['original'][key]['cheque_no'],response['original'][key]['cheque_date'],
                                 response['original'][key]['debit_amount'], response['original'][key]['credit_amount'],
                                 balance,response['original'][key]["remarks"], response['original'][key]["added_at"],
