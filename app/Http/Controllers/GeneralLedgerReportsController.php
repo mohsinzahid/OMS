@@ -202,12 +202,16 @@ class GeneralLedgerReportsController extends Controller
         $first = DB::table('salepayment as sp')
             ->leftJoin('chequeinfo as ci', 'sp.id', '=', 'ci.sale_payment_id')
             ->leftJoin('saleinventory as sin', 'sp.job_order_no', '=', 'sin.id')
+            ->leftJoin('customers as c', 'sin.customer_id', '=', 'c.id')
+            ->leftJoin('walkincustomer as w', 'sin.id', '=', 'w.saleinventory_id')
             ->select("sp.id as id", "sp.date as date",
                 (DB::raw("CASE WHEN sp.invoiceno iS NULL THEN sin.invoiceno ELSE sp.invoiceno END as invoice_no")),
                 (DB::raw("CASE WHEN ci.tax_amount iS NULL THEN sp.amount ELSE sp.amount + ci.tax_amount END as debit_amount")),
-                DB::raw("0 as credit_amount"),
-                DB::raw("'CC' as formtype"),"sp.added_at as added_at", "ci.cheque_no as cheque_no",
-                "ci.cheque_date as cheque_date",DB::raw("'' as created_by"),DB::raw("'' as remarks"))
+                DB::raw("0 as credit_amount"), DB::raw("'CC' as formtype"),"sp.added_at as added_at", "ci.cheque_no as cheque_no",
+                "ci.cheque_date as cheque_date",DB::raw("'' as created_by"),DB::raw("'' as remarks"),
+                DB::raw("CASE WHEN sp.invoiceno iS NULL THEN CASE WHEN c.type = 0 THEN w.name ELSE c.name END ELSE '' as customer_name"),
+                DB::raw("CASE WHEN sp.invoiceno iS NULL THEN CASE WHEN c.type = 0 THEN 'Walk In Customer' ELSE 
+                    'Credit customer' END ELSE '' as customer_type"))
             ->where('sp.date', '>=', $request['start'])
             ->where('sp.date', '<=', $request['end']);
 
@@ -217,7 +221,8 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("0 as debit_amount"),
                 (DB::raw("CASE WHEN ci.tax_amount iS NULL THEN pp.amount ELSE pp.amount + ci.tax_amount END as credit_amount")),
                 DB::raw("'CP' as formtype"),"pp.added_at as added_at", "ci.cheque_no as cheque_no",
-                "ci.cheque_date as cheque_date",DB::raw("'' as created_by"),DB::raw("'' as remarks"))
+                "ci.cheque_date as cheque_date",DB::raw("'' as created_by"),DB::raw("'' as remarks"),
+                DB::raw("'' as customer_name"), DB::raw("'' as customer_type"))
             ->where('pp.paiddate', '>=', $request['start'])
             ->where('pp.paiddate', '<=', $request['end']);
 
@@ -226,7 +231,8 @@ class GeneralLedgerReportsController extends Controller
                 (DB::raw("CASE WHEN glaf.debit_gl = ".$request['id']." THEN glaf.amount ELSE 0 END as debit_amount")),
                 (DB::raw("CASE WHEN glaf.credit_gl = ".$request['id']." THEN glaf.amount ELSE 0 END as credit_amount")),
                 DB::raw("'GLAF' as formtype"),"glaf.added_at as added_at", DB::raw("'' as cheque_no"),
-                DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks")
+                DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "glaf.remarks as remarks",
+                DB::raw("'' as customer_name"), DB::raw("'' as customer_type"))
             ->where('glaf.date', '>=', $request['start'])
             ->where('glaf.date', '<=', $request['end'])
             ->where(function($result) use ($request) {
@@ -244,18 +250,23 @@ class GeneralLedgerReportsController extends Controller
                 (DB::raw("CASE WHEN saf.type = 'credit' THEN saf.amount ELSE 0 END as debit_amount")),
                 (DB::raw("CASE WHEN saf.type = 'debit' THEN saf.amount ELSE 0 END as credit_amount")),
                 DB::raw("'SAF' as formtype"),"saf.added_at as added_at", DB::raw("'' as cheque_no"),
-                DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "saf.remarks as remarks")
+                DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "saf.remarks as remarks",
+                DB::raw("'' as customer_name"), DB::raw("'' as customer_type"))
             ->where('saf.general_ledger_id',$request['id'])
             ->where('saf.date', '>=', $request['start'])
             ->where('saf.date', '<=', $request['end']);
 
         $result = DB::table('customeradjustment as caf')
             ->leftJoin('saleinventory as sin', 'sin.id', '=', 'caf.invoice_no')
+            ->leftJoin('customers as c', 'caf.customer_id', '=', 'c.id')
+            ->leftJoin('walkincustomer as w', 'sin.id', '=', 'w.saleinventory_id')
             ->select("caf.id as id", "caf.date as date", "sin.invoiceno as invoice_no",
                 (DB::raw("CASE WHEN caf.type = 'credit' THEN caf.amount ELSE 0 END as debit_amount")),
                 (DB::raw("CASE WHEN caf.type = 'debit' THEN caf.amount ELSE 0 END as credit_amount")),
                 DB::raw("'CAF' as formtype"),"caf.added_at as added_at", DB::raw("'' as cheque_no"),
-                DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "caf.remarks as remarks")
+                DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "caf.remarks as remarks",
+                DB::raw("CASE WHEN c.type = 0 THEN w.name ELSE c.name END as customer_name"),
+                DB::raw("CASE WHEN c.type = 0 THEN 'Walk In Customer' ELSE 'Credit customer' END as customer_type"))
             ->where('caf.date', '>=', $request['start'])
             ->where('caf.date', '<=', $request['end'])
             ->where('caf.general_ledger_id',$request['id'])
