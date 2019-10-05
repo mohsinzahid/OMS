@@ -106,7 +106,7 @@
                         if(response[key]['saleinventory_id'] !== previd)
                         {
                             printbutton = '<button class="btn btn-w-md btn-success" style="color: #31b887; !important" ' +
-                                'data-toggle="modal" data-target="#myModal1' +response[key]['saleinventory_id']+ '">Done</button>\n'+
+                                'data-toggle="modal" id="submit'+response[key]['saleinventory_id']+'" data-target="#myModal1' +response[key]['saleinventory_id']+ '">Done</button>\n'+
                                 ' <div class="modal fade" id="myModal1' +response[key]['saleinventory_id']+ '" tabindex="-1" ' +
                                 'role="dialog" aria-hidden="true" style="display: none;">\n' +
                                 '                                    <div class="modal-dialog modal-lg">\n' +
