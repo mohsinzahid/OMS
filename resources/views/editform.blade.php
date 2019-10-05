@@ -55,7 +55,7 @@
                                         CGN <small>(System Generated Unique ID)</small>
                                     </label>
                                     <input type="text" class="form-control" id="confirmjobid" pattern="\d*"
-                                           placeholder="0" name="cgn" onkeyup="confirmjobids()" required>
+                                           placeholder="0" name="cgn" onchange="confirmjobids()" required>
                                 </div>
                                 <div class=" col-sm-1" id="check">
                                     <label></label>
