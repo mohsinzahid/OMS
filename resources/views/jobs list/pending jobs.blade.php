@@ -194,9 +194,9 @@
                     $("#modalin").append(html);
 
                     $("#myModal2").modal('show');*/
-                    if (response === 1) {
-                        toastr.success('Print Status Updated successfully');
-                    }
+                    toastr.success('Print Status Updated successfully');
+                    $("#submit"+id).attr("disabled",true);
+
                 },
                 error: function (XMLHttpRequest, jqXHR, textStatus, errorThrown) {
                     if (XMLHttpRequest.readyState == 0) {
