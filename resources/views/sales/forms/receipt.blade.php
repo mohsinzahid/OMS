@@ -165,6 +165,8 @@
                             response[key]["invoice_no"],debitamount ,paidamount,discount, response[key]["created_by"],
                             response[key]["added_at"],response[key]["status"], button, customer_id
                         ]).draw();
+
+                        unique_id = unique_id +1;
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
