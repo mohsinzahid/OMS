@@ -46,7 +46,7 @@ class SupplierAdjustmentController extends Controller
         {
             DB::table('supplieradjustment')->insert(
                 ['supplier_id' => $request['supplierid'],'purchase_order_no' => $request['purchaseorderno'],
-                    'date' => $request['paiddate'], 'amount' => $request['amount'], 'added_at' => now(),
+                    'date' => $request['paiddate'], 'amount' => $request['amount'], 'added_at' => DB::raw('NOW()'),
                     'type' => $request['type'], 'general_ledger_id' => $request['generalledger'],
                     'size_id' => $request['size'], 'quantity' => $request['quantity'],
                     'remarks' => $request['remarks']]);
@@ -55,7 +55,7 @@ class SupplierAdjustmentController extends Controller
         {
             DB::table('supplieradjustment')->insert(
                 ['supplier_id' => $request['supplierid'],'purchase_order_no' => $request['purchaseorderno'],
-                    'date' => $request['paiddate'], 'amount' => $request['amount'], 'added_at' => now(),
+                    'date' => $request['paiddate'], 'amount' => $request['amount'], 'added_at' => DB::raw('NOW()'),
                     'type' => $request['type'], 'general_ledger_id' => $request['generalledger'],
                     'remarks' => $request['remarks']]);
         }

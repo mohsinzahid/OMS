@@ -45,7 +45,7 @@ class CashCollectionController extends Controller
         {
             DB::table('salepayment')->insert(
                 ['customer_id' => $request['customerid'], 'date' => $request['paiddate'] ,
-                    'invoiceno' => $request['invoiceno'] , 'added_at' => now() , 'amount' => $request['amount'],
+                    'invoiceno' => $request['invoiceno'] , 'added_at' => DB::raw('NOW()') , 'amount' => $request['amount'],
                     'payee_name' => $request['payeename'], 'type' => "cash" ]
             );
             $sale_payment_id = DB::getPdo()->lastInsertId();
@@ -63,7 +63,7 @@ class CashCollectionController extends Controller
         {
             DB::table('salepayment')->insert(
                 ['customer_id' => $request['customerid'], 'date' => $request['paiddate'] ,
-                    'job_order_no' => $request['invoiceno'] , 'added_at' => now() , 'amount' => $request['amount'],
+                    'job_order_no' => $request['invoiceno'] , 'added_at' => DB::raw('NOW()') , 'amount' => $request['amount'],
                     'payee_name' => $request['payeename'], 'type' => "cash" ]
             );
         }
@@ -116,7 +116,7 @@ class CashCollectionController extends Controller
             $data = DB::table('salepayment')->where('id', $request['id'])->first();
             DB::table('salepayment')->where('id', $request['id'])
                 ->update(['customer_id' => $request['customerid'], 'date' => $request['paiddate'] ,
-                    'job_order_no' => $request['invoiceno'] , 'added_at' => now() , 'amount' => $request['amount'],
+                    'job_order_no' => $request['invoiceno'] , 'added_at' => DB::raw('NOW()') , 'amount' => $request['amount'],
                     'invoiceno' => NULL, 'payee_name' => $request['payeename'], 'type' => "cash"]);
             if($data->type == 'cheque')
             {
@@ -127,7 +127,7 @@ class CashCollectionController extends Controller
         {
             DB::table('salepayment')->where('id', $request['id'])
                 ->update(['customer_id' => $request['customerid'], 'date' => $request['paiddate'] ,
-                    'invoiceno' => $request['invoiceno'] , 'added_at' => now() , 'amount' => $request['amount'],
+                    'invoiceno' => $request['invoiceno'] , 'added_at' => DB::raw('NOW()') , 'amount' => $request['amount'],
                     'payee_name' => $request['payeename'], 'job_order_no' => NULL]);
 
             if ($request['type'] == "0") /*if cheque entry is made*/
@@ -208,20 +208,20 @@ class CashCollectionController extends Controller
     {
         DB::table('salepayment')->insert(
             ['customer_id' => $request['customerid'], 'date' => $request['date'],
-                'job_order_no' => $request['job_order_no'] , 'added_at' => now() , 'amount' => $request['amount'],
+                'job_order_no' => $request['job_order_no'] , 'added_at' => DB::raw('NOW()') , 'amount' => $request['amount'],
                 'type' => "cash"]);
         if($request['discount'] > 0)
         {
             DB::table('customeradjustment')->insert(
                 ['customer_id' => $request['customerid'],'invoice_no' => $request['job_order_no'],
-                    'date' => $request['date'], 'amount' => $request['discount'], 'added_at' => now(),
+                    'date' => $request['date'], 'amount' => $request['discount'], 'added_at' => DB::raw('NOW()'),
                     'type' => "credit", 'general_ledger_id' => "8", 'remarks' => 'Discount adjustment added from Receipts']);
         }
         else if($request['discount'] < 0)
         {
             DB::table('customeradjustment')->insert(
                 ['customer_id' => $request['customerid'],'invoice_no' => $request['job_order_no'],
-                    'date' => $request['date'], 'amount' => ($request['discount'] * -1), 'added_at' => now(),
+                    'date' => $request['date'], 'amount' => ($request['discount'] * -1), 'added_at' => DB::raw('NOW()'),
                     'type' => 'debit', 'general_ledger_id' => 1, 'remarks' => 'Discount adjustment added from Receipts']);
         }
 

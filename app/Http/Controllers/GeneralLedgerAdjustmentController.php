@@ -20,7 +20,7 @@ class GeneralLedgerAdjustmentController extends Controller
     {
 //        dd($request);
         DB::table('gladjustment')->insert(
-            ['added_at' => now() , 'amount' => $request['amount'], 'remarks' => $request['remarks'],
+            ['added_at' => DB::raw('NOW()') , 'amount' => $request['amount'], 'remarks' => $request['remarks'],
                 'debit_gl' => $request['debitgl'], 'credit_gl' => $request['creditgl'], 'date' => $request['date']]);
 
         $gl = DB::table('glaccounts')->orderBy('name', 'asc')->get();

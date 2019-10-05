@@ -42,7 +42,7 @@ class CustomerAdjustmentController extends Controller
 //        dd($request);
         DB::table('customeradjustment')->insert(
             ['customer_id' => $request['customerid'],'invoice_no' => $request['joborderno'],
-                'date' => $request['paiddate'], 'amount' => $request['amount'], 'added_at' => now(),
+                'date' => $request['paiddate'], 'amount' => $request['amount'], 'added_at' => DB::raw('NOW()'),
                 'type' => $request['type'], 'general_ledger_id' => $request['generalledger'],
                 'remarks' => $request['remarks']]);
 
@@ -91,7 +91,7 @@ class CustomerAdjustmentController extends Controller
     {
         DB::table('customeradjustment')->where('id', $request['id'])->update(
             ['customer_id' => $request['customerid'],'invoice_no' => $request['joborderno'],
-                'date' => $request['paiddate'], 'amount' => $request['amount'], 'added_at' => now(),
+                'date' => $request['paiddate'], 'amount' => $request['amount'], 'added_at' => DB::raw('NOW()'),
                 'type' => $request['type'], 'general_ledger_id' => $request['generalledger'],
                 'remarks' => $request['remarks']]);
 

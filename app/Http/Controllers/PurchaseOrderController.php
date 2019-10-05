@@ -42,7 +42,7 @@ class PurchaseOrderController extends Controller
         $totalamount =array_sum($request['data']['amount']);
         DB::table('purchaseinventory')->insert(
             ['vendor_id' => $request['vendor_id'], 'dateofpurchase' => $request['dateofpurchase'] ,
-                'invoice_no' => $request['invoiceno'] , 'added_at' => now() , 'total_amount' => $totalamount,
+                'invoice_no' => $request['invoiceno'] , 'added_at' => DB::raw('NOW()') , 'total_amount' => $totalamount,
                 'received_by' => $request['receivedby'], 'remarks' => $request['remarks']]);
 
         $last_id =DB::getPdo()->lastInsertId();
@@ -118,7 +118,7 @@ class PurchaseOrderController extends Controller
                 'dateofpurchase' => $request['dateofpurchase'],
                 'invoice_no' => $request['invoiceno'],
                 'received_by' => $request['receivedby'],
-                'added_at' => now(),
+                'added_at' => DB::raw('NOW()'),
                 'remarks' => $request['remarks'],
                 'total_amount' => $request['totalamount']]);
 

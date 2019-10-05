@@ -36,14 +36,14 @@ class JobOrderController extends Controller
             DB::table('saleinventory')->insert(
                 ['customer_id' => $request['customer_id'], 'employee_id' => $request['employee'],
                     'dateofsale' => $request['dateofsale'], 'invoiceno' => $request['invoiceno'], 'status' => 0,
-                    'added_at' => now(), 'paidamount' => 0, 'isreplace' => 0, 'total_amount' => $request['totalamount']]);
+                    'added_at' => DB::raw('NOW()'), 'paidamount' => 0, 'isreplace' => 0, 'total_amount' => $request['totalamount']]);
         }
         else
         {
             DB::table('saleinventory')->insert(
                 ['customer_id' => $request['customer_id'], 'employee_id' => $request['employee'],
                     'dateofsale' => $request['dateofsale'], 'invoiceno' => $request['invoiceno'], 'status' => 0,
-                    'added_at' => now(), 'paidamount' => 0, 'isreplace' => 1]
+                    'added_at' => DB::raw('NOW()'), 'paidamount' => 0, 'isreplace' => 1]
             );
         }
 

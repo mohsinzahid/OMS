@@ -39,7 +39,7 @@ class CashPaymentController extends Controller
     {
         DB::table('purchasepayment')->insert(
             ['vendor_id' => $request['vendor_id'], 'paiddate' => $request['paiddate'] ,
-                'invoiceno' => $request['invoiceno'] , 'added_at' => now() , 'amount' => $request['amount'],
+                'invoiceno' => $request['invoiceno'] , 'added_at' => DB::raw('NOW()') , 'amount' => $request['amount'],
                 'type' => "cash"]);
 
         $purchase_payment_id = DB::getPdo()->lastInsertId();
@@ -102,7 +102,7 @@ class CashPaymentController extends Controller
             ->update(['vendor_id' => $request['vendor_id'],
                 'paiddate' => $request['paiddate'] ,
                 'invoiceno' => $request['invoiceno'] ,
-                'added_at' => now() ,
+                'added_at' => DB::raw('NOW()') ,
                 'amount' => $request['amount'],
                 'type' => 'cash']);
 
