@@ -61,12 +61,15 @@ class JobslistController extends Controller
             ->leftJoin('walkincustomer as w', 'saleinventory.id', '=', 'w.saleinventory_id')
             ->Join('saleinventoryitem', 'saleinventory.id', '=', 'saleinventoryitem.saleinventory_id')
             ->join('size', 'saleinventoryitem.size_id', '=', 'size.id')
+            ->leftJoin('salepayment as sp', 'saleinventory.id', '=', 'sp.job_order_no')
+
             ->select("saleinventory.id as id", "saleinventory.dateofsale as date", "saleinventory.invoiceno as invoice_no",
                 "saleinventory.added_at as added_at","e.name as created_by",
                 ("saleinventory.status as status"),
                 DB::raw("CASE WHEN c.type = 0 THEN w.name ELSE c.name END as name"),
                 DB::raw("CASE WHEN c.type = 0 THEN 'Walk In Customer' ELSE 'Credit customer' END as type"),
-                "saleinventoryitem.*", "size.size")
+                "saleinventoryitem.*", "size.size",
+                DB::raw("CASE WHEN sp.job_order_no = saleinventory.id THEN 'paid' ELSE 'unpaid' END as status"))
             ->where('saleinventory.dateofsale', '>=',  $request['start'])
             ->where('saleinventory.dateofsale', '<=',  $request['end'])
             ->ORDERBY('added_at')

@@ -64,6 +64,7 @@
                                     <th style="color: #ffc771 ">Description</th>
                                     <th style="color: #ffc771 ">Set</th>
                                     <th style="color: #ffc771 ">Color</th>
+                                    <th style="color: #ffc771 ">Status</th>
 {{--                                    <th style="color: #ffc771 ">Status</th>--}}
                                     <th style="text-align: center"><span class="pe-7s-edit" style="color: #ffc771 ; font-size:20px !important; "></span></th>
                                 </tr>
@@ -134,14 +135,14 @@
                                 response[key]["saleinventory_id"],response[key]["name"],response[key]["date"],
                                 response[key]['invoice_no'], response[key]["created_by"], response[key]["added_at"],
                                 response[key]["size"], response[key]["description"], response[key]["set"],
-                                response[key]["color"],editIcon ]).draw();
+                                response[key]["color"],response[key]["status"],editIcon ]).draw();
                             previd = response[key]['saleinventory_id'];
                         }
                         else
                         {
                             $("#tableExample4").DataTable().row.add([
                                 '','','','', '', '', response[key]["size"], response[key]["description"], response[key]["set"],
-                                response[key]["color"], '','', '']).draw();
+                                response[key]["color"],'', '','', '']).draw();
                         }
                     }
 
