@@ -139,7 +139,7 @@
 
                         job_id ='<div id="jobid'+unique_id+'">'+response[key]["id"]+'</div>';
                         date = '<input type="date" class="form-control"\n' + 'value=""  ' +
-                            'name="date" id="date'+unique_id+'" required>';
+                            'name="date" id="date'+unique_id+'" min="'+response[key]["date"]+'" required>';
                         debitamount = '<input value="'+response[key]["debit_amount"]+'" type="text" class="form-control"' +
                             ' id="debitamount'+unique_id+'" disabled>';
                         paidamount = '<input type="text" class="form-control" placeholder="0.00" id="paidamount'+unique_id+'" ' +
@@ -182,47 +182,60 @@
         function collect(id) {
             var paidamount =$("#paidamount"+id).val();
             var date =$("#date"+id).val();
-            if(paidamount && date) {
-                $("#submit"+id).attr("disabled", true);
-                var customer_id = $("#cust_id" + id).val();
-                var jobid = $("#jobid" + id).text();
-                var discount = $("#discount"+ id).val();
-                console.log(discount);
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    statusCode: {
-                        500: function () {
-                            alert("Script exhausted");
-                        }
-                    },
-                    type: 'POST',
-                    url: '/job-order/ajaxcollect',
-                    data: {customerid: customer_id, date: date, job_order_no: jobid, amount: paidamount, discount:discount},
-
-                    success: function (response) {
-                        console.log(response);
-                        if (response === 1) {
-                            toastr.success('Receipt Collected successfully');
-                        }
-                    },
-                    error: function (XMLHttpRequest, jqXHR, textStatus, errorThrown) {
-                        if (XMLHttpRequest.readyState == 0) {
-                            // Network error (i.e. connection refused, access denied due to CORS, etc.)
-                            toastr.error('Network Connection Refused');
-                            $("#submit"+id).removeAttr("disabled");
-                        }
-                        console.log(JSON.stringify(jqXHR));
-                        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-                    }
-                });
+            var mindate =$("#date"+id).attr("min");
+            if (!paidamount)
+            {
+                toastr.warning('Please Enter Paid Amount');
             }
             else{
-                toastr.warning('Please Enter Paid Amount');
+                if(!date){
+                    toastr.warning('Please Enter Date');
+                }
+                else
+                {
+                    if(date >= mindate){
+                        $("#submit"+id).attr("disabled", true);
+                        var customer_id = $("#cust_id" + id).val();
+                        var jobid = $("#jobid" + id).text();
+                        var discount = $("#discount"+ id).val();
+                        console.log(discount);
+
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            statusCode: {
+                                500: function () {
+                                    alert("Script exhausted");
+                                }
+                            },
+                            type: 'POST',
+                            url: '/job-order/ajaxcollect',
+                            data: {customerid: customer_id, date: date, job_order_no: jobid, amount: paidamount, discount:discount},
+
+                            success: function (response) {
+                                // console.log(response);
+                                if (response === 1) {
+                                    toastr.success('Receipt Collected successfully');
+                                }
+                            },
+                            error: function (XMLHttpRequest, jqXHR, textStatus, errorThrown) {
+                                if (XMLHttpRequest.readyState == 0) {
+                                    // Network error (i.e. connection refused, access denied due to CORS, etc.)
+                                    toastr.error('Network Connection Refused');
+                                    $("#submit"+id).removeAttr("disabled");
+                                }
+                                console.log(JSON.stringify(jqXHR));
+                                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                            }
+                        });
+                    }
+                    else{
+                        toastr.warning('Please Enter Correct Date');
+                    }
+                }
             }
         }
 
