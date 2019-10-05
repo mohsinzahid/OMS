@@ -172,6 +172,7 @@
         $("#tableExample4").on('click','#print', function ()
         {
             var idvalue = $(this).val();
+            console.log(idvalue);
 
             $.ajaxSetup({
                 headers: {
@@ -195,7 +196,7 @@
 
                     $("#myModal2").modal('show');*/
                     toastr.success('Print Status Updated successfully');
-                    $("#submit"+id).attr("disabled",true);
+                    $("#submit"+idvalue).attr("disabled",true);
 
                 },
                 error: function (XMLHttpRequest, jqXHR, textStatus, errorThrown) {
