@@ -353,12 +353,13 @@ class GeneralLedgerReportsController extends Controller
             ->leftJoin('saleinventory as sin', 'sp.job_order_no', '=', 'sin.id')
             ->leftJoin('customers as c', 'sin.customer_id', '=', 'c.id')
             ->leftJoin('walkincustomer as w', 'sin.id', '=', 'w.saleinventory_id')
+            ->leftJoin('customers as csp', 'sp.customer_id', '=', 'csp.id')
             ->select("sp.id as id", "sp.date as date", (DB::raw(" sp.invoiceno as invoice_no")),
                 "sp.amount as debit_amount", DB::raw("0 as credit_amount"),
                 DB::raw("'CC' as formtype"),"sp.added_at as added_at", "ci.cheque_no as cheque_no",
                 "ci.cheque_date as cheque_date",DB::raw("'' as created_by"),DB::raw("'' as remarks"),
                 DB::raw("CASE WHEN sp.invoiceno iS NULL AND c.type = 0 THEN w.name WHEN sp.invoiceno iS NULL AND 
-                    c.type != 0 THEN c.name ELSE '' END as customer_name"),
+                    c.type != 0 THEN c.name ELSE csp.name END as customer_name"),
                 DB::raw("CASE WHEN sp.invoiceno iS NULL AND c.type = 0 THEN 'Walk In Customer' WHEN sp.invoiceno iS NULL
                     AND c.type != 0 THEN 'Credit customer' ELSE '' END as customer_type"))
             ->where('sp.type', 'cheque')
@@ -813,12 +814,13 @@ class GeneralLedgerReportsController extends Controller
             ->leftJoin('saleinventory as sin', 'sp.job_order_no', '=', 'sin.id')
             ->leftJoin('customers as c', 'sin.customer_id', '=', 'c.id')
             ->leftJoin('walkincustomer as w', 'sin.id', '=', 'w.saleinventory_id')
+            ->leftJoin('customers as csp', 'sp.customer_id', '=', 'csp.id')
             ->select("sp.id as id", "sp.date as date", (DB::raw(" sp.invoiceno as invoice_no")),
                 "ci.tax_amount as debit_amount", DB::raw("0 as credit_amount"), DB::raw("'CC' as formtype"),
                 "sp.added_at as added_at", "ci.cheque_no as cheque_no", "ci.cheque_date as cheque_date",
                 DB::raw("'' as created_by"),DB::raw("'' as remarks"),
                 DB::raw("CASE WHEN sp.invoiceno iS NULL AND c.type = 0 THEN w.name WHEN sp.invoiceno iS NULL AND 
-                    c.type != 0 THEN c.name ELSE '' END as customer_name"),
+                    c.type != 0 THEN c.name ELSE csp.name END as customer_name"),
                 DB::raw("CASE WHEN sp.invoiceno iS NULL AND c.type = 0 THEN 'Walk In Customer' WHEN sp.invoiceno iS NULL
                     AND c.type != 0 THEN 'Credit customer' ELSE '' END as customer_type"))
             ->where('sp.type', 'cheque')
