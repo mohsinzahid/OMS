@@ -207,6 +207,7 @@ class GeneralLedgerReportsController extends Controller
             ->leftJoin('chequeinfo as ci', 'sp.id', '=', 'ci.sale_payment_id')
             ->leftJoin('saleinventory as sin', 'sp.job_order_no', '=', 'sin.id')
             ->leftJoin('customers as c', 'sin.customer_id', '=', 'c.id')
+            ->leftJoin('customers as csp', 'sp.customer_id', '=', 'c.id')
             ->leftJoin('walkincustomer as w', 'sin.id', '=', 'w.saleinventory_id')
             ->select("sp.id as id", "sp.date as date",
                 (DB::raw("CASE WHEN sp.invoiceno iS NULL THEN sin.invoiceno ELSE sp.invoiceno END as invoice_no")),
@@ -214,7 +215,7 @@ class GeneralLedgerReportsController extends Controller
                 DB::raw("0 as credit_amount"), DB::raw("'CC' as formtype"),"sp.added_at as added_at", "ci.cheque_no as cheque_no",
                 "ci.cheque_date as cheque_date",DB::raw("'' as created_by"),DB::raw("'' as remarks"),
                 DB::raw("CASE WHEN sp.invoiceno iS NULL AND c.type = 0 THEN w.name WHEN sp.invoiceno iS NULL AND 
-                    c.type != 0 THEN c.name ELSE '' END as customer_name"),
+                    c.type != 0 THEN c.name ELSE csp.name END as customer_name"),
                 DB::raw("CASE WHEN sp.invoiceno iS NULL AND c.type = 0 THEN 'Walk In Customer' WHEN sp.invoiceno iS NULL
                     AND c.type != 0 THEN 'Credit customer' ELSE '' END as customer_type"))
             ->where('sp.date', '>=', $request['start'])
