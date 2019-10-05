@@ -194,8 +194,16 @@
                     $("#modalin").append(html);
 
                     $("#myModal2").modal('show');*/
+                    if (response === 1) {
+                        toastr.success('Print Status Updated successfully');
+                    }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function (XMLHttpRequest, jqXHR, textStatus, errorThrown) {
+                    if (XMLHttpRequest.readyState == 0) {
+                        // Network error (i.e. connection refused, access denied due to CORS, etc.)
+                        toastr.error('Network Connection Refused');
+                        $("#submit"+id).removeAttr("disabled");
+                    }
                     console.log(JSON.stringify(jqXHR));
                     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                 }
