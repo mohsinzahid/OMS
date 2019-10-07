@@ -134,7 +134,7 @@
                     data: {id: id, start: start, end: end},
 
                     success: function (response) {
-                        console.log(response['original']);
+                        // console.log(response['original']);
                         var openingbalance = response['original']['openingbalance'];
 
                         delete response['original']['openingbalance'];

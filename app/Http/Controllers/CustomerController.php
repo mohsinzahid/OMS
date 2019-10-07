@@ -34,6 +34,9 @@ class CustomerController extends Controller
                     'status' => 1, //status 1 defines active and 0 defines hide
                     'type' => 0, //type 0 defines walk in customer and there will be only one row of this in Customer table
                     'prevbalance' => 0]);
+
+            DB::table('closedperiod')
+                ->insert(['closed_date' => date("Y-m-d")]);
         }
         return view('trading.forms.customer opening.add', ["msg"=>'']);
     }

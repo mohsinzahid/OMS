@@ -34,10 +34,6 @@ Route::group(['middleware' => 'auth'], function()
 
 // supplier start start
 
-/*Route::get('/vendor/add', function () {
-    return view('vendor.add', ["msg"=>'']);
-});*/
-
     Route::get('/supplier/add',function ()
     {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -45,8 +41,6 @@ Route::group(['middleware' => 'auth'], function()
         else
             return view('admin.master');
     });
-
-//Route::post('/vendor/postvendor','VendorController@store');
 
     Route::post('/vendor/postvendor',function (Request $request)
     {
@@ -56,8 +50,6 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
-//Route::get('/vendor/index','VendorController@index');
-
     Route::get('/vendor/index',function ()
     {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -66,16 +58,12 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
-//Route::get('/vendor/{id}/edit','VendorController@edit');
-
     Route::get('/supplier/{id}/edit', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\VendorController@edit',[$id]);
         else
             return view('admin.master');
     });
-
-//Route::post('/vendor/updatevendor/{id}','VendorController@update');
 
     Route::post('/vendor/update-vendor', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -97,8 +85,6 @@ Route::group(['middleware' => 'auth'], function()
         else
             return view('admin.master');
     });
-
-/*Route::get('/vendor/{id}/delete','VendorController@destroy');*/
 
 // vendor end
 
@@ -124,12 +110,9 @@ Route::group(['middleware' => 'auth'], function()
 
     Route::get('/inventory-summary-report/ajaxupdate','InventoryReportsController@InventorySummaryReportAjaxUpdate');
 
-
 // inventory report end
 
 //Stock start
-
-/*Route::get('/stock/add','StockController@index');*/
 
     Route::get('/stock/add',function ()
     {
@@ -139,8 +122,6 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
-//Route::post('/stock/poststock','StockController@store');
-
     Route::post('/stock/poststock',function (Request $request)
     {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -149,20 +130,12 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
-//Route::get('/stock/show','StockController@show');
-
-
-
-//Route::get('/stock/{id}/edit','StockController@edit');
-
     Route::get('/stock/{id}/edit', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\StockController@edit',[$id]);
         else
             return view('admin.master');
     });
-
-//Route::post('/stock/Updatestock','StockController@update');
 
     Route::post('/stock/Updatestock', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -175,16 +148,12 @@ Route::group(['middleware' => 'auth'], function()
 
 //Waste Start
 
-//Route::post('/wastage/postwaste','WasteController@store');
-
     Route::post('/wastage/postwaste', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 4 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\WasteController@store',[$request]);
         else
             return view('admin.master');
     });
-
-//Route::get('/wastage/add','WasteController@create');
 
     Route::get('/wastage/add',function ()
     {
@@ -194,8 +163,6 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
-//Route::get('/wastage/show','WasteController@index');
-
     Route::get('/wastage/show',function ()
     {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -204,16 +171,12 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
-//Route::get('/wastage/{id}/edit','WasteController@edit');
-
     Route::get('/wastage/{id}/edit', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\WasteController@edit',[$id]);
         else
             return view('admin.master');
     });
-
-//Route::post('/wastage/updatewaste','WasteController@update');
 
     Route::post('/wastage/updatewaste', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 4 || Auth::user()->type_id === 2)
@@ -222,8 +185,6 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
-//Route::get('/wastage/{id}/delete','WasteController@destroy');
-
     Route::get('/wastage/{id}/delete', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 4 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\WasteController@destroy',[$id]);
@@ -231,12 +192,9 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
-
 //Waste End
 
 //Purchase  Start
-
-//Route::get('/purchase/add','PurchasesReportsController@create');
 
     Route::get('/purchase/add', function () {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -245,16 +203,12 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
-//Route::post('/purchase/store','PurchasesReportsController@store');
-
     Route::post('/purchase/store', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\PurchaseOrderController@store',[$request]);
         else
             return view('admin.master');
     });
-
-//Route::get('/purchase/index','PurchasesReportsController@index');
 
     Route::get('/purchases/supplier_ledger', function () {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -270,11 +224,9 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
-Route::get('/supplier-ledger/ajaxupdate', 'PurchasesReportsController@SupplierLedgerAjaxUpdate');
+    Route::get('/supplier-ledger/ajaxupdate', 'PurchasesReportsController@SupplierLedgerAjaxUpdate');
 
-Route::get('/supplier-ledger-detail/ajaxupdate', 'PurchasesReportsController@SupplierLedgerDetailAjaxUpdate');
-
-//Route::get('/purchase/{id}/edit','PurchasesReportsController@edit');
+    Route::get('/supplier-ledger-detail/ajaxupdate', 'PurchasesReportsController@SupplierLedgerDetailAjaxUpdate');
 
     Route::get('/purchase-order/{id}/edit', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -283,8 +235,6 @@ Route::get('/supplier-ledger-detail/ajaxupdate', 'PurchasesReportsController@Sup
             return view('admin.master');
     });
 
-//Route::get('/purchase/{id}/delete','PurchasesReportsController@destroy');
-
     Route::get('/purchase-order/{id}/delete', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\PurchaseOrderController@destroy',[$id]);
@@ -292,16 +242,12 @@ Route::get('/supplier-ledger-detail/ajaxupdate', 'PurchasesReportsController@Sup
             return view('admin.master');
     });
 
-//Route::post('/purchase/update', 'PurchasesReportsController@update');
-
     Route::post('/purchase-order/update', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\PurchaseOrderController@update',[$request]);
         else
             return view('admin.master');
     });
-
-/*Route::get('/purchase/ajaxgetdate', 'PurchasesReportsController@date');*/
 
     Route::get('/supplier-adjustment/add', function () {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -335,17 +281,12 @@ Route::get('/supplier-ledger-detail/ajaxupdate', 'PurchasesReportsController@Sup
 
 //Purchase Payment Start
 
-
-//Route::get('/purchasepayment/add','CashPaymentController@create');
-
     Route::get('/cashpayment/add', function () {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\CashPaymentController@create');
         else
             return view('admin.master');
     });
-
-//Route::post('/purchasepayment/postpayment','CashPaymentController@store');
 
     Route::post('/purchasepayment/postpayment', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -354,8 +295,6 @@ Route::get('/supplier-ledger-detail/ajaxupdate', 'PurchasesReportsController@Sup
             return view('admin.master');
     });
 
-//Route::get('/purchasepayment/{id}/edit','CashPaymentController@edit');
-
     Route::get('/cash-payment/{id}/edit', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\CashPaymentController@edit',[$id]);
@@ -363,16 +302,12 @@ Route::get('/supplier-ledger-detail/ajaxupdate', 'PurchasesReportsController@Sup
             return view('admin.master');
     });
 
-//Route::get('/purchasepayment/{id}/delete','CashPaymentController@destroy');
-
     Route::get('/purchasepayment/{id}/delete', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\CashPaymentController@destroy',[$id]);
         else
             return view('admin.master');
     });
-
-//Route::post('/purchasepayment/update','CashPaymentController@update');
 
     Route::post('/purchasepayment/update', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -383,13 +318,9 @@ Route::get('/supplier-ledger-detail/ajaxupdate', 'PurchasesReportsController@Sup
 
     Route::get('/supplier-adjustment/ajax/get-invoice', 'SupplierAdjustmentController@getinvoice');
 
-
-
 //Purchase Payment End
 
 //customer Start
-
-//Route::get('/customer/add', 'CustomerController@build');
 
     Route::get('/customer/add', function () {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
@@ -398,16 +329,12 @@ Route::get('/supplier-ledger-detail/ajaxupdate', 'PurchasesReportsController@Sup
             return view('admin.master');
     });
 
-//Route::post('customer/store','CustomerController@store');
-
     Route::post('customer/store', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\CustomerController@store',[$request]);
         else
             return view('admin.master');
     });
-
-//Route::get('customer/index','CustomerController@index');
 
     Route::get('customer/index', function () {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
@@ -416,16 +343,12 @@ Route::get('/supplier-ledger-detail/ajaxupdate', 'PurchasesReportsController@Sup
             return view('admin.master');
     });
 
-//Route::get('/customer/{id}/edit','CustomerController@edit');
-
     Route::get('/customer/{id}/edit', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\CustomerController@edit',[$id]);
         else
             return view('admin.master');
     });
-
-//Route::post('/customer/update','CustomerController@update');
 
     Route::post('/customer/update', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -434,8 +357,6 @@ Route::get('/supplier-ledger-detail/ajaxupdate', 'PurchasesReportsController@Sup
             return view('admin.master');
     });
 
-//Route::get('/customer/saleprice','CustomerController@create');
-
     Route::get('/customer/saleprice', function () {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\CustomerController@create');
@@ -443,9 +364,7 @@ Route::get('/supplier-ledger-detail/ajaxupdate', 'PurchasesReportsController@Sup
             return view('admin.master');
     });
 
-Route::get('/customer/saleprice/ajaxupdate','CustomerController@show');
-
-//Route::post('/customer/saleprice/add','CustomerController@addsaleprice');
+    Route::get('/customer/saleprice/ajaxupdate','CustomerController@show');
 
     Route::post('/customer/saleprice/add', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -454,8 +373,6 @@ Route::get('/customer/saleprice/ajaxupdate','CustomerController@show');
             return view('admin.master');
     });
 
-//Route::get('/customer/saleprice/{id}/delete','CustomerController@destroy');
-
     Route::get('/customer/saleprice/{id}/delete', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\CustomerController@destroy',[$id]);
@@ -463,12 +380,9 @@ Route::get('/customer/saleprice/ajaxupdate','CustomerController@show');
             return view('admin.master');
     });
 
-
 //customer End
 
 //Sale Start
-
-/*Route::get('/saleadd','SaleinventoryController@create');*/
 
     Route::get('/sales/forms/job-order',function ()
     {
@@ -488,11 +402,6 @@ Route::get('/customer/saleprice/ajaxupdate','CustomerController@show');
 
     Route::get('/joborder/ajax/get-saleprice', 'JobOrderController@getsaleprice');
 
-
-    /*Route::post('/sale/store','SaleinventoryController@store');*/
-
-//Route::get('/sale/index','SaleinventoryController@index');
-
     Route::get('/sales/reports/customerLedgerReport',function ()
     {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2  || Auth::user()->type_id ===  3)
@@ -501,7 +410,7 @@ Route::get('/customer/saleprice/ajaxupdate','CustomerController@show');
             return view('admin.master');
     });
 
-Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsController@CustomerLedgerReportAjaxUpdate');
+    Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsController@CustomerLedgerReportAjaxUpdate');
 
     Route::get('/reports/customerLedgerDetail/ajaxupdate', 'SalesReportsController@CustomerLedgerDetailAjaxUpdate');
 
@@ -512,9 +421,6 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
             return view('admin.master');
     });
 
-
-//Route::get('/sale/receipt','SaleinventoryController@receipt');
-
     Route::get('/sale/receipt',function ()
     {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
@@ -523,16 +429,12 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
             return view('admin.master');
     });
 
-//Route::get('/customer/sale/{id}/edit', 'SaleinventoryController@edit');
-
     Route::get('/job-order/{id}/edit', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\JobOrderController@edit',[$id]);
         else
             return view('admin.master');
     });
-
-//Route::post('/sale/changeAmount','SaleinventoryController@update');
 
     Route::post('/sale/changeAmount', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -541,16 +443,12 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
             return view('admin.master');
     });
 
-//Route::post('customer/sale/update','SaleinventoryController@updatesale');
-
     Route::post('/job-order/update', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\JobOrderController@update',[$request]);
         else
             return view('admin.master');
     });
-
-//Route:: get('/customer/sale/{id}/delete','SaleinventoryController@destroy');
 
     Route::get('/customer/sale/{id}/delete', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -600,8 +498,6 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
             return view('admin.master');
     });
 
-//Route::get('salelist/ajaxupdate','SalelistController@index');
-
     Route::get('jobs-list/get-pending-jobs', function () {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3 || Auth::user()->type_id === 4)
             return app()->call('App\Http\Controllers\JobslistController@pendingjobs');
@@ -619,8 +515,6 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
             return view('admin.master');
     });
 
-//Route::get('salelist/printed', 'SalelistController@getprinted');
-
     Route::get('/jobs-list/ajax-get-printed-jobs', function () {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3|| Auth::user()->type_id === 4)
             return app()->call('App\Http\Controllers\JobslistController@printedjobs');
@@ -628,10 +522,7 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
             return view('admin.master');
     });
 
-
-
 //salelist end
-
 
 //Sale Payment Start
 
@@ -642,16 +533,12 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
             return view('admin.master');
     });
 
-//Route::post('/salepayment/postpayment','SalepaymentController@store');
-
     Route::post('/cash-collection/postpayment', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\CashCollectionController@store',[$request]);
         else
             return view('admin.master');
     });
-
-//Route::get('/salepayment/{id}/edit','SalepaymentController@edit');
 
     Route::get('/cash-collection/{id}/edit', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -660,16 +547,12 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
             return view('admin.master');
     });
 
-//Route::get('/salepayment/{id}/delete','SalepaymentController@destroy');
-
     Route::get('/cash-collection/{id}/delete', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
             return app()->call('App\Http\Controllers\CashCollectionController@destroy',[$id]);
         else
             return view('admin.master');
     });
-
-//Route::post('/salepayment/update','SalepaymentController@update');
 
     Route::post('/cash-collection/updatepayment', function (Request $request) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -678,10 +561,11 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
             return view('admin.master');
     });
 
-
     Route::get('/cash-collection/ajax/get-invoice','CashCollectionController@getinvoice');
 
     Route::post('/job-order/ajaxcollect', 'CashCollectionController@receipts');
+
+    Route::get('/receipts/ajax-validate-period', 'CashCollectionController@validate_period');
 
 
 //Customer adjustment start
@@ -708,8 +592,6 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
     });
 
     Route::get('/customer-adjustment/ajax/get-invoice','CustomerAdjustmentController@getinvoice');
-
-
 
     Route::get('/customer-adjustment/{id}/edit', function ($id) {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
@@ -743,9 +625,6 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
     });
 
     Route::get('/edit-form/ajax/get-id','EditFormController@ajaxgetids');
-
-
-
 
 //Edit forms end
 
@@ -828,6 +707,8 @@ Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsContro
         else
             return view('admin.master');
     });
+
+    Route::get('/general-ledger-reports/ajax-daily-ledger','GeneralLedgerReportsController@GetDailyLedgerAjax');
 
 
 //General Ledger End

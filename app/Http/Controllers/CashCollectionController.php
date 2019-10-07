@@ -227,8 +227,23 @@ class CashCollectionController extends Controller
 
         $result = 1;
 
-
         return response()->json($result, 200);
 
+    }
+
+    public function validate_period(Request $request)
+    {
+        $closed_period = DB::table('closedperiod')->first();
+
+        if($request['date'] > $closed_period->closed_date)
+        {
+            $result = 1;
+        }
+        else
+        {
+            $result =0;
+        }
+
+        return response()->json($result, 200);
     }
 }

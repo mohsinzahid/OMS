@@ -62,8 +62,8 @@
 
                             <div class="form-group">
                                 <label>Date</label>
-                                <input type="date" class="form-control" name="paiddate" value="<?php echo date('Y-m-d'); ?>"
-                                       id="focus1" required>
+                                <input type="date" class="form-control" name="paiddate" id="focus1"
+                                       onchange="validate()" required>
                             </div>
                             <div id="jor">
                                 <div class="form-group" id="jod">
@@ -145,6 +145,9 @@
     </div>
 
     <script>
+
+        var idstatus = 0;
+        var datestatus = 0;
         $(document).ready(function () {
             $(".select2_demo_2").select2({
                 placeholder: "Select a customer",
@@ -189,18 +192,21 @@
                 data: {id: customer_id, jobid: jobid},
 
                 success: function (response) {
-
-                    var value = $('input:radio[name=vor]:checked').val();
-                    if(value === 'r') {
-                        if(response) {
+                    if(response)
+                    {
+                        console.log('date status = '+datestatus+' id status = '+idstatus);
+                        idstatus = 1;
+                        if(datestatus == 1) {
                             $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
                             $(".pe-7s-check").css({ 'color': 'lightgreen' });
                         }
-                        else {
-                            $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
-                            $(".pe-7s-check").css({ 'color': '' });
-                        }
                     }
+                    else{
+                        idstatus = 0;
+                        $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
+                        $(".pe-7s-check").css({ 'color': '' });
+                    }
+
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) { if (XMLHttpRequest.readyState == 0) {
                     // Network error (i.e. connection refused, access denied due to CORS, etc.)
@@ -267,7 +273,7 @@
                 $("#jod").removeClass( "col-sm-11" );
                 $("#jor").removeClass( "row" );
                 $("#submit").removeAttr("disabled");
-                $("#confirmjobid").removeAttr("onkeyup");
+                $("#confirmjobid").removeAttr("onchange");
 
 
                 if( $('input:radio[name=type]:checked').val() == 0)
@@ -284,6 +290,62 @@
         $(function () {
             $('[autofocus]').focus()
         });
+
+        function validate() {
+            var date =$("#focus1").val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                statusCode: {
+                    500: function () {
+                        alert("Script exhausted");
+                    }
+                },
+                type: 'GET',
+                url: '/receipts/ajax-validate-period',
+                data: {date: date},
+
+                success: function (response) {
+                    if (response === 1) {
+                        console.log('date status = '+datestatus+' id status = '+idstatus);
+                        datestatus = 1;
+                        var value = $('input:radio[name=vor]:checked').val();
+                        if(value === 'v')
+                        {
+                            $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
+                            $(".pe-7s-check").css({ 'color': 'lightgreen' });
+                        }
+                        else{
+                            if(idstatus == 1)
+                            {
+                                $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
+                                $(".pe-7s-check").css({ 'color': 'lightgreen' });
+                            }
+                        }
+                    }
+                    else
+                    {
+                        datestatus = 0;
+                        toastr.warning('Date is in closed period.');
+                        $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
+                        $(".pe-7s-check").css({ 'color': '' });
+                    }
+                },
+                error: function (XMLHttpRequest, jqXHR, textStatus, errorThrown) {
+                    if (XMLHttpRequest.readyState == 0) {
+                        // Network error (i.e. connection refused, access denied due to CORS, etc.)
+                        toastr.error('Network Connection Refused');
+                        $("#submit"+id).removeAttr("disabled");
+                    }
+                    console.log(XMLHttpRequest);
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+            });
+        }
     </script>
 
 @endsection

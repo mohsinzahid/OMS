@@ -139,7 +139,7 @@
 
                         job_id ='<div id="jobid'+unique_id+'">'+response[key]["id"]+'</div>';
                         date = '<input type="date" class="form-control"\n' + 'value=""  ' +
-                            'name="date" id="date'+unique_id+'" min="'+response[key]["date"]+'" required>';
+                            'name="date" id="date'+unique_id+'" data-date="'+response[key]["date"]+'" required>';
                         debitamount = '<input value="'+response[key]["debit_amount"]+'" type="text" class="form-control"' +
                             ' id="debitamount'+unique_id+'" disabled>';
                         paidamount = '<input type="text" class="form-control" placeholder="0.00" id="paidamount'+unique_id+'" ' +
@@ -147,11 +147,11 @@
                         if (response[key]["status"] === 'paid')
                         {
                             button = '<button type="button" style="color: #ffc771" class="btn btn-warning btn-sm" ' +
-                                'onclick="collect('+unique_id+')" id="submit'+unique_id+'" disabled>Collect</button>';
+                                ' id="submit'+unique_id+'" disabled>Collect</button>';
                         }
                         else{
                             button = '<button type="button" style="color: #ffc771" class="btn btn-warning btn-sm" ' +
-                                'onclick="collect('+unique_id+')" id="submit'+unique_id+'">Collect</button>';
+                                'onclick="validate('+unique_id+')" id="submit'+unique_id+'">Collect</button>';
                         }
 
                         customer_id = '<input value="'+response[key]["customer_id"]+'" id="cust_id'+unique_id+'"' +
@@ -179,10 +179,50 @@
             $('[autofocus]').focus()
         });
 
+        function validate(id) {
+            var date =$("#date"+id).val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                statusCode: {
+                    500: function () {
+                        alert("Script exhausted");
+                    }
+                },
+                type: 'GET',
+                url: '/receipts/ajax-validate-period',
+                data: {date: date},
+
+                success: function (response) {
+                    // console.log(response);
+                    if (response === 1) {
+                       collect(id)
+                    }
+                    else
+                    {
+                        toastr.warning('Date is in closed period.');
+                    }
+                },
+                error: function (XMLHttpRequest, jqXHR, textStatus, errorThrown) {
+                    if (XMLHttpRequest.readyState == 0) {
+                        // Network error (i.e. connection refused, access denied due to CORS, etc.)
+                        toastr.error('Network Connection Refused');
+                        $("#submit"+id).removeAttr("disabled");
+                    }
+                    console.log(XMLHttpRequest);
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+            });
+        }
+
         function collect(id) {
             var paidamount =$("#paidamount"+id).val();
             var date =$("#date"+id).val();
-            var mindate =$("#date"+id).attr("min");
+            var mindate =$("#date"+id).attr("data-date");
             if (!paidamount)
             {
                 toastr.warning('Please Enter Paid Amount');
@@ -198,7 +238,6 @@
                         var customer_id = $("#cust_id" + id).val();
                         var jobid = $("#jobid" + id).text();
                         var discount = $("#discount"+ id).val();
-                        console.log(discount);
 
                         $.ajaxSetup({
                             headers: {
