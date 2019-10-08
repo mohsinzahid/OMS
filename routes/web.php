@@ -624,7 +624,21 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
+    Route::post('/accounting/close-date/update', function (Request $request) {
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+            return app()->call('App\Http\Controllers\AccountingPeriodController@updateAccountingPeriod',[$request]);
+        else
+            return view('admin.master');
+    });
+
     Route::get('/edit-form/ajax/get-id','EditFormController@ajaxgetids');
+
+    Route::get('/accounting/close-date', function () {
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+            return app()->call('App\Http\Controllers\AccountingPeriodController@getAccountingPeriod');
+        else
+            return view('admin.master');
+    });
 
 //Edit forms end
 

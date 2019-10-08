@@ -251,10 +251,11 @@
                     </li>
                 @endif
 
-                <li>
-                    <a href="{{url('/form/edit')}}">Edit Selection Form</a>
-                </li>
-
+                    <li class="nav-category">
+                        Edit
+                    </li>
+                    <li><a href="{{url('/form/edit')}}">Edit Selection Form</a></li>
+                    <li><a href="{{url('/accounting/close-date')}}">Close Accounting Date</a></li>
             </ul>
         </nav>
     </aside>
