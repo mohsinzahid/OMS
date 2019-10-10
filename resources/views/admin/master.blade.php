@@ -126,6 +126,7 @@
                         </a>
                         <ul id="salesreports" class="nav nav-second collapse">
                             <li><a href="{{url('/sales/reports/customerLedgerReport')}}">Customer Ledger Report</a></li>
+                            <li><a href="{{url('/sales/reports/walkCustomerLedger')}}">Walk Customer Ledger Report</a></li>
                             <li><a href="{{url('/reports/customerLedgerDetail')}}">Customer ledger Detail Report</a></li>
                             <li><a href="{{url('/customer/index')}}">Customer Summary Report</a></li>
                         </ul>

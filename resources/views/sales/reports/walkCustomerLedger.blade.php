@@ -61,14 +61,8 @@
                                     <th style="color: #ffc771 ">Invoice No</th>
                                     <th style="color: #ffc771 ">Employee</th>
                                     <th style="color: #ffc771 ">Added At</th>
-                                    <th style="color: #ffc771 ">Size</th>
-                                    <th style="color: #ffc771 ">Description</th>
-                                    <th style="color: #ffc771 ">Set</th>
-                                    <th style="color: #ffc771 ">Color</th>
                                     <th style="color: #ffc771 ">Amount</th>
                                     <th style="color: #ffc771 ">Status</th>
-{{--                                    <th style="color: #ffc771 ">Status</th>--}}
-                                    <th style="text-align: center"><span class="pe-7s-edit" style="color: #ffc771 ; font-size:20px !important; "></span></th>
                                 </tr>
                                 </thead>
                                 <tbody id="addrow">
@@ -119,45 +113,18 @@
                 },
                 type: 'GET',
                 data: {start:start, end: end},
-                url: '/jobs-list/ajax-get-submitted-jobs',
+                url: '/sales/reports/walkCustomerLedger/ajaxupdate',
 
                 success: function (response) {
                     console.log(response);
                     $('#tableExample4').DataTable().clear().draw();
 
-                    var previd = -1;
-                    var editIcon;
                     for(key in response)
                     {
-                        if(response[key]['saleinventory_id'] !== previd)
-                        {
-                            if(response[key]['status'] === 0)
-                            {
-                                editIcon = '<a href="/job-order/' + response[key]['saleinventory_id'] +'/edit">' +
-                                    '<span style="font-size: 17px !important;" class="pe-7s-note" id="edit' +
-                                    response[key]['saleinventory_id'] + '"></span></a>';
-                            }
-                            else
-                            {
-                                editIcon = '';
-                            }
-
                             $("#tableExample4").DataTable().row.add([
-                                response[key]["saleinventory_id"],response[key]["name"],response[key]["date"],
+                                response[key]["id"],response[key]["name"],response[key]["date"],
                                 response[key]["type"], response[key]['invoice_no'], response[key]["created_by"],
-                                response[key]["added_at"], response[key]["size"], response[key]["description"],
-                                response[key]["set"], response[key]["color"],response[key]["amount"],response[key]["status"],
-                                editIcon ]).draw();
-                            previd = response[key]['saleinventory_id'];
-                         }
-                        else
-                        {
-                            $("#tableExample4").DataTable().row.add([
-                                response[key]["saleinventory_id"],'',response[key]["date"],response[key]["type"],
-                                response[key]['invoice_no'], response[key]["created_by"],
-                                response[key]["added_at"], response[key]["size"], response[key]["description"],
-                                response[key]["set"], response[key]["color"],'', response[key]["status"], '']).draw();
-                        }
+                                response[key]["added_at"], response[key]["amount"], response[key]["status"]]).draw();
                     }
 
 

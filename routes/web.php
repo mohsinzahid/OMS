@@ -410,6 +410,22 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
+    Route::get('/sales/reports/walkCustomerLedger',function ()
+    {
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2  || Auth::user()->type_id ===  3)
+            return view('sales.reports.walkCustomerLedger');
+        else
+            return view('admin.master');
+    });
+
+    Route::get('/sales/reports/walkCustomerLedger/ajaxupdate',function ()
+    {
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2  || Auth::user()->type_id ===  3)
+            return app()->call('App\Http\Controllers\SalesReportsController@WalkCustomerLedger');
+        else
+            return view('admin.master');
+    });
+
     Route::get('/sales/reports/customerLedgerReport/ajaxupdate', 'SalesReportsController@CustomerLedgerReportAjaxUpdate');
 
     Route::get('/reports/customerLedgerDetail/ajaxupdate', 'SalesReportsController@CustomerLedgerDetailAjaxUpdate');
