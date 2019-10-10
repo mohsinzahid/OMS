@@ -151,7 +151,7 @@
                         else
                         {
                             $("#tableExample4").DataTable().row.add([
-                                '','','','', '', '', response[key]["size"], response[key]["description"], response[key]["set"],
+                                '','','','', '', '','', response[key]["size"], response[key]["description"], response[key]["set"],
                                 response[key]["color"],'', '','', '']).draw();
                         }
                     }
