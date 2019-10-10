@@ -57,6 +57,7 @@
                                     <th style="color: #ffc771 ">CGN</th>
                                     <th style="color: #ffc771 ">Name</th>
                                     <th style="color: #ffc771 ">Date</th>
+                                    <th style="color: #ffc771 ">Type</th>
                                     <th style="color: #ffc771 ">Invoice No</th>
                                     <th style="color: #ffc771 ">Employee</th>
                                     <th style="color: #ffc771 ">Added At</th>
@@ -133,9 +134,9 @@
 
                             $("#tableExample4").DataTable().row.add([
                                 response[key]["saleinventory_id"],response[key]["name"],response[key]["date"],
-                                response[key]['invoice_no'], response[key]["created_by"], response[key]["added_at"],
-                                response[key]["size"], response[key]["description"], response[key]["set"],
-                                response[key]["color"],response[key]["status"],editIcon ]).draw();
+                                response[key]["type"], response[key]['invoice_no'], response[key]["created_by"],
+                                response[key]["added_at"], response[key]["size"], response[key]["description"],
+                                response[key]["set"], response[key]["color"],response[key]["status"],editIcon ]).draw();
                             previd = response[key]['saleinventory_id'];
                         }
                         else
