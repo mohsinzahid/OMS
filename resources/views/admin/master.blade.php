@@ -202,6 +202,7 @@
                         </a>
                             <ul id="generalledgerreports" class="nav nav-second collapse">
                                 <li><a href="{{url('/general-ledger/reports')}}">GL Reports</a></li>
+                                <li><a href="{{url('/general-ledger/dailyReports')}}">Daily Report</a></li>
                             </ul>
                     </li>
 

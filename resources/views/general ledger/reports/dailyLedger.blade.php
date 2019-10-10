@@ -26,8 +26,8 @@
 
             <div class="col-sm-4"></div>
             <div class="form-group col-sm-2" id="hiddenfrom" style="border-left: 1px solid darkslategrey;">
-                <label >From</label>
-                <input type="date" class="form-control"  id="start" required>
+                {{--<label >From</label>
+                <input type="date" class="form-control"  id="start" required>--}}
             </div>
             <div class="form-group col-sm-2 " id="hiddento">
                 <label>Date</label>
@@ -65,7 +65,7 @@
                                     <th style="color: #ffc771 ">Set</th>
                                     <th style="color: #ffc771 ">Color</th>
                                     <th style="color: #ffc771 ">Status</th>
-{{--                                    <th style="color: #ffc771 ">Status</th>--}}
+                                    {{--                                    <th style="color: #ffc771 ">Status</th>--}}
                                     <th style="text-align: center"><span class="pe-7s-edit" style="color: #ffc771 ; font-size:20px !important; "></span></th>
                                 </tr>
                                 </thead>
@@ -92,7 +92,7 @@
         });
 
         $( "#calldate" ).click(function(){
-            var start = $('#start').val();
+            // var start = $('#start').val();
             var end = $('#end').val();
             $("#addrow").empty();
             $.ajaxSetup({
@@ -107,8 +107,8 @@
                     }
                 },
                 type: 'GET',
-                data: {start:start, end: end},
-                url: '/jobs-list/ajax-get-submitted-jobs',
+                data: {date: end},
+                url: '/general-ledger-reports/ajax-daily-ledger',
 
                 success: function (response) {
                     console.log(response);

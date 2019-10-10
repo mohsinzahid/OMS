@@ -722,7 +722,14 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
-//    Route::get('/general-ledger-reports/ajax-daily-ledger','GeneralLedgerReportsController@GetDailyLedgerAjax');
+    Route::get('/general-ledger-reports/ajax-daily-ledger','GeneralLedgerReportsController@GetDailyLedgerAjax');
+
+    Route::get('/general-ledger/dailyReports', function () {
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+            return view('general ledger.reports.dailyLedger');
+        else
+            return view('admin.master');
+    });
 
 
 //General Ledger End
