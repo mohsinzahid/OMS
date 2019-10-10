@@ -85,9 +85,18 @@
     <script>
         $(document).ready(function () {
             $('#tableExample4').DataTable({
-                "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+                dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                 "lengthMenu": [ [25, 50, -1], [25, 50, "All"] ],
-                "iDisplayLength": 25,
+                buttons: [
+                    {extend: 'copy',className: 'btn-sm',
+                        exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ,10 ,11 ]}},
+                    {extend: 'csv',title: "Zahid Scan", className: 'btn-sm',
+                        exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ,10 ,11 ]}},
+                    {extend: 'pdf', title: "Zahid Scan", className: 'btn-sm',
+                        exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ,10 ,11 ]}},
+                    {extend: 'print',title: "Zahid Scan" , className: 'btn-sm',
+                        exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ,10 ,11 ]}}
+                ],
                 "ordering": false
             });
         });
