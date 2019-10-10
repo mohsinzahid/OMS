@@ -153,10 +153,11 @@
                         else
                         {
                             $("#tableExample4").DataTable().row.add([
-                                response[key]["saleinventory_id"],'',response[key]["date"],response[key]["type"],
-                                response[key]['invoice_no'], response[key]["created_by"],
-                                response[key]["added_at"], response[key]["size"], response[key]["description"],
-                                response[key]["set"], response[key]["color"],'', response[key]["status"], '']).draw();
+                                response[key]["saleinventory_id"],response[key]["name"],
+                                response[key]["date"],response[key]["type"], response[key]['invoice_no'],
+                                response[key]["created_by"], response[key]["added_at"], response[key]["size"],
+                                response[key]["description"], response[key]["set"], response[key]["color"],'',
+                                response[key]["status"], '']).draw();
                         }
                     }
 
