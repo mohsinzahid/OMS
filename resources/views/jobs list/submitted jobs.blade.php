@@ -124,12 +124,12 @@
                     console.log(response);
                     $('#tableExample4').DataTable().clear().draw();
 
-                    var previd = -1;
+                    // var previd = -1;
                     var editIcon;
                     for(key in response)
                     {
-                        if(response[key]['saleinventory_id'] !== previd)
-                        {
+                        // if(response[key]['saleinventory_id'] !== previd)
+                        // {
                             if(response[key]['status'] === 0)
                             {
                                 editIcon = '<a href="/job-order/' + response[key]['saleinventory_id'] +'/edit">' +
@@ -146,14 +146,14 @@
                                 response[key]["type"], response[key]['invoice_no'], response[key]["created_by"],
                                 response[key]["added_at"], response[key]["size"], response[key]["description"],
                                 response[key]["set"], response[key]["color"],response[key]["status"],editIcon ]).draw();
-                            previd = response[key]['saleinventory_id'];
-                        }
+                            // previd = response[key]['saleinventory_id'];
+                        /* }
                         else
                         {
                             $("#tableExample4").DataTable().row.add([
                                 '','','','', '', '','', response[key]["size"], response[key]["description"], response[key]["set"],
                                 response[key]["color"],'', '','', '']).draw();
-                        }
+                        }*/
                     }
 
 
