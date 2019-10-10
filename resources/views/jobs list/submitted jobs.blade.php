@@ -90,13 +90,13 @@
                 "lengthMenu": [ [25, 50, -1], [25, 50, "All"] ],
                 buttons: [
                     {extend: 'copy',className: 'btn-sm',
-                        exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ,10 ,11 ]}},
+                        exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ,10 ,11,12 ]}},
                     {extend: 'csv',title: "Zahid Scan", className: 'btn-sm',
-                        exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ,10 ,11 ]}},
+                        exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ,10 ,11,12 ]}},
                     {extend: 'pdf', title: "Zahid Scan", className: 'btn-sm',
-                        exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ,10 ,11 ]}},
+                        exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ,10 ,11,12 ]}},
                     {extend: 'print',title: "Zahid Scan" , className: 'btn-sm',
-                        exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ,10 ,11 ]}}
+                        exportOptions: {columns: [ 0, 1, 2, 3, 4, 5 ,6 ,7 ,8 ,9 ,10 ,11,12 ]}}
                 ],
                 "ordering": false
             });
