@@ -65,8 +65,8 @@
                                     <th style="color: #ffc771 ">Description</th>
                                     <th style="color: #ffc771 ">Set</th>
                                     <th style="color: #ffc771 ">Color</th>
-                                    <th style="color: #ffc771 ">Status</th>
                                     <th style="color: #ffc771 ">Amount</th>
+                                    <th style="color: #ffc771 ">Status</th>
 {{--                                    <th style="color: #ffc771 ">Status</th>--}}
                                     <th style="text-align: center"><span class="pe-7s-edit" style="color: #ffc771 ; font-size:20px !important; "></span></th>
                                 </tr>
@@ -125,12 +125,12 @@
                     console.log(response);
                     $('#tableExample4').DataTable().clear().draw();
 
-                    // var previd = -1;
+                    var previd = -1;
                     var editIcon;
                     for(key in response)
                     {
-                        // if(response[key]['saleinventory_id'] !== previd)
-                        // {
+                        if(response[key]['saleinventory_id'] !== previd)
+                        {
                             if(response[key]['status'] === 0)
                             {
                                 editIcon = '<a href="/job-order/' + response[key]['saleinventory_id'] +'/edit">' +
@@ -146,16 +146,17 @@
                                 response[key]["saleinventory_id"],response[key]["name"],response[key]["date"],
                                 response[key]["type"], response[key]['invoice_no'], response[key]["created_by"],
                                 response[key]["added_at"], response[key]["size"], response[key]["description"],
-                                response[key]["set"], response[key]["color"],response[key]["status"],response[key]["amount"],
+                                response[key]["set"], response[key]["color"],response[key]["amount"],response[key]["status"],
                                 editIcon ]).draw();
-                            // previd = response[key]['saleinventory_id'];
-                        /* }
+                            previd = response[key]['saleinventory_id'];
+                         }
                         else
                         {
                             $("#tableExample4").DataTable().row.add([
-                                '','','','', '', '','', response[key]["size"], response[key]["description"], response[key]["set"],
-                                response[key]["color"],'', '','', '']).draw();
-                        }*/
+                                response[key]["saleinventory_id"],'','','', '', '','', response[key]["size"],
+                                response[key]["description"], response[key]["set"], response[key]["color"],'',
+                                response[key]["status"], '']).draw();
+                        }
                     }
 
 
