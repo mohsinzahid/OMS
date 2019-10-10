@@ -26,11 +26,11 @@
 
             <div class="col-sm-4"></div>
             <div class="form-group col-sm-2" id="hiddenfrom" style="border-left: 1px solid darkslategrey;">
-                <label >From</label>
-                <input type="date" class="form-control"  id="start" required>
+                {{--<label >From</label>
+                <input type="date" class="form-control"  id="start" required>--}}
             </div>
-            <div class="form-group col-sm-2 hidden " id="hiddento">
-                <label>To</label>
+            <div class="form-group col-sm-2 " id="hiddento">
+                <label>Date</label>
                 <input type="date" class="form-control"  id="end" required>
             </div>
             <div class="col-sm-1 hidden" id="calldate">
@@ -92,7 +92,7 @@
         });
 
         $( "#calldate" ).click(function(){
-            var start = $('#start').val();
+            // var start = $('#start').val();
             var end = $('#end').val();
             $("#addrow").empty();
             $.ajaxSetup({
@@ -107,7 +107,7 @@
                     }
                 },
                 type: 'GET',
-                data: {start: start, end: end},
+                data: {date: end},
                 url: '/jobs-list/ajax-get-submitted-jobs',
 
                 success: function (response) {
@@ -156,12 +156,12 @@
             });
         });
 
-        $("#hiddenfrom").on('change', function ()
-        {
-            var min = $(this).val();
-            $("#hiddento").attr("min", min);
-            $("#hiddento").removeClass("hidden");
-        });
+        // $("#hiddenfrom").on('change', function ()
+        // {
+        //     var min = $(this).val();
+        //     $("#hiddento").attr("min", min);
+        //     $("#hiddento").removeClass("hidden");
+        // });
 
         $("#hiddento").on('change', function ()
         {

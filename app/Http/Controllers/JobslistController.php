@@ -71,7 +71,7 @@ class JobslistController extends Controller
                 "saleinventoryitem.*", "size.size",
                 DB::raw("CASE WHEN sp.job_order_no = saleinventory.id THEN 'paid' ELSE 'unpaid' END as status"))
 //            ->where('saleinventory.dateofsale', '>=',  $request['start'])
-            ->where('saleinventory.added_at', 'like',  '%' . $request['start'] .'%')
+            ->where('saleinventory.added_at', 'like',  '%' . $request['date'] .'%')
 //            ->where('saleinventory.dateofsale', '<=',  $request['end'])
             ->ORDERBY('added_at')
             ->get();
