@@ -953,8 +953,8 @@ class GeneralLedgerReportsController extends Controller
         return response($result);
     }
 
-    public function GetDailyLedgerAjax(Request $request)
+    /*public function GetDailyLedgerAjax(Request $request)
     {
 
-    }
+    }*/
 }
