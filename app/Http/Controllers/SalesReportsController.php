@@ -125,13 +125,13 @@ class SalesReportsController extends Controller
     {
         $result = DB::table('saleinventory')
             ->Join('employees as e', 'saleinventory.employee_id', '=', 'e.id')
-            ->leftJoin('customers as c', 'saleinventory.customer_id', '=', 'c.id')
+//            ->leftJoin('customers as c', 'saleinventory.customer_id', '=', 'c.id')
             ->leftJoin('walkincustomer as w', 'saleinventory.id', '=', 'w.saleinventory_id')
             ->leftJoin('salepayment as sp', 'saleinventory.id', '=', 'sp.job_order_no')
             ->select("saleinventory.id as id", "saleinventory.dateofsale as date", "saleinventory.invoiceno as invoice_no",
                 "saleinventory.added_at as added_at","e.name as created_by",
-                DB::raw("CASE WHEN c.type = 0 THEN w.name ELSE c.name END as name"),"saleinventory.total_amount as amount",
-                DB::raw("CASE WHEN c.type = 0 THEN 'Walk In Customer' ELSE 'Credit customer' END as type"),
+                DB::raw("w.name as name"),"saleinventory.total_amount as amount",
+                DB::raw("'Walk In Customer' as type"),
                 DB::raw("CASE WHEN sp.job_order_no = saleinventory.id THEN 'paid' ELSE 'unpaid' END as status"))
             ->where('saleinventory.dateofsale', '>=',  $request['start'])
             ->where('saleinventory.dateofsale', '<=',  $request['end'])
