@@ -15,7 +15,7 @@
                         <i class="pe page-header-icon pe-7s-note2"></i>
                     </div>
                     <div class="header-title">
-                        <h3>Submitted Jobs</h3>
+                        <h3>Walking Customer Ledger</h3>
                     </div>
                 </div>
                 <hr>
