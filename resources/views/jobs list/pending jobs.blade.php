@@ -215,10 +215,10 @@
 
         });
 
-        setInterval(function()
-        {
-           data();
-        }, 120000);
+        // setInterval(function()
+        // {
+        //    data();
+        // }, 120000);
     </script>
 
 @endsection
