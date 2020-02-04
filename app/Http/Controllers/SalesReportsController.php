@@ -9,7 +9,7 @@ class SalesReportsController extends Controller
 {
     public function CustomerLedgerReport()
     {
-        $customer = DB::table('customers')->where('status',1)->orderBy('name', 'asc')->get();
+        $customer = DB::table('customers')->orderBy('name', 'asc')->get();
         $walk = DB::table('customers')->where('type',0)->first();
         return view('sales.reports.customerLedgerReport', ['customer' => $customer, 'walk' => $walk]);
     }

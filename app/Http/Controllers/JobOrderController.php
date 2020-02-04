@@ -12,7 +12,7 @@ class JobOrderController extends Controller
     {
         //all customer will be listed unless walkincustomer is hidden by changing type 0 to type 1.
         //$customer = DB::table('customers')->where('type',1)->orderBy('name', 'asc')->get();
-        $customer = DB::table('customers')->orderBy('name', 'asc')->get();
+        $customer = DB::table('customers')->where('status',1)->orderBy('name', 'asc')->get();
         $size = DB::table('size')->get();
         $walk = DB::table('customers')->where('type',0)->first();
         $employee = DB::table('employees')->get();
