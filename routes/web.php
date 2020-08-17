@@ -627,14 +627,14 @@ Route::group(['middleware' => 'auth'], function()
 //Edit forms start
 
     Route::get('/form/edit', function () {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return view('editform');
         else
             return view('admin.master');
     });
 
     Route::post('/form/edit/redirect', function (Request $request) {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\EditFormController@show',[$request]);
         else
             return view('admin.master');
