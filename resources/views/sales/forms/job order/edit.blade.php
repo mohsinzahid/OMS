@@ -7,16 +7,23 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="view-header">
-                    <div class="pull-right text-right" style="line-height: 14px">
+                    <div class="col-sm-6">
+                        <div class="pull-right text-right" style="line-height: 14px">
+                        </div>
+                        <div class="col-sm-2 header-icon">
+                            <i class="pe page-header-icon pe-7s-pen"></i>
+                        </div>
+                        <div class=" header-title">
+                            <h3>Edit a Sale Inventory</h3>
+                        </div>
                     </div>
-                    <div class="header-icon">
-                        <i class="pe page-header-icon pe-7s-pen"></i>
-                    </div>
-                    <div class="header-title">
-                        <h3>Edit a Sale Inventory</h3>
-                    </div>
-                    <div style="float: right">
-                        <a href="/customer/sale/{{$inventory->id}}/delete" class="btn btn-w-md btn-danger">Delete</a>
+                    <div class="col-sm-6" style="margin-top: 30px">
+                        <div style="float: left">
+                            <button  class="btn btn-w-md btn-warning" onclick="getrates()">Update Sale Price</button>
+                        </div>
+                        <div style="float: right">
+                            <a href="/customer/sale/{{$inventory->id}}/delete" class="btn btn-w-md btn-danger">Delete</a>
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -239,17 +246,23 @@
                 placeholder: "Select a customer",
                 allowClear: true
             });
-            getrates();
+            //getrates();
+            var counts = $('#counter').val();
+            for(var i = 0 ; i<counts ; i++)
+            {
+                Calculate(i);
+            }
+            tot();
 
         });
 
         function Calculate(locate)
         {
-            var id = $('#sizes'+locate).val();
+            //var id = $('#sizes'+locate).val();
             var set = document.getElementById('set'+locate).value;
             var color = document.getElementById('color'+locate).value;
-            // var saleprice = document.getElementById('saleprice'+locate).value;
-            var saleprice = rates[id];
+            var saleprice = document.getElementById('saleprice'+locate).value;
+            //var saleprice = rates[id];
             var amount = (saleprice * (set * color));
             document.getElementById('saleprice'+locate).value=parseFloat(saleprice);
             document.getElementById('answer'+locate).value=parseFloat(amount);
@@ -307,10 +320,11 @@
                     var counts = $('#counter').val();
                     for(var i = 0 ; i<counts ; i++)
                     {
+                        var id = $('#sizes'+i).val();
+                        document.getElementById('saleprice'+i).value=parseFloat(rates[id]);
                         Calculate(i);
                     }
                     tot();
-
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(JSON.stringify(jqXHR));
