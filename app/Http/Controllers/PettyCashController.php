@@ -15,7 +15,8 @@ class PettyCashController extends Controller
         DB::table('pettycashpayment')->insert(
             ['date' => $request['date'], 'added_at' => DB::raw('NOW()') , 'amount' => $request['amount'],
                 'remarks' => $request['remarks']]);
-            return view('general ledger.forms.petty cash payment.add',['msg'=>'Payment added Successfully']);
+            //return view('general ledger.forms.petty cash payment.add',['msg'=>'Payment added Successfully']);
+        return redirect('/petty-cash/add');
     }
 
     public function edit($id)

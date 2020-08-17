@@ -26,7 +26,6 @@ class GeneralLedgerReportsController extends Controller
         {
             $result = $this->cash($request);
         }
-
         elseif ($request['id'] == 3)
         {
             $result = $this->bank($request);

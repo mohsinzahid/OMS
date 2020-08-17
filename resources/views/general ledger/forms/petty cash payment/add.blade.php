@@ -29,13 +29,13 @@
                 </div>
                 <div class="panel panel-filled">
                     <div class="panel-body">
-                        <form method="post" action="{{ url('/petty-cash/post-payment') }}" autocomplete="off">
+                        <form method="post" action="{{ url('/petty-cash/post-payment') }}" id="form" autocomplete="off">
                             {{ csrf_field() }}
 
                             <div class="row">
                                 <div class="form-group col-sm-6">
                                     <label for="Inputdate">Date</label>
-                                    <input type="date" class="form-control" id="date" name="date" onchange="validate()" required>
+                                    <input type="date" class="form-control" id="date" name="date" required>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label for="Inputamount">Amount</label>
@@ -50,7 +50,7 @@
                                            name="remarks" required>
                                 </div>
                             </div>
-                            <button type="submit" id="submit" class="btn btn-warning" disabled>Submit</button>
+                            <button type="submit" class="btn btn-warning">Submit</button>
 
                         </form>
                     </div>
@@ -62,7 +62,7 @@
     </div>
 
     <script>
-        function validate() {
+        $("form").submit(function(e){
             var date =$("#date").val();
             $.ajaxSetup({
                 headers: {
@@ -82,12 +82,13 @@
                 success: function (response) {
                     // console.log(response);
                     if (response === 1) {
-                        $("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
+                        //$("#submit").removeAttr("disabled").removeClass("btn-default").addClass("btn-success");
+                        $('#form')[0].submit();
                     }
                     else
                     {
                         toastr.warning('Selected Date is in closed period.');
-                        $("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
+                        //$("#submit").attr("disabled", true).removeClass("btn-success").addClass("btn-default");
                     }
                 },
                 error: function (XMLHttpRequest, jqXHR, textStatus, errorThrown) {
@@ -100,6 +101,7 @@
                     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                 }
             });
-        }
+            e.preventDefault(e);
+        })
     </script>
 @endsection

@@ -143,7 +143,7 @@
                         debitamount = '<input value="'+response[key]["debit_amount"]+'" type="text" class="form-control"' +
                             ' id="debitamount'+unique_id+'" disabled>';
                         paidamount = '<input type="text" class="form-control" placeholder="0.00" id="paidamount'+unique_id+'" ' +
-                            'name="paidamount" onkeyup=calculateDiscount('+unique_id+')>';
+                            'name="paidamount" onchange=    calculateDiscount('+unique_id+')>';
                         if (response[key]["status"] === 'paid')
                         {
                             button = '<button type="button" style="color: #ffc771" class="btn btn-warning btn-sm" ' +
@@ -208,7 +208,7 @@
                 },
                 error: function (XMLHttpRequest, jqXHR, textStatus, errorThrown) {
                     if (XMLHttpRequest.readyState == 0) {
-                        // Network error (i.e. connection refused, access denied due to CORS, etc.)
+                        // Network error (i.e. connection refused, acce ss denied due to CORS, etc.)
                         toastr.error('Network Connection Refused');
                         $("#submit"+id).removeAttr("disabled");
                     }
