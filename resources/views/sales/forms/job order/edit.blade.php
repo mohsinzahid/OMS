@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-sm-6" style="margin-top: 30px">
                         <div style="float: left">
-                            <button  class="btn btn-w-md btn-warning" onclick="getrates()">Update Sale Price</button>
+                            <button  class="btn btn-w-md btn-warning" onclick='updateRates("a");'>Update Sale Price</button>
                         </div>
                         <div style="float: right">
                             <a href="/customer/sale/{{$inventory->id}}/delete" class="btn btn-w-md btn-danger">Delete</a>
@@ -54,7 +54,7 @@
                                     <div class="form-group">
                                         <label>Customer</label>
                                         <select class="select2_demo_2 form-control" name="customer_id" id="callfunc"
-                                                onchange='getrates();' required>
+                                                onchange='getRates("a")' required>
                                             <option value="" selected disabled hidden>Choose here</option>
                                             @if(count($customer)>0)
                                                 @foreach($customer as $customers)
@@ -122,7 +122,7 @@
                                                     <label>Size</label>
                                                 @endif
                                                 <select class="form-control" name="data[size][{{$i}}]" id="sizes{{$i}}"
-                                                        style="width: 100%" onchange='Calculate("{{$i}}");tot()' required>
+                                                        style="width: 100%" onchange='updateRates("{{$i}}")' required>
                                                     <option value="" selected disabled hidden>Choose here</option>
                                                     @if(count($size)>0)
                                                         @foreach($size as $sizes)
@@ -246,7 +246,7 @@
                 placeholder: "Select a customer",
                 allowClear: true
             });
-            //getrates();
+            getRates("");
             var counts = $('#counter').val();
             for(var i = 0 ; i<counts ; i++)
             {
@@ -283,9 +283,8 @@
             document.getElementById('total').value=parseFloat(totalamount);
         }
 
-        function getrates () {
+        function getRates (locate) {
             var value = $('#callfunc').val();
-            console.log(value);
             if(value === walkid)
             {
                 $("#walkinfo1,#walkinfo2,#walkinfo3").removeClass("hidden");
@@ -313,24 +312,50 @@
                 data: {id: value},
 
                 success: function (response) {
-
-                    console.log(response);
                     rates = [];
                     rates = response;
-                    var counts = $('#counter').val();
-                    for(var i = 0 ; i<counts ; i++)
+
+                    if(locate == "a")
                     {
-                        var id = $('#sizes'+i).val();
-                        document.getElementById('saleprice'+i).value=parseFloat(rates[id]);
-                        Calculate(i);
+                        var counts = $('#counter').val();
+                        for(var i = 0 ; i<counts ; i++)
+                        {
+                            var id = $('#sizes'+i).val();
+                            console.log(rates[id]);
+                            document.getElementById('saleprice'+i).value=parseFloat(rates[id]);
+                            Calculate(i);
+                        }
+                        tot();
                     }
-                    tot();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(JSON.stringify(jqXHR));
                     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                 }
             });
+        }
+
+        function updateRates(locate)
+        {
+            if(locate == "a")
+            {
+                var counts = $('#counter').val();
+                for(var i = 0 ; i<counts ; i++)
+                {
+                    var id = $('#sizes'+i).val();
+                    console.log(rates[id]);
+                    document.getElementById('saleprice'+i).value=parseFloat(rates[id]);
+                    Calculate(i);
+                }
+                tot();
+            }
+            else
+            {
+                id = $('#sizes'+locate).val();
+                document.getElementById('saleprice'+locate).value=parseFloat(rates[id]);
+                Calculate(locate);
+                tot();
+            }
         }
 
     </script>

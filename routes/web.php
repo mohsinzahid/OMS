@@ -460,7 +460,7 @@ Route::group(['middleware' => 'auth'], function()
     });
 
     Route::post('/job-order/update', function (Request $request) {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\JobOrderController@update',[$request]);
         else
             return view('admin.master');
