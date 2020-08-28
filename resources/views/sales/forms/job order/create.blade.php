@@ -139,17 +139,6 @@
                             <hr>
                             <div class="row">
                                 <div class="form-group col-sm-2">
-                                    <button type="submit" class="btn btn-warning" {{--style="color: #f6a821"--}}>Submit</button>
-                                </div>
-
-                                <div class="checkbox checkbox-warning col-sm-1">
-                                    <input id="checkbox5" type="checkbox" name="replace" class="styled" value="1">
-                                    <label for="checkbox5">
-                                       Replace
-                                    </label>
-                                </div>
-
-                                <div class="form-group col-sm-2">
                                     <label style="float: right">Prepared By
                                         <span class="pe-7s-star" style="color: #f6a821"></span>
                                     </label>
@@ -166,6 +155,18 @@
                                         @endif
                                     </select>
                                 </div>
+
+                                <div class="checkbox checkbox-warning col-sm-1">
+                                    {{--<input id="checkbox5" type="checkbox" name="replace" class="styled" value="1">
+                                    <label for="checkbox5">
+                                       Replace
+                                    </label>--}}
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <button type="submit" class="btn btn-warning" {{--style="color: #f6a821"--}}>Submit</button>
+                                </div>
+
+
                                 <div class="form-group col-sm-2" style="text-align: right">
                                     <label>Total Amount</label>
                                 </div>
@@ -198,6 +199,7 @@
                 allowClear: true
             });*/
             $(".select2_demo_2").select2();
+            $('#callfunc').focus()
         });
 
         function addRow(){
