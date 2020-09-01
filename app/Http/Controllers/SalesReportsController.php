@@ -181,8 +181,8 @@ class SalesReportsController extends Controller
                 ->first();
 //                ->first(DB::raw('CASE WHEN ci.tax_amount iS NULL THEN sp.amount ELSE sp.amount + ci.tax_amount END'));
 //            $data['lastPaymentAmount'] = $last->amount +  $last->tax_amount;
-            $data['lastPaymentAmount'] = $last['amount'];
-            $data['lastPaymentDate'] = $last['tax_amount'];
+            $data['lastPaymentAmount'] = $last->amount;
+            $data['lastPaymentDate'] = '';
             $data['last'] = $last;
             $result[] = $data;
         }
