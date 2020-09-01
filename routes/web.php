@@ -480,6 +480,16 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
+    Route::get('/sales/reports/customerReceivable', function () {
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2  || Auth::user()->type_id === 3)
+            return view('sales.reports.customerReceivables');
+        else
+            return view('admin.master');
+    });
+
+    Route::get('/sales/reports/customerReceivable/ajaxupdate', 'SalesReportsController@CustomerReceivableAjaxUpdate');
+
+
 //Sale End
 
     //salelist start

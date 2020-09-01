@@ -142,4 +142,53 @@ class SalesReportsController extends Controller
         return response()->json($result, 200);
     }
 
+    public function CustomerReceivableAjaxUpdate(Request $request){
+        $End_date = $request['end'];
+        $customer = DB::table('customers')->orderBy('name', 'asc')->get();
+
+        foreach ($customer as $value) {
+            $data['name'] = $value->name;
+            $prevdebitsale = DB::table('saleinventory')->where('customer_id', $value->id)
+                ->where('status', 1)
+                ->where('saleinventory.dateofsale', '<=', $End_date)
+                ->sum('saleinventory.total_amount');
+
+            //mass paid
+            $prevcreditsale =  DB::table('salepayment as sp')->where('customer_id', $value->id)
+                ->leftJoin('chequeinfo as ci', 'sp.id', '=', 'ci.sale_payment_id')
+                ->where('date', '<=', $End_date)
+                ->sum(DB::raw('CASE WHEN ci.tax_amount iS NULL THEN sp.amount ELSE sp.amount + ci.tax_amount END'));
+
+            $prevcreditadj = DB::table('customeradjustment')->where('customer_id', $value->id)
+                ->where('date', '<=', $End_date)
+                ->where('type', 'credit')
+                ->sum('amount');
+
+            $prevdebitadj = DB::table('customeradjustment')->where('customer_id', $value->id)
+                ->where('date', '<=', $End_date)
+                ->where('type', 'debit')
+                ->sum('amount');
+
+            $balance = DB::table('customers')->where('id', $value->id)
+                ->select('prevbalance')->first();
+
+            $data['balance'] = ($balance ->prevbalance + $prevdebitsale +$prevdebitadj) -
+                ($prevcreditsale + $prevcreditadj);
+
+            $last = DB::table('salepayment as sp')->where('customer_id', $value->id)
+                ->leftJoin('chequeinfo as ci', 'sp.id', '=', 'ci.sale_payment_id')
+                ->latest('added_at')
+                ->first();
+//                ->first(DB::raw('CASE WHEN ci.tax_amount iS NULL THEN sp.amount ELSE sp.amount + ci.tax_amount END'));
+
+            $data['lastPaymentAmount'] = $last->amount +  $last->tax_amount;
+            $data['lastPaymentDate'] = $last->date;
+            $result[] = $data;
+        }
+
+//        $last = DB::table('salepayment')->latest('added_at')->first();
+
+
+        return response()->json($result, 200);
+    }
 }

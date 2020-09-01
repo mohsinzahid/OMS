@@ -199,7 +199,6 @@
                 allowClear: true
             });*/
             $(".select2_demo_2").select2();
-            $('#callfunc').focus()
         });
 
         function addRow(){

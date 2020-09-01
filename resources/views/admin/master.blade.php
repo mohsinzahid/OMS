@@ -129,6 +129,7 @@
                             <li><a href="{{url('/sales/reports/walkCustomerLedger')}}">Walk Customer Ledger Report</a></li>
                             <li><a href="{{url('/reports/customerLedgerDetail')}}">Customer ledger Detail Report</a></li>
                             <li><a href="{{url('/customer/index')}}">Customer Summary Report</a></li>
+                            <li><a href="{{url('/sales/reports/customerReceivable')}}">Customer Receivable</a></li>
                         </ul>
                     </li>
 
