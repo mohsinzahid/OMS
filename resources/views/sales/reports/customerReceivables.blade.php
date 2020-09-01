@@ -114,11 +114,19 @@ $(document).ready(function () {
                                 var totalBalance = 0;
                                 for (key in response) {
 
+                                    let lastPayment = '';
+                                    let lastPaymentdate = '';
                                     totalBalance = totalBalance + response[key]["balance"];
-                                    lastPayment = response[key]["last"]["amount"] +  response[key]["last"]["tax_amount"];
+                                    if(response[key]["last"]!= null)
+                                    {
+                                        lastPayment = response[key]["last"]["amount"] +  response[key]["last"]["tax_amount"];
+                                        lastPaymentdate = response[key]["last"]["date"];
+                                    }
+
+
 
                                     $("#tableExample4").DataTable().row.add([
-                                        response[key]["name"], response[key]["last"]["date"],
+                                        response[key]["name"], lastPaymentdate ,
                                         lastPayment , response[key]["balance"]
                                     ]).draw();
                                 }
