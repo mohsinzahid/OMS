@@ -117,8 +117,8 @@ $(document).ready(function () {
                                     totalBalance = totalBalance + response[key]["balance"];
 
                                     $("#tableExample4").DataTable().row.add([
-                                        response[key]["name"], response[key]["lastPaymentDate"],
-                                        response[key]["lastPaymentAmount"], response[key]["balance"]
+                                        response[key]["name"], response[key]["last"]["lastPaymentDate"],
+                                        response[key]["last"]["lastPaymentAmount"], response[key]["balance"]
                                     ]).draw();
                                 }
                                 $("#tableExample4").DataTable().row.add([
