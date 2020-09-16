@@ -48,7 +48,7 @@
                                             <option value="" selected disabled hidden>Choose here</option>
                                             @if(count($customer)>0)
                                                 @foreach($customer as $customers)
-                                                    <option value="{{$customers->id}}">{{$customers->id}} &emsp;
+                                                    <option value="{{$customers->id}}">
                                                         {{$customers->name}} </option>
                                                 @endforeach
                                             @else
