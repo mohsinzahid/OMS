@@ -35,7 +35,7 @@
                             <div class="row">
                                 <div class="form-group col-sm-6">
                                     <label for="Inputdate">Date</label>
-                                    <input type="date" class="form-control" id="date" name="date" required>
+                                    <input type="date" class="form-control" id="date" name="date" required autofocus>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label for="Inputamount">Amount</label>

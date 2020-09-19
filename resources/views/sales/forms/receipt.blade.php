@@ -285,6 +285,20 @@
             $('#discount'+id).val(debitamount - paidamount);
         }
 
+        $(document).on('keydown',function (evt) {
+            if (!evt) evt = event;
+
+            if (evt.ctrlKey && /*evt.altKey &&*/ evt.keyCode === 113) {
+
+                $("#invoiceno").focus();
+
+            } else if (evt.shiftKey && evt.keyCode) {
+                    console.log(evt)
+                $("#date"+String.fromCharCode(evt.keyCode)).focus();
+
+            }
+        });
+
     </script>
 
 @endsection
