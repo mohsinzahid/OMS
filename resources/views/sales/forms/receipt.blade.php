@@ -288,14 +288,12 @@
         $(document).on('keydown',function (evt) {
             if (!evt) evt = event;
 
-            if (evt.ctrlKey && /*evt.altKey &&*/ evt.keyCode === 113) {
-
+            if (evt.ctrlKey && /*evt.altKey &&*/ evt.keyCode === 113) {     //ctrl + f2 to focus on input inovice no
                 $("#invoiceno").focus();
 
-            } else if (evt.shiftKey && evt.keyCode) {
+            } else if (evt.shiftKey && evt.keyCode) {  // shift + row no to focus no specific row date
                     console.log(evt)
                 $("#date"+String.fromCharCode(evt.keyCode)).focus();
-
             }
         });
 
