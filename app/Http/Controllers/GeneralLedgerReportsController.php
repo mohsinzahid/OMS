@@ -105,7 +105,7 @@ class GeneralLedgerReportsController extends Controller
                 "sin.added_at as added_at",DB::raw("'' as cheque_no"),DB::raw("'' as cheque_date"),"e.name as created_by",
                 DB::raw("'' as remarks"),DB::raw("CASE WHEN c.type = 0 THEN w.name ELSE c.name END as customer_name"),
                 DB::raw("CASE WHEN c.type = 0 THEN 'Walk In Customer' ELSE 'Credit customer' END as customer_type"))
-            ->where('sin.status', 1)
+//            ->where('sin.status', 1)
             ->where('sin.dateofsale', '>=', $request['start'])
             ->where('sin.dateofsale', '<=', $request['end']);
 
