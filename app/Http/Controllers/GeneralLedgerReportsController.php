@@ -67,7 +67,7 @@ class GeneralLedgerReportsController extends Controller
     public function sales(Request $request)
     {
         $prevsale = DB::table('saleinventory')
-            ->where('status', 1)
+            //->where('status', 1)
             ->where('saleinventory.dateofsale', '<', $request['start'])
             ->sum('saleinventory.total_amount');
 
