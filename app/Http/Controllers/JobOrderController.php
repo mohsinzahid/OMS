@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\DocBlock\Tags\Formatter\AlignFormatter;
 
 
 class JobOrderController extends Controller
@@ -202,12 +203,13 @@ class JobOrderController extends Controller
             ->leftJoin('customers as c', 'sin.customer_id', '=', 'c.id')
             ->leftJoin('walkincustomer as w', 'sin.id', '=', 'w.saleinventory_id')
             ->leftJoin('salepayment as sp', 'sin.id', '=', 'sp.job_order_no')
+            ->leftJoin('customeradjustment as ca', 'sin.id', '=', 'ca.invoice_no')
             ->select("sin.id as id", "sin.dateofsale as date", "sin.invoiceno as invoice_no",
                 "sin.total_amount as debit_amount", "sin.added_at as added_at","e.name as created_by",
                 DB::raw("'' as remarks"), DB::raw("CASE WHEN c.type = 0 THEN w.name ELSE c.name END as name"),
                 DB::raw("CASE WHEN c.type = 0 THEN 'Walk In Customer' ELSE 'Credit customer' END as type"),
                 "sin.customer_id as customer_id",
-                DB::raw("CASE WHEN sp.job_order_no = sin.id THEN 'paid' ELSE 'unpaid' END as status"))
+                DB::raw("CASE WHEN sp.job_order_no = sin.id || ca.invoice_no = sin.id THEN 'paid' ELSE 'unpaid' END as status"))
             ->where('sin.invoiceno', $request['id'])
             ->get();
 
@@ -239,6 +241,5 @@ class JobOrderController extends Controller
 
         return view('jobs list.print job order',['walk' => $walk, 'inventory' =>  $inventory, 'walkincustomer' =>$walkincustomer, 'item' => $items, 'len' =>$len, 'saleinventoryid' => $id]);
     }
-
-
 }
+
