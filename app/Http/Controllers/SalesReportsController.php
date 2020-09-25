@@ -135,7 +135,7 @@ class SalesReportsController extends Controller
                 DB::raw("'Walk In Customer' as type"),
 //                DB::raw("CASE WHEN sp.job_order_no = saleinventory.id THEN 'paid' ELSE 'unpaid' END as status"))
                 DB::raw("CASE WHEN SUM(sp.amount) = saleinventory.total_amount || 
-                        SUM(sp.amount)+ SUM(ca.amount) = saleinventory.total_amount
+                        SUM(sp.amount)+ ca.amount = saleinventory.total_amount
                         || SUM(ca.amount) = saleinventory.total_amount || 
                         (SUM(sp.amount) = saleinventory.total_amount + ca.amount && ca.general_ledger_id = 1) 
                          THEN 'paid' ELSE CASE WHEN SUM(sp.amount) < saleinventory.total_amount || 

@@ -183,23 +183,27 @@
                     }
 
                     for (let key in creditInfo) {
+                        if(creditInfo[key]["sp_cgn"])
+                        {
+                            $("#tableExample3").DataTable().row.add([
+                                creditInfo[key]["job_order_cgn"],creditInfo[key]["sp_cgn"],'',creditInfo[key]["paid_date"],
+                                creditInfo[key]["credit_amount"], '', 'Cash'
+                            ]).draw();
+                        }
 
-                        $("#tableExample3").DataTable().row.add([
-                            creditInfo[key]["job_order_cgn"],creditInfo[key]["sp_cgn"],'',creditInfo[key]["paid_date"],
-                            creditInfo[key]["credit_amount"], '', 'Cash'
-                        ]).draw();
                     }
-                    if(adjInfo)
-                    {
-                        for (let key in adjInfo) {
-
+                    for (let key in adjInfo) {
+                        if(adjInfo[key]["ca_cgn"])
+                        {
                             $("#tableExample3").DataTable().row.add([
                                 adjInfo[key]["job_order_cgn"],'',adjInfo[key]["ca_cgn"],adjInfo[key]["adj_date"],
                                 '', adjInfo[key]["adj_amount"],
                                 adjInfo[key]["gl"]
                             ]).draw();
                         }
+
                     }
+
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(JSON.stringify(jqXHR));

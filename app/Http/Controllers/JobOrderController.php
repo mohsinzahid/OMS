@@ -216,10 +216,10 @@ class JobOrderController extends Controller
                 "sin.customer_id as customer_id",
 //                DB::raw("SUM(sp.amount) as credit_amount")
 //                DB::raw("CASE WHEN sp.job_order_no = sin.id || ca.invoice_no = sin.id THEN 'paid' ELSE 'unpaid' END as status")
-                DB::raw("CASE WHEN SUM(sp.amount) = sin.total_amount || SUM(sp.amount)+ SUM(ca.amount) = sin.total_amount
-                        || SUM(ca.amount) = sin.total_amount || (SUM(sp.amount) = sin.total_amount + ca.amount && ca.general_ledger_id = 1) 
+                DB::raw("CASE WHEN (SUM(sp.amount) = sin.total_amount) || (SUM(sp.amount) + ca.amount = sin.total_amount)
+                        || (SUM(ca.amount) = sin.total_amount) || ((SUM(sp.amount) = sin.total_amount + ca.amount && ca.general_ledger_id = 1)) 
                  THEN 'paid' ELSE CASE WHEN SUM(sp.amount) < sin.total_amount || SUM(ca.amount) < sin.total_amount 
-                 THEN 'partial' ELSE  'unpaid' END END as status"))
+                 THEN 'partial' ELSE 'unpaid' END END as status"))
             ->where('sin.invoiceno', $request['id'])
             ->groupBy('sin.id','sin.dateofsale','sin.invoiceno', 'sin.total_amount', 'sin.added_at',
                 'e.name', 'sin.customer_id', 'w.name', 'c.type', 'ca.general_ledger_id', 'ca.amount')
