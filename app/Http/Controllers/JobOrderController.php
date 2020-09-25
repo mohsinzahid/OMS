@@ -241,14 +241,16 @@ class JobOrderController extends Controller
             )
             ->where('sin.invoiceno', $request['id'])
             ->get();
-        if($adjustmentInfo[0]->job_order_cgn)
-            $result['adjInfo'] = $adjustmentInfo;
-        else
-            $result['adjInfo'] = null;
-        if($creditInfo[0]->sp_cgn)
-            $result['creditInfo'] = $creditInfo;
-        else
-            $result['creditInfo'] = '';
+//        if($adjustmentInfo[0]->job_order_cgn)
+//            $result['adjInfo'] = $adjustmentInfo;
+//        else
+//            $result['adjInfo'] = null;
+//        if($creditInfo[0]->sp_cgn)
+//            $result['creditInfo'] = $creditInfo;
+//        else
+//            $result['creditInfo'] = '';
+        $result['adjInfo'] = $adjustmentInfo;
+        $result['creditInfo'] = $creditInfo;
         $result['debitInfo'] = $debitInfo;
 
 
