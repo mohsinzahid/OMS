@@ -54,14 +54,13 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="panel panel-filled">
                     <div class="panel-heading">
                         Sales
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
-
                             <table id="tableExample4" class="table table-striped table-hover table-bordered table-condensed">
                                 <thead>
                                     <tr>
@@ -71,10 +70,37 @@
                                         <th style="color: #ffc771">Date</th>
                                         <th style="color: #ffc771">Invoice No</th>
                                         <th style="color: #ffc771">Debit Amount</th>
-                                        <th style="color: #ffc771">Remarks</th>
                                         <th style="color: #ffc771">Created By</th>
                                         <th style="color: #ffc771">Entry date</th>
+                                        <th style="color: #ffc771">Status</th>
                                     </tr>
+                                </thead>
+                                <tbody id="back">
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-filled">
+                    <div class="panel-heading">
+                        Credit Info
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table id="tableExample3" class="table table-striped table-hover table-bordered table-condensed">
+                                <thead>
+                                <tr>
+                                    <th style="color: #ffc771">Job Order CGN</th>
+                                    <th style="color: #ffc771">Sales Payment CGN</th>
+                                    <th style="color: #ffc771">Adjustment CGN</th>
+                                    <th style="color: #ffc771">Paid Date</th>
+                                    <th style="color: #ffc771">Credit Amount</th>
+                                    <th style="color: #ffc771">Adjustment Amount</th>
+                                    <th style="color: #ffc771">General Ledger</th>
+                                </tr>
                                 </thead>
                                 <tbody id="back">
                                 </tbody>
@@ -93,7 +119,7 @@
     <script>
 
         $( "#search" ).click(function(){
-            var id = $('#invoiceno').val();
+            let id = $('#invoiceno').val();
 
             $.ajaxSetup({
                 headers: {
@@ -107,7 +133,8 @@
                     }
                 },
                 type: 'GET',
-                url: '/job-order/ajaxsearch',
+                url: '/job-order/ajaxSearchDetail',
+                // url: '/job-order/ajaxsearch',
                 data: {id: id},
 
                 success: function (response) {
@@ -132,14 +159,46 @@
 
 
                     $('#tableExample4').DataTable().clear().draw();
+                    $('#tableExample3').DataTable().clear().draw();
 
-                    for (key in response) {
+                    let debitInfo = response['debitInfo'];
+                    let creditInfo = response['creditInfo'];
+                    let adjInfo = response['adjInfo'];
+                    console.log(debitInfo);
 
+
+                    for (let key in debitInfo) {
+
+                        // $("#tableExample4").DataTable().row.add([
+                        //     response[key]["id"],response[key]["type"],response[key]["name"], response[key]["date"],
+                        //     response[key]["invoice_no"], response[key]["debit_amount"], response[key]["remarks"],
+                        //     response[key]["created_by"], response[key]["added_at"]
+                        // ]).draw();
                         $("#tableExample4").DataTable().row.add([
-                            response[key]["id"],response[key]["type"],response[key]["name"], response[key]["date"],
-                            response[key]["invoice_no"], response[key]["debit_amount"], response[key]["remarks"],
-                            response[key]["created_by"], response[key]["added_at"]
+                            debitInfo[key]["id"],debitInfo[key]["type"],
+                            debitInfo[key]["name"], debitInfo[key]["date"],
+                            debitInfo[key]["invoice_no"], debitInfo[key]["debit_amount"],
+                            debitInfo[key]["created_by"], debitInfo[key]["added_at"],debitInfo[key]["status"]
                         ]).draw();
+                    }
+
+                    for (let key in creditInfo) {
+
+                        $("#tableExample3").DataTable().row.add([
+                            creditInfo[key]["job_order_cgn"],creditInfo[key]["sp_cgn"],'',creditInfo[key]["paid_date"],
+                            creditInfo[key]["credit_amount"], '', 'Cash'
+                        ]).draw();
+                    }
+                    if(adjInfo)
+                    {
+                        for (let key in adjInfo) {
+
+                            $("#tableExample3").DataTable().row.add([
+                                adjInfo[key]["job_order_cgn"],'',adjInfo[key]["ca_cgn"],adjInfo[key]["adj_date"],
+                                '', adjInfo[key]["adj_amount"],
+                                adjInfo[key]["gl"]
+                            ]).draw();
+                        }
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {

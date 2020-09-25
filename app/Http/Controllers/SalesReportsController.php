@@ -10,7 +10,7 @@ class SalesReportsController extends Controller
     public function CustomerLedgerReport()
     {
         $customer = DB::table('customers')->orderBy('name', 'asc')->get();
-        $walk = DB::table('customers')->where('type',0)->first();
+        $walk = DB::table('customers')->where('type', 0)->first();
         return view('sales.reports.customerLedgerReport', ['customer' => $customer, 'walk' => $walk]);
     }
 
@@ -36,7 +36,7 @@ class SalesReportsController extends Controller
 
 
         //mass paid
-        $prevcreditsale =  DB::table('salepayment as sp')->where('customer_id', $request['id'])
+        $prevcreditsale = DB::table('salepayment as sp')->where('customer_id', $request['id'])
             ->leftJoin('chequeinfo as ci', 'sp.id', '=', 'ci.sale_payment_id')
             ->where('date', '<', $Start_date)
             ->sum(DB::raw('CASE WHEN ci.tax_amount iS NULL THEN sp.amount ELSE sp.amount + ci.tax_amount END'));
@@ -48,8 +48,8 @@ class SalesReportsController extends Controller
                 (DB::raw("CASE WHEN sp.invoiceno iS NULL THEN sin.invoiceno ELSE sp.invoiceno END as invoice_no")),
                 DB::raw("0 as debit_amount"),
                 (DB::raw("CASE WHEN ci.tax_amount iS NULL THEN sp.amount ELSE sp.amount + ci.tax_amount END as credit_amount")),
-                DB::raw("'CC' as formtype"),"sp.added_at as added_at", "ci.cheque_no as cheque_no",
-                "ci.cheque_date as cheque_date",DB::raw("'' as created_by"),DB::raw("'' as remarks"),DB::raw("0 as net_amount"))
+                DB::raw("'CC' as formtype"), "sp.added_at as added_at", "ci.cheque_no as cheque_no",
+                "ci.cheque_date as cheque_date", DB::raw("'' as created_by"), DB::raw("'' as remarks"), DB::raw("0 as net_amount"))
             ->where('sp.customer_id', $request['id'])
             ->where('sp.date', '>=', $Start_date)
             ->where('sp.date', '<=', $End_date);
@@ -58,9 +58,9 @@ class SalesReportsController extends Controller
         $second = DB::table('saleinventory as sin')
             ->leftJoin('employees as e', 'sin.employee_id', '=', 'e.id')
             ->select("sin.id as id", "sin.dateofsale as date", "sin.invoiceno as invoice_no",
-                "sin.total_amount as debit_amount",DB::raw("0 as credit_amount"),DB::raw("'JO' as formtype"),
-                "sin.added_at as added_at",DB::raw("'' as cheque_no"),DB::raw("'' as cheque_date"),"e.name as created_by",
-                DB::raw("'' as remarks"),DB::raw("0 as net_amount"))
+                "sin.total_amount as debit_amount", DB::raw("0 as credit_amount"), DB::raw("'JO' as formtype"),
+                "sin.added_at as added_at", DB::raw("'' as cheque_no"), DB::raw("'' as cheque_date"), "e.name as created_by",
+                DB::raw("'' as remarks"), DB::raw("0 as net_amount"))
             ->where('sin.customer_id', $request['id'])
             ->where('sin.status', 1)
             ->where('sin.dateofsale', '>=', $Start_date)
@@ -72,8 +72,8 @@ class SalesReportsController extends Controller
             ->select("caf.id as id", "caf.date as date", "sin.invoiceno as invoice_no",
                 (DB::raw("CASE WHEN caf.type = 'debit' THEN caf.amount ELSE 0 END as debit_amount")),
                 (DB::raw("CASE WHEN caf.type = 'credit' THEN caf.amount ELSE 0 END as credit_amount")),
-                DB::raw("'CAF' as formtype"),"caf.added_at as added_at", DB::raw("'' as cheque_no"),
-                DB::raw("'' as cheque_date"),DB::raw("'' as created_by"), "caf.remarks as remarks",DB::raw("0 as net_amount"))
+                DB::raw("'CAF' as formtype"), "caf.added_at as added_at", DB::raw("'' as cheque_no"),
+                DB::raw("'' as cheque_date"), DB::raw("'' as created_by"), "caf.remarks as remarks", DB::raw("0 as net_amount"))
             ->where('caf.customer_id', $request['id'])
             ->where('caf.date', '>=', $Start_date)
             ->where('caf.date', '<=', $End_date)
@@ -84,7 +84,7 @@ class SalesReportsController extends Controller
 
         $openingbalance = DB::table('customers')->where('id', $request['id'])
             ->select('prevbalance')->first();
-        $result['openingbalance'] = ($openingbalance ->prevbalance + $prevdebitsale +$prevdebitadj) - ($prevcreditsale + $prevcreditadj);
+        $result['openingbalance'] = ($openingbalance->prevbalance + $prevdebitsale + $prevdebitadj) - ($prevcreditsale + $prevcreditadj);
 
         /*$temp = $result['openingbalance'] ;
         foreach ($result as $results)
@@ -98,8 +98,8 @@ class SalesReportsController extends Controller
 
     public function statement()
     {
-        $customer = DB::table('customers')->where('status',1)->orderBy('name', 'asc')->get();
-        $walk = DB::table('customers')->where('type',0)->first();
+        $customer = DB::table('customers')->where('status', 1)->orderBy('name', 'asc')->get();
+        $walk = DB::table('customers')->where('type', 0)->first();
 
         return view('sales.reports.customerLedgerDetail', ['customer' => $customer, 'walk' => $walk]);
     }
@@ -110,11 +110,11 @@ class SalesReportsController extends Controller
             ->join('saleinventoryitem', 'saleinventory.id', '=', 'saleinventoryitem.saleinventory_id')
             ->join('size', 'saleinventoryitem.size_id', '=', 'size.id')
             ->join('employees', 'saleinventory.employee_id', '=', 'employees.id')
-            ->select('saleinventory.*','saleinventoryitem.*', 'size.size', 'employees.name')
-            ->where('saleinventory.status',1)
-            ->where('saleinventory.customer_id',$request['id'])
-            ->where('saleinventory.dateofsale','>=', $request['start'])
-            ->where('saleinventory.dateofsale','<=', $request['end'])
+            ->select('saleinventory.*', 'saleinventoryitem.*', 'size.size', 'employees.name')
+            ->where('saleinventory.status', 1)
+            ->where('saleinventory.customer_id', $request['id'])
+            ->where('saleinventory.dateofsale', '>=', $request['start'])
+            ->where('saleinventory.dateofsale', '<=', $request['end'])
             ->ORDERBY('saleinventory.dateofsale')
             ->get();
 
@@ -128,21 +128,32 @@ class SalesReportsController extends Controller
             ->leftJoin('customers as c', 'saleinventory.customer_id', '=', 'c.id')
             ->leftJoin('walkincustomer as w', 'saleinventory.id', '=', 'w.saleinventory_id')
             ->leftJoin('salepayment as sp', 'saleinventory.id', '=', 'sp.job_order_no')
+            ->leftJoin('customeradjustment as ca', 'saleinventory.id', '=', 'ca.invoice_no')
             ->select("saleinventory.id as id", "saleinventory.dateofsale as date", "saleinventory.invoiceno as invoice_no",
-                "saleinventory.added_at as added_at","e.name as created_by",
-                DB::raw("w.name as name"),"saleinventory.total_amount as amount",
+                "saleinventory.added_at as added_at", "e.name as created_by",
+                DB::raw("w.name as name"), "saleinventory.total_amount as amount",
                 DB::raw("'Walk In Customer' as type"),
-                DB::raw("CASE WHEN sp.job_order_no = saleinventory.id THEN 'paid' ELSE 'unpaid' END as status"))
-            ->where('saleinventory.dateofsale', '>=',  $request['start'])
-            ->where('saleinventory.dateofsale', '<=',  $request['end'])
-            ->where('c.type',0)
+//                DB::raw("CASE WHEN sp.job_order_no = saleinventory.id THEN 'paid' ELSE 'unpaid' END as status"))
+                DB::raw("CASE WHEN SUM(sp.amount) = saleinventory.total_amount || 
+                        SUM(sp.amount)+ SUM(ca.amount) = saleinventory.total_amount
+                        || SUM(ca.amount) = saleinventory.total_amount || 
+                        (SUM(sp.amount) = saleinventory.total_amount + ca.amount && ca.general_ledger_id = 1) 
+                         THEN 'paid' ELSE CASE WHEN SUM(sp.amount) < saleinventory.total_amount || 
+                         SUM(ca.amount) < saleinventory.total_amount 
+                         THEN 'partial' ELSE  'unpaid' END END as status"))
+            ->where('saleinventory.dateofsale', '>=', $request['start'])
+            ->where('saleinventory.dateofsale', '<=', $request['end'])
+            ->where('c.type', 0)
+            ->groupBy('saleinventory.id', 'saleinventory.dateofsale', 'saleinventory.invoiceno', 'saleinventory.total_amount', 'saleinventory.added_at',
+                'e.name', 'saleinventory.customer_id', 'w.name', 'c.type', 'ca.general_ledger_id', 'ca.amount')
             ->ORDERBY('added_at')
             ->get();
 
         return response()->json($result, 200);
     }
 
-    public function CustomerReceivableAjaxUpdate(Request $request){
+    public function CustomerReceivableAjaxUpdate(Request $request)
+    {
         $End_date = $request['end'];
         $customer = DB::table('customers')->orderBy('name', 'asc')->get();
 
@@ -154,7 +165,7 @@ class SalesReportsController extends Controller
                 ->sum('saleinventory.total_amount');
 
             //mass paid
-            $prevcreditsale =  DB::table('salepayment as sp')->where('customer_id', $value->id)
+            $prevcreditsale = DB::table('salepayment as sp')->where('customer_id', $value->id)
                 ->leftJoin('chequeinfo as ci', 'sp.id', '=', 'ci.sale_payment_id')
                 ->where('date', '<=', $End_date)
                 ->sum(DB::raw('CASE WHEN ci.tax_amount iS NULL THEN sp.amount ELSE sp.amount + ci.tax_amount END'));
@@ -172,7 +183,7 @@ class SalesReportsController extends Controller
             $balance = DB::table('customers')->where('id', $value->id)
                 ->select('prevbalance')->first();
 
-            $data['balance'] = ($balance ->prevbalance + $prevdebitsale +$prevdebitadj) -
+            $data['balance'] = ($balance->prevbalance + $prevdebitsale + $prevdebitadj) -
                 ($prevcreditsale + $prevcreditadj);
 
             $last = DB::table('salepayment as sp')->where('customer_id', $value->id)

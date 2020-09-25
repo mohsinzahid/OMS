@@ -516,6 +516,8 @@ Route::group(['middleware' => 'auth'], function()
     });
 
     Route::get('/job-order/ajaxsearch', 'JobOrderController@AjaxSearch');
+    Route::get('/job-order/ajaxSearchDetail', 'JobOrderController@AjaxSearchDetail');
+
 
     Route::get('/jobs-list/pending-jobs', function () {
         if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3 || Auth::user()->type_id === 4)
