@@ -217,7 +217,10 @@ class JobOrderController extends Controller
 //                DB::raw("SUM(sp.amount) as credit_amount")
 //                DB::raw("CASE WHEN sp.job_order_no = sin.id || ca.invoice_no = sin.id THEN 'paid' ELSE 'unpaid' END as status")
                 DB::raw("CASE WHEN (SUM(sp.amount) = sin.total_amount) || (SUM(sp.amount) + ca.amount = sin.total_amount)
-                        || (SUM(ca.amount) = sin.total_amount) || ((SUM(sp.amount) = sin.total_amount + ca.amount && ca.general_ledger_id = 1)) 
+                        || (SUM(ca.amount) = sin.total_amount) || 
+                        ((SUM(sp.amount) = sin.total_amount + ca.amount && ca.general_ledger_id = 1)) ||
+                         ((SUM(sp.amount) + ca.amount && (ca.general_ledger_id = 2 || ca.general_ledger_id = 3))  = 
+                         (sin.total_amount + ca.amount && ca.general_ledger_id = 1))
                  THEN 'paid' ELSE CASE WHEN SUM(sp.amount) < sin.total_amount || SUM(ca.amount) < sin.total_amount 
                  THEN 'partial' ELSE 'unpaid' END END as status"))
             ->where('sin.invoiceno', $request['id'])

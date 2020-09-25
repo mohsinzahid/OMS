@@ -144,7 +144,8 @@ class SalesReportsController extends Controller
             ->where('saleinventory.dateofsale', '>=', $request['start'])
             ->where('saleinventory.dateofsale', '<=', $request['end'])
             ->where('c.type', 0)
-            ->groupBy('saleinventory.id', 'saleinventory.dateofsale', 'saleinventory.invoiceno', 'saleinventory.total_amount', 'saleinventory.added_at',
+            ->groupBy('saleinventory.id', 'saleinventory.dateofsale', 'saleinventory.invoiceno', 'saleinventory.total_amount',
+                'saleinventory.added_at',
                 'e.name', 'saleinventory.customer_id', 'w.name', 'c.type', 'ca.general_ledger_id', 'ca.amount')
             ->ORDERBY('added_at')
             ->get();
