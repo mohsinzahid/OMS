@@ -92,7 +92,7 @@ $(document).ready(function () {
                             data: {end: end},
 
                             success: function (response) {
-                            console.log(response);
+                            // console.log(response);
 
                     $('#tableExample4').DataTable({
                                     dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
