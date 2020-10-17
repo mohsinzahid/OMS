@@ -92,7 +92,7 @@ $(document).ready(function () {
                             data: {end: end},
 
                             success: function (response) {
-                            // console.log(response);
+                            console.log(response);
 
                     $('#tableExample4').DataTable({
                                     dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
@@ -126,7 +126,7 @@ $(document).ready(function () {
                                         lastPaymentdate = response[key]["lastPayment"]["date"];
                                         // console.log(lastPayment);
                                     }
-                                    if(response[key]["lastSale"]["dateofsale"] != null)
+                                    if(response[key]["lastSale"] != null)
                                     {
                                         lastSale = response[key]["lastSale"]["dateofsale"];
                                     }
