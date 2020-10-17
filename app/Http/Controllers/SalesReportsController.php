@@ -187,14 +187,21 @@ class SalesReportsController extends Controller
             $data['balance'] = ($balance->prevbalance + $prevdebitsale + $prevdebitadj) -
                 ($prevcreditsale + $prevcreditadj);
 
-            $last = DB::table('salepayment as sp')->where('customer_id', $value->id)
+            $lastPayment = DB::table('salepayment as sp')->where('customer_id', $value->id)
                 ->leftJoin('chequeinfo as ci', 'sp.id', '=', 'ci.sale_payment_id')
-                ->latest('added_at')
+//                ->latest('added_at')
+                ->latest('date')
                 ->first();
+
+            $lastSale = DB::table('saleinventory')->where('customer_id', $value->id)
+                ->latest('dateofsale')
+                ->first();
+
 //                ->first(DB::raw('CASE WHEN ci.tax_amount iS NULL THEN sp.amount ELSE sp.amount + ci.tax_amount END'));
 //            $data['lastPaymentAmount'] = $last->amount +  $last->tax_amount;
             //$data['lastPaymentDate'] = '';
-            $data['last'] = $last;
+            $data['lastPayment'] = $lastPayment;
+            $data['lastSale'] = $lastSale;
             $result[] = $data;
         }
 

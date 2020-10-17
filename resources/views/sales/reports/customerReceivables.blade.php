@@ -49,6 +49,7 @@
                                 <thead>
                                 <tr>
                                     <th style="color: #ffc771">Customer</th>
+                                    <th style="color: #ffc771">Last Bill Date</th>
                                     <th style="color: #ffc771">Last Payment Date</th>
                                     <th style="color: #ffc771">Last Payment Amount</th>
                                     <th style="color: #ffc771">Balance</th>
@@ -91,7 +92,7 @@ $(document).ready(function () {
                             data: {end: end},
 
                             success: function (response) {
-                            console.log(response);
+                            // console.log(response);
 
                     $('#tableExample4').DataTable({
                                     dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
@@ -108,7 +109,7 @@ $(document).ready(function () {
                                     "ordering": false,
                                     "bDestroy": true
                                 });
-                                // console.log(response);
+                                 // console.log(response);
                                 $('#tableExample4').DataTable().clear().draw();
 
                                 var totalBalance = 0;
@@ -117,21 +118,21 @@ $(document).ready(function () {
                                     let lastPayment = '';
                                     let lastPaymentdate = '';
                                     totalBalance = totalBalance + response[key]["balance"];
-                                    if(response[key]["last"]!= null)
+                                    if(response[key]["lastPayment"]!= null)
                                     {
-                                        lastPayment = response[key]["last"]["amount"] +  response[key]["last"]["tax_amount"];
-                                        lastPaymentdate = response[key]["last"]["date"];
+                                        lastPayment = response[key]["lastPayment"]["amount"] +
+                                            response[key]["lastPayment"]["tax_amount"];
+                                        lastPaymentdate = response[key]["lastPayment"]["date"];
+                                        // console.log(lastPayment);
                                     }
 
-
-
                                     $("#tableExample4").DataTable().row.add([
-                                        response[key]["name"], lastPaymentdate ,
+                                        response[key]["name"], response[key]["lastSale"]["dateofsale"] ,lastPaymentdate ,
                                         lastPayment , response[key]["balance"]
                                     ]).draw();
                                 }
                                 $("#tableExample4").DataTable().row.add([
-                                    "Net Total", "", "", totalBalance]).draw();
+                                    "Net Total", "","", "", totalBalance]).draw();
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
                                 console.log(JSON.stringify(jqXHR));
