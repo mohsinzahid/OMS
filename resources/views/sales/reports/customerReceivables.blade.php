@@ -117,6 +117,7 @@ $(document).ready(function () {
 
                                     let lastPayment = '';
                                     let lastPaymentdate = '';
+                                    let lastSale = '';
                                     totalBalance = totalBalance + response[key]["balance"];
                                     if(response[key]["lastPayment"]!= null)
                                     {
@@ -125,9 +126,13 @@ $(document).ready(function () {
                                         lastPaymentdate = response[key]["lastPayment"]["date"];
                                         // console.log(lastPayment);
                                     }
+                                    if(response[key]["lastSale"]["dateofsale"] != null)
+                                    {
+                                        lastSale = response[key]["lastSale"]["dateofsale"];
+                                    }
 
                                     $("#tableExample4").DataTable().row.add([
-                                        response[key]["name"], response[key]["lastSale"]["dateofsale"] ,lastPaymentdate ,
+                                        response[key]["name"], lastSale ,lastPaymentdate ,
                                         lastPayment , response[key]["balance"]
                                     ]).draw();
                                 }
