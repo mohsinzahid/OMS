@@ -76,7 +76,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group"><label >Date</label>
                                         <input type="date" class="form-control" name="dateofsale"
-                                               value="<?php echo date('Y-m-d'); ?>" = "yy/mm/dd"  min="2020-01-01" max="2020-12-31"
+                                               value="<?php echo date('Y-m-d'); ?>" = "yy/mm/dd"  min="2021-01-01" max="2021-12-31"
                                                id="focus2" required></div>
                                     <div class="form-group">
                                         <label >Invoice No</label>
