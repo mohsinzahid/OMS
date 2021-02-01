@@ -63,6 +63,7 @@
                                     <th style="color: #ffc771 ">Added At</th>
                                     <th style="color: #ffc771 ">Amount</th>
                                     <th style="color: #ffc771 ">Status</th>
+                                    <th style="text-align: center"><span class="pe-7s-edit" style="color: #ffc771 ; font-size:20px !important; "></span></th>
                                 </tr>
                                 </thead>
                                 <tbody id="addrow">
@@ -116,15 +117,17 @@
                 url: '/sales/reports/walkCustomerLedger/ajaxupdate',
 
                 success: function (response) {
-                    console.log(response);
+                    // console.log(response);
                     $('#tableExample4').DataTable().clear().draw();
+                    let edit= '';
 
                     for(key in response)
                     {
+                        edit = '<a href="/job-order/'+response[key]["id"]+'/edit" target="_blank" class="btn btn-w-md btn-success">edit</a>';
                             $("#tableExample4").DataTable().row.add([
                                 response[key]["id"],response[key]["name"],response[key]["date"],
                                 response[key]["type"], response[key]['invoice_no'], response[key]["created_by"],
-                                response[key]["added_at"], response[key]["amount"], response[key]["status"]]).draw();
+                                response[key]["added_at"], response[key]["amount"], response[key]["status"], edit]).draw();
                     }
 
 

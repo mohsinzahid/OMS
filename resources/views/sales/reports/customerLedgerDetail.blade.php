@@ -75,6 +75,7 @@
                                     <th style="color: #ffc771 ">Description</th>
                                     <th style="color: #ffc771 ">Set</th>
                                     <th style="color: #ffc771 ">Color</th>
+                                    <th style="text-align: center"><span class="pe-7s-edit" style="color: #ffc771 ; font-size:20px !important; "></span></th>
                                 </tr>
                                 </thead>
                                 <tbody id="addrow">
@@ -136,13 +137,15 @@
                     });
 
                     $('#tableExample4').DataTable().clear().draw();
+                    let edit= '';
 
                     for(key in response)
                     {
+                        edit = '<a href="/job-order/'+response[key]["saleinventory_id"]+'/edit" target="_blank" class="btn btn-w-md btn-success">edit</a>';
                         $("#tableExample4").DataTable().row.add([
                             response[key]['saleinventory_id'],name,response[key]["dateofsale"], response[key]["invoiceno"],
                             response[key]["name"], response[key]["added_at"], response[key]["size"], response[key]["description"],
-                            response[key]["set"], response[key]["color"]
+                            response[key]["set"], response[key]["color"], edit
                         ]).draw();
                     }
 
