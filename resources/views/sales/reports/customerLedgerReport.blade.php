@@ -83,6 +83,7 @@
                                     <th style="color: #ffc771">Remarks</th>
                                     <th style="text-align: center"><span class="pe-7s-user" style="color: #ffc771 ; font-size:20px !important; "></span></th>
                                     <th style="text-align: center"><span class="pe-7s-clock" style="color: #ffc771 ; font-size:20px !important; "></span></th>
+                                    <th style="text-align: center"><span class="pe-7s-edit" style="color: #ffc771 ; font-size:20px !important; "></span></th>
                                 </tr>
                                 </thead>
                                 <tbody id="back">
@@ -160,12 +161,13 @@
                             balance = (balance + response[key]["debit_amount"]) - response[key]["credit_amount"];
                             totaldebit = totaldebit + response[key]["debit_amount"];
                             totalcredit = totalcredit + response[key]["credit_amount"];
+                            edit = '<a href="/job-order/'+response[key]["id"]+'/edit" target="_blank" class="btn btn-w-md btn-success">edit</a>';
 
                             $("#tableExample4").DataTable().row.add([
                                 response[key]["id"],response[key]["date"], response[key]["formtype"], response[key]["invoice_no"],
                                 response[key]["cheque_no"], response[key]["cheque_date"], response[key]["debit_amount"],
                                 response[key]["credit_amount"],balance, response[key]["remarks"], response[key]["created_by"],
-                                response[key]["added_at"]
+                                response[key]["added_at"], edit
                             ]).draw();
                         }
 

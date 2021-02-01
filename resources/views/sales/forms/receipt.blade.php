@@ -64,6 +64,7 @@
                                 <thead>
                                 <tr>
                                     <th style="color: #ffc771">CGN</th>
+                                    <th style="color: #ffc771">Edit</th>
                                     <th style="color: #ffc771">Type</th>
                                     <th style="color: #ffc771">Name</th>
                                     <th style="color: #ffc771">Date</th>
@@ -159,9 +160,10 @@
 
                         discount = '<input value="" type="text" class="form-control" id="discount'+unique_id+'" disabled' +
                             ' required>';
+                        edit = '<a href="/job-order/'+unique_id+'/edit" target="_blank" class="pe-7s-edit"></a>'
 
                         $("#tableExample4").DataTable().row.add([
-                           job_id ,response[key]["type"],response[key]["name"], date,
+                           job_id, edit ,response[key]["type"],response[key]["name"], date,
                             response[key]["invoice_no"],debitamount ,paidamount,discount, response[key]["created_by"],
                             response[key]["added_at"],response[key]["status"], button, customer_id
                         ]).draw();
