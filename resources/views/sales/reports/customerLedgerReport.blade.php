@@ -152,7 +152,7 @@
 
                         $('#tableExample4').DataTable().clear().draw();
                         $("#tableExample4").DataTable().row.add([
-                            "","Opening Balance", "", "", "", "", "", "", openingbalance,"", "", ""]).draw();
+                            "","Opening Balance", "", "", "", "", "", "", openingbalance,"", "", "",""]).draw();
 
                         var totaldebit = 0;
                         var totalcredit = 0;
