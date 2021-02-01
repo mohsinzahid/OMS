@@ -172,7 +172,7 @@
                         }
 
                         $("#tableExample4").DataTable().row.add([
-                            "","Net Total", "", "", "", "", totaldebit, totalcredit, balance,"", "", ""]).draw();
+                            "","Net Total", "", "", "", "", totaldebit, totalcredit, balance,"", "", "",""]).draw();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(JSON.stringify(jqXHR));
