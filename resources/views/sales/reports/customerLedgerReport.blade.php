@@ -161,7 +161,15 @@
                             balance = (balance + response[key]["debit_amount"]) - response[key]["credit_amount"];
                             totaldebit = totaldebit + response[key]["debit_amount"];
                             totalcredit = totalcredit + response[key]["credit_amount"];
-                            edit = '<a href="/job-order/'+response[key]["id"]+'/edit" target="_blank" class="btn btn-w-md btn-success">edit</a>';
+
+                            if (response[key]["formtype"] === 'JO') {
+                                edit = '<a href="/job-order/'+response[key]["id"]+'/edit" target="_blank" class="btn btn-w-md btn-success">edit</a>';
+                            } else if (response[key]["formtype"] === 'CC') {
+                            edit = '<a href="/cash-collection/'+response[key]["id"]+'/edit" target="_blank" class="btn btn-w-md btn-success">edit</a>';
+                            } else if (response[key]["formtype"] === 'CAF') {
+                                edit = '<a href="/customer-adjustment/'+response[key]["id"]+'/edit" target="_blank" class="btn btn-w-md btn-success">edit</a>';
+                            }
+
 
                             $("#tableExample4").DataTable().row.add([
                                 response[key]["id"],response[key]["date"], response[key]["formtype"], response[key]["invoice_no"],

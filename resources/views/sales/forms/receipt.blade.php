@@ -160,7 +160,7 @@
 
                         discount = '<input value="" type="text" class="form-control" id="discount'+unique_id+'" disabled' +
                             ' required>';
-                        edit = '<a href="/job-order/'+unique_id+'/edit" target="_blank" class="pe-7s-edit"></a>'
+                        edit = '<a href="/job-order/'+response[key]["id"]+'/edit" target="_blank" class="pe-7s-edit"></a>'
 
                         $("#tableExample4").DataTable().row.add([
                            job_id, edit ,response[key]["type"],response[key]["name"], date,

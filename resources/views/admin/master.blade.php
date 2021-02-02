@@ -112,11 +112,11 @@
                             Forms<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
                         </a>
                         <ul id="salesforms" class="nav nav-second collapse">
-                            <li><a href="{{url('/sales/forms/job-order')}}">Job Order (CTP)</a></li>
-                            <li><a href="{{url('/sales/forms/cash-collection')}}">Cash Collection</a></li>
-                            <li><a href="{{url('/sales/forms/customer-adjustment')}}">Customer Adjustment Form</a></li>
-                            <li><a href="{{url('/job-order/search')}}">Search Job Order</a></li>
-                            <li><a href="{{url('/sale/receipt')}}">Receipts Collection</a></li>
+                            <li><a href="{{url('/sales/forms/job-order')}}" target="_blank">Job Order (CTP)</a></li>
+                            <li><a href="{{url('/sales/forms/cash-collection')}}" target="_blank">Cash Collection</a></li>
+                            <li><a href="{{url('/sales/forms/customer-adjustment')}}" target="_blank">Customer Adjustment Form</a></li>
+                            <li><a href="{{url('/job-order/search')}}" target="_blank">Search Job Order</a></li>
+                            <li><a href="{{url('/sale/receipt')}}" target="_blank">Receipts Collection</a></li>
                         </ul>
                     </li>
 
@@ -125,11 +125,11 @@
                             Reports<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
                         </a>
                         <ul id="salesreports" class="nav nav-second collapse">
-                            <li><a href="{{url('/sales/reports/customerLedgerReport')}}">Customer Ledger Report</a></li>
-                            <li><a href="{{url('/sales/reports/walkCustomerLedger')}}">Walk Customer Ledger Report</a></li>
-                            <li><a href="{{url('/reports/customerLedgerDetail')}}">Customer ledger Detail Report</a></li>
-                            <li><a href="{{url('/customer/index')}}">Customer Summary Report</a></li>
-                            <li><a href="{{url('/sales/reports/customerReceivable')}}">Customer Receivable</a></li>
+                            <li><a href="{{url('/sales/reports/customerLedgerReport')}}" target="_blank">Customer Ledger Report</a></li>
+                            <li><a href="{{url('/sales/reports/walkCustomerLedger')}}" target="_blank">Walk Customer Ledger Report</a></li>
+                            <li><a href="{{url('/reports/customerLedgerDetail')}}" target="_blank">Customer ledger Detail Report</a></li>
+                            <li><a href="{{url('/customer/index')}}" target="_blank">Customer Summary Report</a></li>
+                            <li><a href="{{url('/sales/reports/customerReceivable')}}" target="_blank">Customer Receivable</a></li>
                         </ul>
                     </li>
 
@@ -142,9 +142,9 @@
                             Forms<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
                         </a>
                         <ul id="purchasesforms" class="nav nav-second collapse">
-                            <li><a href="{{url('/purchase/add')}}">Purchase Order</a></li>
-                            <li><a href="{{url('/cashpayment/add')}}">Cash Payments</a></li>
-                            <li><a href="{{url('/supplier-adjustment/add')}}">Supplier Adjustment Form</a></li>
+                            <li><a href="{{url('/purchase/add')}}" target="_blank">Purchase Order</a></li>
+                            <li><a href="{{url('/cashpayment/add')}}" target="_blank">Cash Payments</a></li>
+                            <li><a href="{{url('/supplier-adjustment/add')}}" target="_blank">Supplier Adjustment Form</a></li>
 
                         </ul>
                     </li>
@@ -154,9 +154,9 @@
                             Reports<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
                         </a>
                         <ul id="purchasesreports" class="nav nav-second collapse">
-                            <li><a href="{{url('/purchases/supplier_ledger')}}">Supplier Ledger Report</a></li>
-                            <li><a href="{{url('/purchase/supplier_ledger_detail')}}">Supplier Ledger Detail Report</a></li>
-                            <li><a href="{{url('/vendor/index')}}">Supplier summary Report</a></li>
+                            <li><a href="{{url('/purchases/supplier_ledger')}}" target="_blank">Supplier Ledger Report</a></li>
+                            <li><a href="{{url('/purchase/supplier_ledger_detail')}}" target="_blank">Supplier Ledger Detail Report</a></li>
+                            <li><a href="{{url('/vendor/index')}}" target="_blank">Supplier summary Report</a></li>
 
                         </ul>
                     </li>
@@ -170,7 +170,7 @@
                             Forms<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
                         </a>
                         <ul id="inventoryforms" class="nav nav-second collapse">
-                            <li><a href="{{url('/wastage/add')}}">Wastage</a></li>
+                            <li><a href="{{url('/wastage/add')}}" target="_blank">Wastage</a></li>
                         </ul>
                     </li>
 
@@ -179,8 +179,8 @@
                             Reports<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
                         </a>
                         <ul id="inventoryreports" class="nav nav-second collapse">
-                            <li><a href="{{url('/inventory/inventory-report')}}">Inventory Report</a></li>
-                            <li><a href="{{url('/inventory/inventory-summary')}}">Inventory Summary Report</a></li>
+                            <li><a href="{{url('/inventory/inventory-report')}}" target="_blank">Inventory Report</a></li>
+                            <li><a href="{{url('/inventory/inventory-summary')}}" target="_blank">Inventory Summary Report</a></li>
                         </ul>
                     </li>
 
@@ -193,8 +193,8 @@
                             Forms<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
                         </a>
                         <ul id="generalledgerforms" class="nav nav-second collapse">
-                            <li><a href="{{url('/general-ledger-adjustment/add')}}">General Ledger Adjustment Form</a></li>
-                            <li><a href="{{url('/petty-cash/add')}}">Petty Cash Payment</a></li>
+                            <li><a href="{{url('/general-ledger-adjustment/add')}}" target="_blank">General Ledger Adjustment Form</a></li>
+                            <li><a href="{{url('/petty-cash/add')}}" target="_blank">Petty Cash Payment</a></li>
                         </ul>
                     </li>
 
@@ -203,8 +203,8 @@
                             Reports<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
                         </a>
                             <ul id="generalledgerreports" class="nav nav-second collapse">
-                                <li><a href="{{url('/general-ledger/reports')}}">GL Reports</a></li>
-                                <li><a href="{{url('/general-ledger/dailyReports')}}">Daily Report</a></li>
+                                <li><a href="{{url('/general-ledger/reports')}}" target="_blank">GL Reports</a></li>
+                                <li><a href="{{url('/general-ledger/dailyReports')}}" target="_blank">Daily Report</a></li>
                             </ul>
                     </li>
 
@@ -217,10 +217,10 @@
                             Forms<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
                         </a>
                         <ul id="tradingforms" class="nav nav-second collapse">
-                            <li><a href="{{url('/supplier/add')}}"> Supplier Opening Form</a></li>
-                            <li><a href="{{url('/customer/add')}}">Customer Opening Form</a></li>
-                            <li><a href="{{url('/stock/add')}}">Inventory Opening Form</a></li>
-                            <li><a href="{{url('/customer/saleprice')}}">Set Sale price</a></li>
+                            <li><a href="{{url('/supplier/add')}}" target="_blank"> Supplier Opening Form</a></li>
+                            <li><a href="{{url('/customer/add')}}" target="_blank">Customer Opening Form</a></li>
+                            <li><a href="{{url('/stock/add')}}" target="_blank">Inventory Opening Form</a></li>
+                            <li><a href="{{url('/customer/saleprice')}}" target="_blank">Set Sale price</a></li>
                             {{--<li><a href="{{url('/stock/size')}}">Sizes</a></li>--}}
                         </ul>
                     </li>
@@ -233,9 +233,9 @@
                             Jobs list <span class="sub-nav-icon"> <i class="stroke-arrow"></i></span>
                         </a>
                         <ul id="jobs" class="nav nav-second collapse">
-                            <li><a href="{{url('/jobs-list/pending-jobs')}}">Pending Jobs</a></li>
-                            <li><a href="{{url('/jobs-list/printed-jobs')}}">Printed Jobs</a></li>
-                            <li><a href="{{url('/jobs-list/submitted-jobs')}}">Show Jobs</a></li>
+                            <li><a href="{{url('/jobs-list/pending-jobs')}}" target="_blank">Pending Jobs</a></li>
+                            <li><a href="{{url('/jobs-list/printed-jobs')}}" target="_blank">Printed Jobs</a></li>
+                            <li><a href="{{url('/jobs-list/submitted-jobs')}}" target="_blank">Show Jobs</a></li>
                         </ul>
                     </li>
 
@@ -245,20 +245,20 @@
                     </li>
 
                     <li>
-                        <a href="{{url('register')}}">
+                        <a href="{{url('register')}}" target="_blank">
                             Add User
                         </a>
                     </li>
                     <li>
-                        <a href="{{url('/waste/show')}}">Wastage Report</a>
+                        <a href="{{url('/waste/show')}}" target="_blank">Wastage Report</a>
                     </li>
                 @endif
 
                     <li class="nav-category">
                         Edit
                     </li>
-                    <li><a href="{{url('/form/edit')}}">Edit Selection Form</a></li>
-                    <li><a href="{{url('/accounting/close-date')}}">Close Accounting Date</a></li>
+                    <li><a href="{{url('/form/edit')}}" target="_blank">Edit Selection Form</a></li>
+                    <li><a href="{{url('/accounting/close-date')}}" target="_blank">Close Accounting Date</a></li>
             </ul>
         </nav>
     </aside>
