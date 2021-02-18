@@ -569,21 +569,21 @@ Route::group(['middleware' => 'auth'], function()
     });
 
     Route::get('/cash-collection/{id}/edit', function ($id) {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\CashCollectionController@edit',[$id]);
         else
             return view('admin.master');
     });
 
     Route::get('/cash-collection/{id}/delete', function ($id) {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\CashCollectionController@destroy',[$id]);
         else
             return view('admin.master');
     });
 
     Route::post('/cash-collection/updatepayment', function (Request $request) {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\CashCollectionController@update',[$request]);
         else
             return view('admin.master');
@@ -599,21 +599,21 @@ Route::group(['middleware' => 'auth'], function()
 //Customer adjustment start
 
     Route::get('/sales/forms/customer-adjustment', function () {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\CustomerAdjustmentController@create');
         else
             return view('admin.master');
     });
 
     Route::post('/customer-adjustment/postpayment', function (Request $request) {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\CustomerAdjustmentController@store',[$request]);
         else
             return view('admin.master');
     });
 
     Route::post('/customer-adjustment/updatepayment', function (Request $request) {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\CustomerAdjustmentController@update',[$request]);
         else
             return view('admin.master');
@@ -622,7 +622,7 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('/customer-adjustment/ajax/get-invoice','CustomerAdjustmentController@getinvoice');
 
     Route::get('/customer-adjustment/{id}/edit', function ($id) {
-        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2 || Auth::user()->type_id === 3)
             return app()->call('App\Http\Controllers\CustomerAdjustmentController@edit',[$id]);
         else
             return view('admin.master');
