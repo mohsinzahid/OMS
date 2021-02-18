@@ -96,6 +96,7 @@
                                     <th style="color: #ffc771">Job Order CGN</th>
                                     <th style="color: #ffc771">Sales Payment CGN</th>
                                     <th style="color: #ffc771">Adjustment CGN</th>
+                                    <th style="color: #ffc771">Edit</th>
                                     <th style="color: #ffc771">Paid Date</th>
                                     <th style="color: #ffc771">Credit Amount</th>
                                     <th style="color: #ffc771">Adjustment Amount</th>
@@ -185,8 +186,9 @@
                     for (let key in creditInfo) {
                         if(creditInfo[key]["sp_cgn"])
                         {
+                            edit = '<a href="/cash-collection/'+creditInfo[key]["sp_cgn"]+'/edit" target="_blank" class="pe-7s-edit"></a>';
                             $("#tableExample3").DataTable().row.add([
-                                creditInfo[key]["job_order_cgn"],creditInfo[key]["sp_cgn"],'',creditInfo[key]["paid_date"],
+                                creditInfo[key]["job_order_cgn"],creditInfo[key]["sp_cgn"],'',edit,creditInfo[key]["paid_date"],
                                 creditInfo[key]["credit_amount"], '', 'Cash'
                             ]).draw();
                         }
@@ -195,8 +197,9 @@
                     for (let key in adjInfo) {
                         if(adjInfo[key]["ca_cgn"])
                         {
+                            edit = '<a href="/customer-adjustment/'+adjInfo[key]["ca_cgn"]+'/edit" target="_blank" class="pe-7s-edit"></a>';
                             $("#tableExample3").DataTable().row.add([
-                                adjInfo[key]["job_order_cgn"],'',adjInfo[key]["ca_cgn"],adjInfo[key]["adj_date"],
+                                adjInfo[key]["job_order_cgn"],'',adjInfo[key]["ca_cgn"],edit,adjInfo[key]["adj_date"],
                                 '', adjInfo[key]["adj_amount"],
                                 adjInfo[key]["gl"]
                             ]).draw();
