@@ -73,7 +73,7 @@
                                         <div id="walkinfo1">
                                             <label>Customer Name</label>
                                             <input type="text" class="form-control" name="walkname" id="custname"
-                                                   pattern="[A-Za-z ]{1,32}" value="{{$walkincustomer->name}}" required>
+                                                   pattern="[A-Za-z0-9 ]+" value="{{$walkincustomer->name}}" required>
                                         </div>
                                         <div id="walkinfo2">
                                             <label>Mobile No</label>

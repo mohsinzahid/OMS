@@ -659,6 +659,13 @@ Route::group(['middleware' => 'auth'], function()
             return view('admin.master');
     });
 
+    Route::post('/accounting/job-order-close-date/update', function (Request $request) {
+        if (Auth::user()->type_id === 1 || Auth::user()->type_id === 2)
+            return app()->call('App\Http\Controllers\AccountingPeriodController@updateJobOrderPeriod',[$request]);
+        else
+            return view('admin.master');
+    });
+
     Route::get('/edit-form/ajax/get-id','EditFormController@ajaxgetids');
 
     Route::get('/accounting/close-date', function () {

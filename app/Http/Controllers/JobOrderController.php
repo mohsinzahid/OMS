@@ -17,8 +17,10 @@ class JobOrderController extends Controller
         $size = DB::table('size')->get();
         $walk = DB::table('customers')->where('type', 0)->first();
         $employee = DB::table('employees')->get();
+        $closed_period = DB::table('closedperiod')->first();
 
-        return view('sales.forms.job order.create', ['customer' => $customer, 'size' => $size, 'walk' => $walk, 'employee' => $employee]);
+        return view('sales.forms.job order.create', ['customer' => $customer, 'size' => $size, 'walk' => $walk,
+            'employee' => $employee, 'closedperiod' => $closed_period]);
     }
 
     /**

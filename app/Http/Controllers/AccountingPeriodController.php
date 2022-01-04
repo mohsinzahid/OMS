@@ -21,4 +21,13 @@ class AccountingPeriodController extends Controller
         return redirect('/accounting/close-date');
 
     }
+
+    public function updateJobOrderPeriod(Request $request)
+    {
+        DB::table('closedperiod')->where('id', 1)->update(
+            ['job_order_closed_year' => $request['jobOrderClosedDate']]
+        );
+        return redirect('/accounting/close-date');
+
+    }
 }

@@ -37,11 +37,13 @@
                                 <thead>
                                 <tr>
                                     <th>Closed Period <small>(yyyy-mm-dd)</small></th>
+                                    <th>Job Order Closed Year <small>(yyyy-mm-dd)</small></th>
                                 </tr>
                                 </thead>
                                 <tbody >
                                 <tr>
-                                    <td>0001-01-01 &emsp; to &emsp; {{$result->closed_date}}</td>
+                                    <td>{{$result->closed_date}}</td>
+                                    <td>{{$result->job_order_closed_year}}</td>
                                 </tr>
 
                                 </tbody>
@@ -52,8 +54,6 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="header-title">
-                </div>
                 <div class="panel panel-filled">
                     <div class="panel-body">
                         <form method="post" action="{{ url('/accounting/close-date/update') }}" autocomplete="off">
@@ -62,6 +62,21 @@
                             <div class="form-group">
                                 <label>Closed Date</label>
                                 <input type="date" class="form-control" name="closeddate"
+                                       required>
+                            </div>
+
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="panel panel-filled">
+                    <div class="panel-body">
+                        <form method="post" action="{{ url('/accounting/job-order-close-date/update') }}" autocomplete="off">
+                            {{ csrf_field() }}
+
+                            <div class="form-group">
+                                <label>Job Order Closed Year</label>
+                                <input type="date" class="form-control" name="jobOrderClosedDate"
                                        required>
                             </div>
 
