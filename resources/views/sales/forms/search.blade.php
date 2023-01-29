@@ -12,6 +12,11 @@
             <div class="col-lg-12">
                 <div class="view-header">
                     <div class="pull-right text-right" style="line-height: 14px">
+                        <select class="form-control" id="status" style="width: 100%" required>
+                            <option value="paidOrPartial">Paid Or Partial</option>
+                            <option value="unpaid" selected>Unpaid</option>
+                            <option value="all">All</option>
+                        </select>
                     </div>
                     <div class="header-icon">
                         <i class="pe page-header-icon pe-7s-pen"></i>
@@ -121,6 +126,7 @@
 
         $( "#search" ).click(function(){
             let id = $('#invoiceno').val();
+            let status = $("#status option:selected").val();
 
             $.ajaxSetup({
                 headers: {
@@ -136,10 +142,9 @@
                 type: 'GET',
                 url: '/job-order/ajaxSearchDetail',
                 // url: '/job-order/ajaxsearch',
-                data: {id: id},
+                data: {id: id, status: status},
 
                 success: function (response) {
-                    console.log(response);
 
                     $('#tableExample4').DataTable({
                         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",

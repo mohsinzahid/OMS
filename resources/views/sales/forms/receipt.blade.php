@@ -12,6 +12,12 @@
             <div class="col-lg-12">
                 <div class="view-header">
                     <div class="pull-right text-right" style="line-height: 14px">
+                        <select class="form-control" id="status" style="width: 100%" required>
+                            <option value="paid">Paid</option>
+                            <option value="unpaid" selected>Unpaid</option>
+                            <option value="partial">Partial</option>
+                            <option value="all">All</option>
+                        </select>
                     </div>
                     <div class="header-icon">
                         <i class="pe page-header-icon pe-7s-pen"></i>
@@ -32,7 +38,7 @@
                     <div class="panel-body">
                         <div class="form-group">
                             <label for="formtype">Forms type</label>
-                            <select class="form-control"style="width: 100%" required>
+                            <select class="form-control" style="width: 100%" required>
                                 <option value="jo" selected> JO &emsp; Job Order(CTP)</option>
                             </select>
                         </div>
@@ -96,7 +102,8 @@
     <script>
 
         $( "#search" ).click(function(){
-            var id = $('#invoiceno').val();
+            let id = $('#invoiceno').val();
+            let status = $("#status option:selected").val();
 
             $.ajaxSetup({
                 headers: {
@@ -111,7 +118,7 @@
                 },
                 type: 'GET',
                 url: '/job-order/ajaxsearch',
-                data: {id: id},
+                data: {id: id, status: status},
 
                 success: function (response) {
                     $('#tableExample4').DataTable({

@@ -22,7 +22,14 @@
             </div>
         </div>
         <div class="row"  id="adddate">
-            <div class="col-sm-3"></div>
+            <div class="col-sm-3">
+                <select class="form-control" id="status" style="width: 100%" required>
+                    <option value="paid">Paid</option>
+                    <option value="unpaid" selected>Unpaid</option>
+                    <option value="partial">Partial</option>
+                    <option value="all">All</option>
+                </select>
+            </div>
 
             <div class="col-sm-4"></div>
             <div class="form-group col-sm-2" id="hiddenfrom" style="border-left: 1px solid darkslategrey;">
@@ -98,6 +105,7 @@
         });
 
         $( "#calldate" ).click(function(){
+            let status = $("#status option:selected").val();
             var start = $('#start').val();
             var end = $('#end').val();
             $("#addrow").empty();
@@ -113,7 +121,7 @@
                     }
                 },
                 type: 'GET',
-                data: {start:start, end: end},
+                data: {start:start, end: end, status:status},
                 url: '/sales/reports/walkCustomerLedger/ajaxupdate',
 
                 success: function (response) {

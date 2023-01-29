@@ -185,7 +185,7 @@ class JobOrderController extends Controller
 
     public function AjaxSearch(Request $request)
     {
-        $result = DB::table('saleinventory as sin')
+        $query = DB::table('saleinventory as sin')
             ->leftJoin('employees as e', 'sin.employee_id', '=', 'e.id')
             ->leftJoin('customers as c', 'sin.customer_id', '=', 'c.id')
             ->leftJoin('walkincustomer as w', 'sin.id', '=', 'w.saleinventory_id')
@@ -196,11 +196,22 @@ class JobOrderController extends Controller
                 DB::raw("'' as remarks"), DB::raw("CASE WHEN c.type = 0 THEN w.name ELSE c.name END as name"),
                 DB::raw("CASE WHEN c.type = 0 THEN 'Walk In Customer' ELSE 'Credit customer' END as type"),
                 "sin.customer_id as customer_id",
-                DB::raw("CASE WHEN sp.job_order_no = sin.id || ca.invoice_no = sin.id THEN 'paid' ELSE 'unpaid' END as status"))
-            ->where('sin.invoiceno', $request['id'])
-            ->get();
+                DB::raw("CASE WHEN (SUM(sp.amount) = sin.total_amount) || (SUM(sp.amount) + ca.amount = sin.total_amount)
+                        || (SUM(ca.amount) = sin.total_amount) || 
+                        ((SUM(sp.amount) = sin.total_amount + ca.amount && ca.general_ledger_id = 1))
+                 THEN 'paid' ELSE CASE WHEN SUM(sp.amount) < sin.total_amount || SUM(ca.amount) < sin.total_amount 
+                 THEN 'partial' ELSE 'unpaid' END END as status"))
+            ->groupBy('sin.id','sin.dateofsale','sin.invoiceno', 'sin.total_amount', 'sin.added_at',
+                'e.name', 'sin.customer_id', 'w.name', 'c.type', 'ca.general_ledger_id', 'ca.amount')
+            ->where('sin.invoiceno', $request['id']);
 
-        return response()->json($result, 200);
+        if ($request['status'] != "all") {
+            $query = $query->having('status', $request['status']);
+        }
+
+        $query = $query->get();
+
+        return response()->json($query, 200);
     }
 
     public function AjaxSearchDetail(Request $request)
@@ -217,7 +228,6 @@ class JobOrderController extends Controller
                 DB::raw("CASE WHEN c.type = 0 THEN 'Walk In Customer' ELSE 'Credit customer' END as type"),
                 "sin.customer_id as customer_id",
 //                DB::raw("SUM(sp.amount) as credit_amount")
-//                DB::raw("CASE WHEN sp.job_order_no = sin.id || ca.invoice_no = sin.id THEN 'paid' ELSE 'unpaid' END as status")
                 DB::raw("CASE WHEN (SUM(sp.amount) = sin.total_amount) || (SUM(sp.amount) + ca.amount = sin.total_amount)
                         || (SUM(ca.amount) = sin.total_amount) || 
                         ((SUM(sp.amount) = sin.total_amount + ca.amount && ca.general_ledger_id = 1))
@@ -225,8 +235,16 @@ class JobOrderController extends Controller
                  THEN 'partial' ELSE 'unpaid' END END as status"))
             ->where('sin.invoiceno', $request['id'])
             ->groupBy('sin.id','sin.dateofsale','sin.invoiceno', 'sin.total_amount', 'sin.added_at',
-                'e.name', 'sin.customer_id', 'w.name', 'c.type', 'ca.general_ledger_id', 'ca.amount')
-            ->get();
+                'e.name', 'sin.customer_id', 'w.name', 'c.type', 'ca.general_ledger_id', 'ca.amount');
+
+        if ($request['status'] == "unpaid") {
+            $debitInfo = $debitInfo->having('status', 'unpaid');
+        } else if ($request['status'] == 'paidOrPartial'){
+            $debitInfo = $debitInfo->having('status', 'paid')->orHaving('status', 'partial');
+        }
+
+        $debitInfo = $debitInfo->get();
+//            ->get();
         $creditInfo = DB::table('saleinventory as sin')
 //            ->leftJoin('customers as c', 'sin.customer_id', '=', 'c.id')
             ->leftJoin('salepayment as sp', 'sin.id', '=', 'sp.job_order_no')
